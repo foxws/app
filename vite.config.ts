@@ -7,7 +7,6 @@ import laravel from 'laravel-vite-plugin'
 import { google } from 'laravel-vite-plugin/fonts'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, loadEnv } from 'vite'
-import { stripCss } from './resources/js/plugins/build/strip-css'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -59,10 +58,6 @@ export default defineConfig(({ mode }) => {
         },
       }),
       tailwindcss(),
-      stripCss(
-        // Remove Roboto @font-face from shaka-player's controls.css — violates CSP font-src 'self'
-        /@font-face\{[^}]*font-family:Roboto[^}]*fonts\.gstatic\.com[^}]*\}/g,
-      ),
       wayfinder({
         formVariants: true,
       }),
@@ -101,10 +96,9 @@ export default defineConfig(({ mode }) => {
               packages.some((pkg) => id.includes(`node_modules/${pkg}`)) ? name : undefined
 
             return (
-              chunk('player', ['shaka-player']) ??
-              chunk('icons', ['@iconify']) ??
-              chunk('ui', ['@nuxt/ui', '@nuxt/icon', 'reka-ui', '@internationalized']) ??
               chunk('core', ['vue', '@inertiajs', '@vueuse']) ??
+              chunk('ui', ['@nuxt/ui', '@nuxt/icon', 'reka-ui', '@internationalized']) ??
+              chunk('icons', ['@iconify']) ??
               chunk('broadcasting', ['pusher-js', 'laravel-echo'])
             )
           },
