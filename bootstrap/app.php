@@ -2,17 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Web\Profiles\Middlewares\ResolveCurrentProfile;
-use Domain\Groups\Commands\ClearGroupCommand;
-use Domain\Playlists\Commands\ClearPlaylistCommand;
-use Domain\Tags\Commands\CreateTagCommand;
-use Domain\Tags\Commands\SortTagsCommand;
-use Domain\Transcodes\Commands\ClearTranscodeCommand;
-use Domain\Transcodes\Commands\CreateTranscodeCommand;
-use Domain\Transcodes\Commands\ImportTranscodeCommand;
 use Domain\Users\Commands\CreateUserCommand;
-use Domain\Videos\Commands\ClearVideoCommand;
-use Domain\Videos\Commands\ImportVideoCommand;
 use Foundation\Http\Middlewares\AddCspHeaders;
 use Foundation\Http\Middlewares\AddHorizonCspNonce;
 use Foundation\Http\Middlewares\AddTelescopeCspNonce;
@@ -24,7 +14,6 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Http\Middleware\CheckAbilities;
 use Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
 use Spatie\Permission\Middleware\PermissionMiddleware;
@@ -33,11 +22,8 @@ use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
 use Spatie\ResponseCache\Middlewares\CacheResponse;
 use Spatie\ResponseCache\Middlewares\DoNotCacheResponse;
 use Support\Inertia\Middlewares\HandleInertiaRequests;
-use Support\Scout\Commands\SyncScoutCommand;
 
-$basePath = $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__);
-
-$app = Application::configure(basePath: $basePath)
+return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
         api: __DIR__.'/../routes/api.php',
@@ -93,13 +79,9 @@ $app = Application::configure(basePath: $basePath)
         );
     })
     ->withEvents(discover: [
-        base_path('src/Domain/*/Listeners'),
+        domain_path('*/Listeners'),
     ])
     ->withCommands([
         CreateUserCommand::class,
     ])
     ->create();
-
-$app->useAppPath($basePath.'/src/App');
-
-return $app;
