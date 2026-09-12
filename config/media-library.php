@@ -12,6 +12,7 @@ use Spatie\MediaLibrary\Conversions\ImageGenerators\Avif;
 use Spatie\MediaLibrary\Conversions\ImageGenerators\Image;
 use Spatie\MediaLibrary\Conversions\ImageGenerators\Pdf;
 use Spatie\MediaLibrary\Conversions\ImageGenerators\Svg;
+use Spatie\MediaLibrary\Conversions\ImageGenerators\Video;
 use Spatie\MediaLibrary\Conversions\ImageGenerators\Webp;
 use Spatie\MediaLibrary\Downloaders\DefaultDownloader;
 use Spatie\MediaLibrary\MediaCollections\Models\Observers\MediaObserver;
@@ -21,7 +22,6 @@ use Spatie\MediaLibrary\Support\FileNamer\DefaultFileNamer;
 use Spatie\MediaLibrary\Support\FileRemover\DefaultFileRemover;
 use Spatie\MediaLibrary\Support\PathGenerator\DefaultPathGenerator;
 use Spatie\MediaLibrary\Support\UrlGenerator\DefaultUrlGenerator;
-use Support\MediaLibrary\Conversions\ImageGenerators\Video;
 use Support\MediaLibrary\Jobs\GenerateResponsiveImagesJob;
 use Support\MediaLibrary\Jobs\PerformConversionsJob;
 
@@ -214,8 +214,8 @@ return [
      * thumbnails and have installed the php-ffmpeg/php-ffmpeg composer
      * dependency.
      */
-    'ffmpeg_path' => env('FFMPEG_PATH', '/usr/local/bin/ffmpeg'),
-    'ffprobe_path' => env('FFPROBE_PATH', '/usr/local/bin/ffprobe'),
+    'ffmpeg_path' => env('FFMPEG_PATH', 'ffmpeg'),
+    'ffprobe_path' => env('FFPROBE_PATH', 'ffprobe'),
 
     /*
      * The timeout (in seconds) that will be used when generating video

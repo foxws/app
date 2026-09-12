@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Support\Filesystem;
+namespace Infrastructure\Filesystem;
 
 use Aws\S3\S3Client;
 use Illuminate\Filesystem\FilesystemManager as BaseFilesystemManager;

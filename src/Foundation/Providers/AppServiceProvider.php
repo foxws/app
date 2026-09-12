@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Foundation\Providers;
 
-use Domain\Profiles\Support\CurrentProfileContext;
 use Illuminate\Support\ServiceProvider;
-use Support\Filesystem\FilesystemManager;
+use Infrastructure\Filesystem\FilesystemManager;
 
 class AppServiceProvider extends ServiceProvider
 {
