@@ -79,7 +79,7 @@ return Application::configure(basePath: dirname(__DIR__))
         );
     })
     ->withEvents(discover: [
-        domain_path('*/Listeners'),
+        // domain_path('*/Listeners'),
     ])
     ->withCommands([
         CreateUserCommand::class,
