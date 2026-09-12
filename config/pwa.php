@@ -1,0 +1,138 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | PWA Enabled
+    |--------------------------------------------------------------------------
+    |
+    | When set to false, pwa:generate writes a self-unregistering service
+    | worker that clears all caches and removes itself. Set this to false
+    | in local and staging environments via the PWA_ENABLED env variable,
+    | or rely on the default which enables PWA only in production.
+    |
+    */
+
+    'enabled' => (bool) env('PWA_ENABLED', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | PWA Manifest Output Path
+    |--------------------------------------------------------------------------
+    |
+    | This option defines the output path for the generated manifest.json file.
+    | The path is relative to the public/ directory. By default, it will be
+    | generated at public/manifest.json.
+    |
+    */
+
+    'manifest_path' => (string) env('PWA_MANIFEST_PATH', 'manifest.json'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | PWA Service Worker Ignored Paths
+    |--------------------------------------------------------------------------
+    |
+    | Define URL path prefixes that the service worker should never intercept
+    | or cache. Any request whose pathname starts with one of these values
+    | will be passed directly to the network, bypassing all SW logic.
+    |
+    */
+
+    'ignore_paths' => (array) env('PWA_IGNORE_PATHS', [
+        '/_inertia/',
+        '/livewire/',
+        '/api/',
+        '/actions/',
+    ]),
+
+    /*
+    |--------------------------------------------------------------------------
+    | PWA Service Worker Path
+    |--------------------------------------------------------------------------
+    |
+    | This option defines the output path for the service worker file, relative
+    | to the public/ directory. It must match the path registered in the body
+    | component and the scope it is intended to control.
+    |
+    */
+
+    'sw_path' => (string) env('PWA_SW_PATH', 'sw.js'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | PWA Manifest
+    |--------------------------------------------------------------------------
+    |
+    | This section defines the settings for the Progressive Web Application
+    | (PWA) manifest. The manifest provides metadata about the application,
+    | such as its name, icons, and theme colors, which are used when the
+    | application is installed on a user's device.
+    |
+    */
+
+    'manifest' => [
+        'id' => env('PWA_ID', '/'),
+        'name' => env('APP_NAME', 'Foxws'),
+        'short_name' => env('PWA_SHORT_NAME', 'Foxws'),
+        'description' => env('PWA_DESCRIPTION', ''),
+        'start_url' => env('PWA_START_URL', '/'),
+        'scope' => env('PWA_SCOPE', '/'),
+        'display_override' => ['standalone', 'minimal-ui'],
+        'display' => env('PWA_DISPLAY', 'standalone'),
+        'background_color' => env('PWA_BACKGROUND_COLOR', '#18181B'),
+        'theme_color' => env('PWA_THEME_COLOR', '#18181B'),
+        'lang' => env('PWA_LANG', 'en'),
+        'dir' => env('PWA_DIR', 'ltr'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | PWA Icons
+    |--------------------------------------------------------------------------
+    |
+    | Define the icons for your PWA manifest. Each icon entry supports a
+    | "disk" key (any configured Laravel filesystem disk) and a "path"
+    | relative to that disk's root. The URL is resolved at generation time
+    | via Storage::disk()->url(). Set "disk" to null to fall back to the
+    | asset() helper with "path" used as-is.
+    |
+    */
+
+    'icons' => [
+        [
+            'disk' => env('PWA_ICON_DISK', null),
+            'path' => env('PWA_ICON_MOBILE_PATH', '/storage/images/icons/icon-192x192.png'),
+            'sizes' => env('PWA_ICON_MOBILE_SIZES', '192x192'),
+            'type' => env('PWA_ICON_MOBILE_TYPE', 'image/png'),
+        ],
+        [
+            'disk' => env('PWA_ICON_DISK', null),
+            'path' => env('PWA_ICON_DESKTOP_PATH', '/storage/images/icons/icon-512x512.png'),
+            'sizes' => env('PWA_ICON_DESKTOP_SIZES', '512x512'),
+            'type' => env('PWA_ICON_DESKTOP_TYPE', 'image/png'),
+        ],
+    ],
+
+    /**
+     * The Apple Touch Icon is used by iOS devices when a user adds the web application to their home screen.
+     */
+    'apple_touch_icon' => (string) env('PWA_APPLE_TOUCH_ICON', '/storage/images/icons/apple-touch-icon.png'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | PWA Service Worker Update Interval
+    |--------------------------------------------------------------------------
+    |
+    | How often (in hours) the page should proactively call registration.update()
+    | to check for a new service worker. Set to 0 or null to rely solely on the
+    | browser's built-in per-navigation check.
+    |
+    */
+
+    'update_interval' => env('PWA_UPDATE_INTERVAL', 24),
+
+];

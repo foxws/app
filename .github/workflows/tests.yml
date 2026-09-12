@@ -1,0 +1,118 @@
+name: Tests
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+
+permissions:
+    contents: read
+
+concurrency:
+    group: tests-${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    tests:
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+
+        strategy:
+            fail-fast: true
+            matrix:
+                php: [8.5, 8.4]
+
+        name: PHP ${{ matrix.php }}
+
+        services:
+            postgres:
+                image: postgres:latest
+                env:
+                    POSTGRES_DB: testing
+                    POSTGRES_USER: user
+                    POSTGRES_PASSWORD: password
+                ports:
+                    - 5432:5432
+                options: >-
+                    --health-cmd "pg_isready -U user -d testing"
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+
+            redis:
+                image: redis:latest
+                ports:
+                    - 6379:6379
+                options: >-
+                    --health-cmd "redis-cli ping"
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+
+            typesense:
+                image: typesense/typesense:30.2
+                env:
+                    TYPESENSE_DATA_DIR: /tmp
+                    TYPESENSE_API_KEY: masterKey
+                ports:
+                    - 8108:8108
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v7
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: dom, curl, libxml, mbstring, pcntl, exif, iconv, fileinfo, xml, pdo, pdo_pgsql, redis
+                  coverage: none
+
+            - name: Get Composer cache directory
+              id: composer-cache
+              run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+            - name: Cache Composer dependencies
+              uses: actions/cache@v6
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-composer-
+
+            - name: Install Composer dependencies
+              run: composer install --prefer-dist --no-interaction --no-progress
+
+            - name: Install pnpm
+              uses: pnpm/action-setup@v6.0.10
+              with:
+                  version: latest
+
+            - name: Install Node.js
+              uses: actions/setup-node@v7
+              with:
+                  node-version: 24
+                  cache: 'pnpm'
+
+            - name: Wait for Typesense
+              run: |
+                  for i in $(seq 1 30); do
+                    if curl -sf http://localhost:8108/health > /dev/null 2>&1; then
+                      echo "Typesense is ready"
+                      break
+                    fi
+                    echo "Waiting for Typesense... ($i/30)"
+                    sleep 2
+                  done
+
+            - name: Build application
+              run: |
+                  cp .env.ci .env
+                  php artisan key:generate
+                  php artisan wayfinder:generate
+                  pnpm install --no-frozen-lockfile
+                  pnpm build
+
+            - name: Execute tests
+              run: php artisan test
