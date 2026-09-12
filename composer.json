@@ -13,7 +13,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
-        "foxws/laravel-ddd": "*",
+        "foxws/laravel-ddd": "^0.0.2",
         "foxws/laravel-essentials": "^0.0.1",
         "foxws/laravel-pwa": "^2.5.1",
         "foxws/laravel-scout-builder": "^1.0",
