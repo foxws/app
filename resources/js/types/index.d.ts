@@ -45,6 +45,26 @@ export type ModelState = {
   color: BadgeProps['color']
 }
 
+
+export type Paginator = {
+  data: Model[] | undefined
+  links: {
+    first: string | undefined
+    last: string | undefined
+    prev: string | undefined
+    next: string | undefined
+  }
+  meta: {
+    current_page: number
+    current_page_url: string
+    from: number | undefined
+    path: string
+    per_page: number
+    to: number | undefined
+    total: number
+  }
+}
+
 export type User = Model & {
   name: string
   email?: string
@@ -60,18 +80,6 @@ export type User = Model & {
 
 export type UserCollection = Omit<Paginator, 'data'> & {
   data: User[] | undefined
-}
-
-export type Profile = Model & {
-  name: string
-  avatar: string | null
-  is_kids: boolean
-  is_primary: boolean
-  state: ModelState
-}
-
-export type ProfileCollection = Omit<Paginator, 'data'> & {
-  data: Profile[] | undefined
 }
 
 export type UserSettings = {
@@ -93,18 +101,6 @@ export type AppearanceSettings = {
   default_view: string
 }
 
-export type PlayerSettings = {
-  autoplay: boolean
-  muted: boolean
-  volume: number
-  loop: boolean
-  captions: boolean
-  quality: string
-  playback_speed: number
-  audio_language: string
-  caption_language: string
-}
-
 export type ApplicationSettings = {
   site_name: string
   timezone: string
@@ -112,57 +108,6 @@ export type ApplicationSettings = {
   allow_registration: boolean
   max_profiles_per_user: number | null
   maintenance_message: string | null
-}
-
-export type ChapterSettings = {
-  patterns: Record<string, string>
-  default_type: 'intro' | 'recap' | 'credits' | 'sponsor' | 'filler' | 'interaction_reminder' | 'scene' | 'main_event'
-  type_options: OptionItem[]
-}
-
-export type PlaylistSettings = {
-  type: 'packager' | 'streamer'
-  disk_name: string
-  language: 'en' | 'nl'
-  text_language: 'en' | 'nl'
-  expires_after: number
-  manifest_cache_lifetime: number
-  manifest_url_lifetime: number
-  manifest_refresh_before: number
-  media_url_lifetime: number
-  key_url_lifetime: number
-  encryption: 'raw_key_encryption' | 'clearkey' | null
-  protection_scheme: 'cenc' | 'cbcs' | null
-  key_rotation: boolean
-  key_rotation_duration: number
-}
-
-export type PlaylistSettingsResponse = PlaylistSettings & {
-  type_options: OptionItem[]
-  encryption_options: OptionItem[]
-  protection_scheme_options: OptionItem[]
-}
-
-export type ProcessingSettings = {
-  extract_captions: boolean
-  extract_chapters: boolean
-  extract_storyboard: boolean
-}
-
-export type MediaStream = {
-  index: number
-  width: number
-  height: number
-  bit_rate: string
-  duration: string
-  codec_name: string
-  codec_type: string
-  closed_captions: number
-}
-
-export type MediaCustomProperties = {
-  streams: MediaStream[]
-  [key: string]: unknown
 }
 
 export type Media = Model & {
@@ -205,145 +150,3 @@ export type TagCollection = Omit<Paginator, 'data'> & {
 }
 
 export type TagMenuItem = Tag & SelectMenuItem
-
-export type Video = Model & {
-  user?: User
-  tags?: Tag[]
-  media?: Media[]
-  playlists?: Playlist[]
-  transcodes?: Transcode[]
-  chapters?: Chapter[]
-  name: string
-  title: string
-  titles?: string
-  description: string | null
-  content?: string
-  summary?: string
-  identifier: string | null
-  season: string | null
-  episode: string | null
-  part: string | null
-  released: string | null
-  duration: number | null
-  timestamp: string | null
-  filesize?: string
-  codec?: string
-  resolution?: string
-  bitrate?: string
-  snapshot?: number
-  thumb: string | null
-  thumb_srcset: string | null
-  storyboard_image: string | null
-  storyboard_vtt: string | null
-  chapters_vtt: string | null
-  adult: boolean
-  captioned: boolean
-  liked: boolean | null
-  saved: boolean | null
-  viewed: boolean | null
-  manage: boolean
-  expires_at: string | null
-  published_at: string | null
-  released_at: string | null
-  state: ModelState
-}
-
-export type VideoCollection = Omit<Paginator, 'data'> & {
-  data: Video[] | undefined
-}
-
-export type Chapter = Model & {
-  type: string
-  label: string
-  start_time: number
-  end_time: number
-  sort: number
-  skippable: boolean
-}
-
-export type Playlist = Model & {
-  resource?: ModelResource
-  asset: string | null
-  asset_dash: string | null
-  asset_hls: string | null
-  asset_refresh_in: number
-  encryption_key_id: string | null
-  encryption_key: string | null
-  expired: boolean
-  failed: boolean
-  valid: boolean
-  type: string | null
-  expires_at: string | null
-  state: ModelState
-}
-
-export type PlaylistCollection = Omit<Paginator, 'data'> & {
-  data: Playlist[] | undefined
-}
-
-export type Transcode = Model & {
-  resource?: ModelResource
-  encoder: string
-  processing: boolean
-  completed: boolean
-  failed: boolean
-  size: number
-  file_size: string
-  error_message: string | null
-  retry_count: number
-  started_at: string | null
-  transcoded_at: string | null
-  state: ModelState
-}
-
-export type TranscodeCollection = Omit<Paginator, 'data'> & {
-  data: Transcode[] | undefined
-}
-
-export type Group = Model & {
-  name: string
-  title: string
-  content: string | null
-  type: string | null
-  state: ModelState
-  videos?: number
-  has?: boolean
-}
-
-export type GroupCollection = Omit<Paginator, 'data'> & {
-  data: Group[] | undefined
-}
-
-export type CollectionItem = Pick<Group, 'id' | 'name' | 'title' | 'type'>
-
-export type Notification = {
-  id: string
-  type: string
-  data: Record<string, unknown>
-  read_at: string | null
-  created_at: string
-  updated_at: string
-}
-
-export type NotificationCollection = Omit<Paginator, 'data'> & {
-  data: Notification[] | undefined
-}
-
-export type Paginator = {
-  data: Model[] | undefined
-  links: {
-    first: string | undefined
-    last: string | undefined
-    prev: string | undefined
-    next: string | undefined
-  }
-  meta: {
-    current_page: number
-    current_page_url: string
-    from: number | undefined
-    path: string
-    per_page: number
-    to: number | undefined
-    total: number
-  }
-}
