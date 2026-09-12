@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Api\Media\Broadcasting\MediaChannel;
-use App\Api\Users\Broadcasting\UserChannel;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -17,5 +15,5 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('users.{user}', UserChannel::class);
-Broadcast::channel('media.{media}', MediaChannel::class);
+// Broadcast::channel('users.{user}', UserChannel::class);
+// Broadcast::channel('media.{media}', MediaChannel::class);
