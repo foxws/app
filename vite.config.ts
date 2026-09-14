@@ -63,6 +63,13 @@ export default defineConfig(({ mode }) => {
       }),
       ui({
         router: 'inertia',
+        // Content components (UContentNavigation/UContentToc/UContentSurround) are only
+        // wired up when @nuxt/content is present — force them since docs nav/toc/surround
+        // here come from Inertia props instead, not a Content collection. The Vite
+        // plugin's public NuxtUIOptions type omits `content` (it's Nuxt-module-only in
+        // the types), but the plugin itself still reads it at runtime.
+        // @ts-expect-error -- see comment above
+        content: true,
         ui: {
           colors: {
             primary: 'identity',

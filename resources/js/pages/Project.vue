@@ -6,6 +6,8 @@ import ProjectHero from '@/components/Ui/ProjectHero.vue'
 import ProseContent from '@/components/Ui/ProseContent.vue'
 import VersionSwitcher from '@/components/Ui/VersionSwitcher.vue'
 import { Head } from '@inertiajs/vue3'
+// Not auto-registered outside a @nuxt/content app (see vite.config.ts's `content: true`).
+import UContentToc from '@nuxt/ui/components/content/ContentToc.vue'
 import { ref } from 'vue'
 
 interface Project {

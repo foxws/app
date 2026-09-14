@@ -3,6 +3,10 @@ import DocsTree from '@/components/Ui/DocsTree.vue'
 import MobileDocsSheet from '@/components/Ui/MobileDocsSheet.vue'
 import ProseContent from '@/components/Ui/ProseContent.vue'
 import { Head } from '@inertiajs/vue3'
+// Not auto-registered outside a @nuxt/content app (see vite.config.ts's `content: true`).
+import UContentSurround from '@nuxt/ui/components/content/ContentSurround.vue'
+import type { ContentSurroundLink } from '@nuxt/ui/components/content/ContentSurround.vue'
+import UContentToc from '@nuxt/ui/components/content/ContentToc.vue'
 import { ref } from 'vue'
 
 interface DocumentPage {
@@ -64,7 +68,12 @@ const tocSheetOpen = ref(false)
 
         <ProseContent :html="document.html" />
 
-        <UContentSurround :surround="document.surround" />
+        <!--
+          UContentSurround's own template guards each slot with `v-if="link"` and
+          renders a blank placeholder for a missing prev/next — its .d.ts just doesn't
+          declare that, so the null entries here need a cast.
+        -->
+        <UContentSurround :surround="(document.surround as unknown as ContentSurroundLink[])" />
       </div>
     </main>
 
