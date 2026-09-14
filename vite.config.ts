@@ -39,8 +39,8 @@ export default defineConfig(({ mode }) => {
         input: ['resources/css/app.css', 'resources/js/app.ts'],
         refresh: true,
         fonts: [
-          google('Geist', { weights: ['400', '500', '600', '700'], alias: 'geist' }),
-          google('Geist Mono', { weights: ['400', '500', '600', '700'], alias: 'geist-mono' }),
+          google('Space Grotesk', { weights: ['400', '500', '600', '700'], alias: 'space-grotesk' }),
+          google('JetBrains Mono', { weights: ['400', '500', '700'], alias: 'jetbrains-mono' }),
         ],
       }),
       inertia({
@@ -65,9 +65,9 @@ export default defineConfig(({ mode }) => {
         router: 'inertia',
         ui: {
           colors: {
-            primary: 'purple',
-            secondary: 'neutral',
-            neutral: 'neutral',
+            primary: 'foxrust',
+            secondary: 'zinc',
+            neutral: 'zinc',
           },
           input: {
             slots: {

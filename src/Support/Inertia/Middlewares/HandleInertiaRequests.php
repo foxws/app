@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace Support\Inertia\Middlewares;
 
-use App\Web\Groups\Responses\GroupCollectionsProperty;
-use App\Web\Users\Responses\UserResourceProperty;
 use Domain\Shared\Enums\Language;
 use Domain\Shared\Enums\Locale;
-use Domain\Tags\Enums\TagType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Inertia\Middleware;
@@ -26,14 +23,7 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'nonce' => fn (): string => app('csp-nonce'),
             'locale' => fn (): string => $request->getLocale(),
-            'auth' => fn (): ?UserResourceProperty => new UserResourceProperty(
-                user: $request->user() ?? null,
-                appends: ['name', 'email', 'avatar', 'settings']
-            ),
-            'collections' => fn (): GroupCollectionsProperty => new GroupCollectionsProperty(
-                user: $request->user() ?? null,
-            ),
-            'unread' => fn (): int => $request->user()?->unreadNotifications()->count() ?? 0,
+            'auth' => fn (): ?array => $request->user()?->only(['id', 'name', 'email']),
         ]);
     }
 
@@ -48,7 +38,6 @@ class HandleInertiaRequests extends Middleware
             'app' => fn (): string => Config::string('app.name', 'Laravel'),
             'locales' => fn (): Options => Options::forEnum(Locale::class),
             'languages' => fn (): Options => Options::forEnum(Language::class),
-            'tags' => fn (): Options => Options::forEnum(TagType::class),
             'echo' => fn (): array => [
                 'key' => Config::string('reverb.apps.apps.0.options.wsKey', ''),
                 'host' => Config::string('reverb.apps.apps.0.options.wsHost', 'localhost'),
