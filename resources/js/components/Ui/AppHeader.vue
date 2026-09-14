@@ -35,7 +35,7 @@ const searchOpen = ref(false)
   <UHeader
     :toggle="false"
     :ui="{
-      root: 'border-neutral-900 bg-neutral-950/95',
+      root: 'sticky top-0 z-50 border-neutral-900 bg-neutral-950/95',
       container: 'px-4 sm:px-7',
     }"
   >

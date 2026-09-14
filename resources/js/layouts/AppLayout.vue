@@ -10,7 +10,7 @@ useFlash()
 
 <template>
   <UApp :nonce="nonce">
-    <div class="min-h-dvh overflow-x-hidden bg-neutral-950 font-sans text-neutral-50">
+    <div class="min-h-dvh overflow-x-clip bg-neutral-950 font-sans text-neutral-50">
       <AppHeader />
 
       <slot />
