@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-use Domain\Groups\Models\Group;
 use Domain\Media\Models\Media;
-use Domain\Playlists\Models\Playlist;
-use Domain\Profiles\Models\Profile;
-use Domain\Relates\Models\Related;
 use Domain\Tags\Models\Tag;
 use Domain\Users\Models\User;
-use Domain\Videos\Models\Video;
+use Foxws\Docs\Models\Document;
+use Foxws\Docs\Models\Project;
+use Foxws\Docs\Models\Version;
 use Foxws\Essentials\Configurables\AggressivePrefetching;
 use Foxws\Essentials\Configurables\AutomaticallyEagerLoadRelationships;
 use Foxws\Essentials\Configurables\EnforceMorphMap;
@@ -61,9 +59,12 @@ return [
     */
 
     'morph_map' => env('ESSENTIALS_MORPH_MAP', [
+        'document' => Document::class,
         'media' => Media::class,
+        'project' => Project::class,
         'tag' => Tag::class,
         'user' => User::class,
+        'version' => Version::class,
     ]),
 
 ];
