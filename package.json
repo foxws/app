@@ -16,7 +16,7 @@
     },
     "dependencies": {
         "@iconify/vue": "^5.0.1",
-        "@inertiajs/vue3": "^3.7.0",
+        "@inertiajs/vue3": "^3.7.1",
         "@internationalized/date": "^3.12.4",
         "@laravel/echo-vue": "^2.5.0",
         "@nuxt/ui": "^4.11.1",
@@ -27,8 +27,8 @@
         "vue": "^3.5.42"
     },
     "devDependencies": {
-        "@iconify-json/lucide": "^1.2.131",
-        "@inertiajs/vite": "^3.7.0",
+        "@iconify-json/lucide": "^1.2.132",
+        "@inertiajs/vite": "^3.7.1",
         "@laravel/vite-plugin-wayfinder": "^0.1.10",
         "@tailwindcss/vite": "^4.3.3",
         "@tsconfig/node24": "^24.0.5",
@@ -52,8 +52,8 @@
         "prettier": "3.9.6",
         "prettier-plugin-blade": "^3.3.3",
         "prettier-plugin-tailwindcss": "^0.8.1",
-        "typescript": "^6.0.3",
-        "vite": "^8.2.2",
+        "typescript": "^7.0.2",
+        "vite": "^8.3.0",
         "vitest": "^5.0.0",
         "vue-tsc": "^3.3.11"
     },
