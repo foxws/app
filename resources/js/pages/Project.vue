@@ -36,7 +36,7 @@ const onThisPageSheetOpen = ref(false)
 
   <div class="lg:grid lg:grid-cols-[224px_1fr_232px]">
     <!-- Desktop docs tree -->
-    <aside class="hidden border-r border-neutral-900 p-5.5 lg:block">
+    <aside class="hidden min-w-0 border-r border-neutral-900 p-5.5 lg:block">
       <DocsTree :nav="project.nav" />
     </aside>
 
@@ -83,7 +83,7 @@ const onThisPageSheetOpen = ref(false)
     </main>
 
     <!-- Desktop right rail: version switcher, GitHub link, then on-this-page -->
-    <aside class="hidden flex-col gap-5.5 border-l border-neutral-900 p-5.5 lg:flex">
+    <aside class="hidden min-w-0 flex-col gap-5.5 border-l border-neutral-900 p-5.5 lg:flex">
       <VersionSwitcher :versions="project.versions" />
 
       <UButton
@@ -100,6 +100,7 @@ const onThisPageSheetOpen = ref(false)
       <UContentToc
         v-if="project.overview?.toc.length"
         :links="project.overview.toc"
+        :ui="{ link: 'min-w-0', linkText: 'min-w-0 truncate' }"
       />
     </aside>
   </div>
@@ -130,6 +131,7 @@ const onThisPageSheetOpen = ref(false)
         <UContentToc
           v-if="project.overview?.toc.length"
           :links="project.overview.toc"
+          :ui="{ link: 'min-w-0', linkText: 'min-w-0 truncate' }"
         />
       </div>
     </template>

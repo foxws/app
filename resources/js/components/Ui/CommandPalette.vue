@@ -84,7 +84,6 @@ const groups = computed(() => [
       >
         <template #item-label="{ item }">
           <div class="flex w-full items-center gap-3">
-            <span class="w-13 shrink-0 font-mono text-[9px] tracking-wider text-neutral-500">{{ item.prefix }}</span>
             <div class="flex min-w-0 flex-col gap-0.5">
               <span class="font-sans text-[13px] font-semibold text-neutral-50">{{ item.label }}</span>
               <span class="font-sans text-[11px] text-neutral-500">{{ item.suffix }}</span>

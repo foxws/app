@@ -3,9 +3,8 @@ import DocsTree from '@/components/Ui/DocsTree.vue'
 import MobileDocsSheet from '@/components/Ui/MobileDocsSheet.vue'
 import ProseContent from '@/components/Ui/ProseContent.vue'
 import { Head } from '@inertiajs/vue3'
-// Not auto-registered outside a @nuxt/content app (see vite.config.ts's `content: true`).
-import UContentSurround from '@nuxt/ui/components/content/ContentSurround.vue'
 import type { ContentSurroundLink } from '@nuxt/ui/components/content/ContentSurround.vue'
+import UContentSurround from '@nuxt/ui/components/content/ContentSurround.vue'
 import UContentToc from '@nuxt/ui/components/content/ContentToc.vue'
 import { ref } from 'vue'
 
@@ -18,7 +17,7 @@ interface DocumentPage {
   surround: ({ title: string; path: string } | null)[]
 }
 
-const props = defineProps<{
+defineProps<{
   document: DocumentPage
 }>()
 
@@ -31,7 +30,7 @@ const tocSheetOpen = ref(false)
 
   <div class="lg:grid lg:grid-cols-[224px_1fr_232px]">
     <!-- Desktop docs tree -->
-    <aside class="hidden border-r border-neutral-900 p-5.5 lg:block">
+    <aside class="hidden min-w-0 border-r border-neutral-900 p-5.5 lg:block">
       <DocsTree :nav="document.nav" />
     </aside>
 
@@ -73,13 +72,16 @@ const tocSheetOpen = ref(false)
           renders a blank placeholder for a missing prev/next — its .d.ts just doesn't
           declare that, so the null entries here need a cast.
         -->
-        <UContentSurround :surround="(document.surround as unknown as ContentSurroundLink[])" />
+        <UContentSurround :surround="document.surround as unknown as ContentSurroundLink[]" />
       </div>
     </main>
 
     <!-- Desktop right rail -->
-    <aside class="hidden flex-col gap-5.5 border-l border-neutral-900 p-5.5 lg:flex">
-      <UContentToc :links="document.toc" />
+    <aside class="hidden min-w-0 flex-col gap-5.5 border-l border-neutral-900 p-5.5 lg:flex">
+      <UContentToc
+        :links="document.toc"
+        :ui="{ link: 'min-w-0', linkText: 'min-w-0 truncate' }"
+      />
     </aside>
   </div>
 
@@ -106,7 +108,10 @@ const tocSheetOpen = ref(false)
         </button>
       </div>
       <div class="p-4.5">
-        <UContentToc :links="document.toc" />
+        <UContentToc
+          :links="document.toc"
+          :ui="{ link: 'min-w-0', linkText: 'min-w-0 truncate' }"
+        />
       </div>
     </template>
   </USlideover>

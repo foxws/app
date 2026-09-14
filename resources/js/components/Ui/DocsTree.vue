@@ -13,5 +13,6 @@ defineProps<{
   <UContentNavigation
     :navigation="(nav as unknown as ContentNavigationLink[])"
     highlight
+    :ui="{ link: 'min-w-0', linkTitle: 'min-w-0 truncate' }"
   />
 </template>
