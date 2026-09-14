@@ -3,7 +3,7 @@ import DocsTree from '@/components/Ui/DocsTree.vue'
 
 defineProps<{
   title: string
-  nav: { group: string; items: string[] }[]
+  nav: { title: string; path?: string; children?: { title: string; path: string }[] }[]
 }>()
 
 const open = defineModel<boolean>('open', { default: false })
@@ -29,7 +29,10 @@ const open = defineModel<boolean>('open', { default: false })
         </button>
       </div>
 
-      <div class="min-h-0 flex-1 overflow-y-auto p-3.5">
+      <div
+        class="min-h-0 flex-1 overflow-y-auto p-3.5"
+        @click.capture="(e) => (e.target as HTMLElement).closest('a') && (open = false)"
+      >
         <DocsTree :nav="nav" />
       </div>
     </template>

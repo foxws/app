@@ -22,7 +22,7 @@ interface Project {
   lead: string
   install: string
   meta: { k: string; v: string }[]
-  nav: { group: string; items: string[] }[]
+  nav: { title: string; path?: string; children?: { title: string; path: string }[] }[]
   on_this_page: string[]
   features: { t: string; d: string }[]
   code: { filename: string; language: string; code: string } | null
@@ -32,8 +32,10 @@ const props = defineProps<{
   project: Project
 }>()
 
-const prevLabel = computed(() => props.project.nav[0]?.items[0])
-const nextLabel = computed(() => props.project.nav[0]?.items[1] ?? props.project.nav[1]?.items[0])
+const prevLabel = computed(() => props.project.nav[0]?.children?.[0]?.title)
+const nextLabel = computed(
+  () => props.project.nav[0]?.children?.[1]?.title ?? props.project.nav[1]?.children?.[0]?.title,
+)
 
 const docsSheetOpen = ref(false)
 const onThisPageSheetOpen = ref(false)
@@ -77,7 +79,9 @@ const onThisPageSheetOpen = ref(false)
         />
 
         <!-- Mobile-only inline meta grid, in place of the desktop right rail -->
-        <div class="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900 lg:hidden">
+        <div
+          class="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900 lg:hidden"
+        >
           <div
             v-for="m in project.meta"
             :key="m.k"
@@ -111,14 +115,6 @@ const onThisPageSheetOpen = ref(false)
           :code="project.code.code"
         />
 
-        <div
-          v-if="!project.flagship"
-          class="rounded-lg border border-neutral-900 p-4"
-        >
-          <span class="block font-sans text-[13px] font-semibold text-neutral-50">Used by Stry</span>
-          <span class="font-sans text-xs text-neutral-400">See it running in production →</span>
-        </div>
-
         <PrevNextNav
           :prev="prevLabel"
           :next="nextLabel"
@@ -129,7 +125,9 @@ const onThisPageSheetOpen = ref(false)
     <!-- Desktop right rail: facts, then navigation -->
     <aside class="hidden flex-col gap-5.5 border-l border-neutral-900 p-5.5 lg:flex">
       <div class="flex flex-col gap-2">
-        <UButton class="justify-center rounded-lg bg-identity-500 py-2.5 font-sans text-[13px] font-semibold text-neutral-950 hover:bg-identity-400">
+        <UButton
+          class="justify-center rounded-lg bg-identity-500 py-2.5 font-sans text-[13px] font-semibold text-neutral-950 hover:bg-identity-400"
+        >
           Get started
         </UButton>
         <UButton
@@ -145,14 +143,6 @@ const onThisPageSheetOpen = ref(false)
 
       <PackageMeta :meta="project.meta" />
       <OnThisPage :sections="project.on_this_page" />
-
-      <div
-        v-if="!project.flagship"
-        class="rounded-lg border border-neutral-900 p-3.5"
-      >
-        <span class="block font-sans text-xs font-semibold text-neutral-50">Used by Stry</span>
-        <span class="font-sans text-[11px] text-neutral-400">See it running in production →</span>
-      </div>
     </aside>
   </div>
 

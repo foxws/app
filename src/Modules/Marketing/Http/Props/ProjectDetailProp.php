@@ -7,6 +7,7 @@ namespace Modules\Marketing\Http\Props;
 use Foxws\Docs\Models\Project;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
+use Modules\Marketing\Support\DocsNavigation;
 
 /**
  * A project's full page: hero, install command, docs tree, feature tiles.
@@ -21,11 +22,7 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
         $version = $this->project->versions->firstWhere('is_default', true) ?? $this->project->versions->first();
         $documents = $version?->documents()->orderBy('order')->get() ?? collect();
 
-        $nav = $documents
-            ->groupBy(fn ($document) => $document->section ?: 'Docs')
-            ->map(fn ($items, $group) => ['group' => $group, 'items' => $items->pluck('title')->all()])
-            ->values()
-            ->all();
+        $nav = DocsNavigation::build($this->project, $documents);
 
         return [
             'key' => $this->project->slug,
