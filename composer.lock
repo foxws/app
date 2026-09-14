@@ -1270,12 +1270,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-docs.git",
-                "reference": "30833761719599bf84b8620abc114993e2f52645"
+                "reference": "f20d363c9357480d497c9b8fc50853e12a5e0395"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/30833761719599bf84b8620abc114993e2f52645",
-                "reference": "30833761719599bf84b8620abc114993e2f52645",
+                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/f20d363c9357480d497c9b8fc50853e12a5e0395",
+                "reference": "f20d363c9357480d497c9b8fc50853e12a5e0395",
                 "shasum": ""
             },
             "require": {
@@ -1348,7 +1348,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-14T10:18:56+00:00"
+            "time": "2026-09-14T10:34:13+00:00"
         },
         {
             "name": "foxws/laravel-essentials",
