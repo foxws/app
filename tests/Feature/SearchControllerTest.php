@@ -15,6 +15,7 @@ test('searches documents by title', function () {
         'slug' => 'installation',
         'title' => 'Installation Guide',
         'section' => 'Getting Started',
+        'body' => 'Run the installer to get started quickly.',
     ]);
     DocumentFactory::new()->create([
         'version_id' => $version->id,
@@ -31,6 +32,7 @@ test('searches documents by title', function () {
             'label' => 'Installation Guide',
             'suffix' => 'Test Project — Getting Started',
             'prefix' => 'TEST-PROJECT',
+            'description' => 'Run the installer to get started quickly.',
             'to' => route('document', ['test-project', 'installation']),
         ],
     ]);
