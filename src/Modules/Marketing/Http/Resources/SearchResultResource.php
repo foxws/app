@@ -30,7 +30,7 @@ final class SearchResultResource extends JsonResource
             'suffix' => $this->section ? "{$project->title} — {$this->section}" : $project->title,
             'prefix' => Str::upper($project->slug),
             'description' => Str::of($body)->stripTags()->trim()->limit(100)->toString(),
-            'to' => route('document', [$project->slug, $this->slug]),
+            'to' => route('document', [$project->slug, $this->slug], absolute: false),
         ];
     }
 }

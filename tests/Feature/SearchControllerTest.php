@@ -33,7 +33,7 @@ test('searches documents by title', function () {
             'suffix' => 'Test Project — Getting Started',
             'prefix' => 'TEST-PROJECT',
             'description' => 'Run the installer to get started quickly.',
-            'to' => route('document', ['test-project', 'installation']),
+            'to' => route('document', ['test-project', 'installation'], absolute: false),
         ],
     ]);
 });

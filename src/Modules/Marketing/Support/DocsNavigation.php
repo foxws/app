@@ -27,7 +27,7 @@ final class DocsNavigation
                 'title' => $group,
                 'children' => $items->map(fn ($document) => [
                     'title' => $document->title,
-                    'path' => route('document', [$project->slug, $document->slug]),
+                    'path' => route('document', [$project->slug, $document->slug], absolute: false),
                 ])->all(),
             ])
             ->values()

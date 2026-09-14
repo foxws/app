@@ -28,7 +28,7 @@ final class DocumentDetailProp implements ProvidesInertiaProperty
     public function toInertiaProperty(PropertyContext $context): mixed
     {
         $links = $this->siblings->flatMap(function (Document $d) {
-            $path = route('document', [$this->project->slug, $d->slug]);
+            $path = route('document', [$this->project->slug, $d->slug], absolute: false);
 
             return [
                 "{$d->slug}.md" => $path,
@@ -54,8 +54,8 @@ final class DocumentDetailProp implements ProvidesInertiaProperty
             'toc' => $rendered['toc'],
             'nav' => DocsNavigation::build($this->project, $this->siblings),
             'surround' => [
-                $prev ? ['title' => $prev->title, 'path' => route('document', [$this->project->slug, $prev->slug])] : null,
-                $next ? ['title' => $next->title, 'path' => route('document', [$this->project->slug, $next->slug])] : null,
+                $prev ? ['title' => $prev->title, 'path' => route('document', [$this->project->slug, $prev->slug], absolute: false)] : null,
+                $next ? ['title' => $next->title, 'path' => route('document', [$this->project->slug, $next->slug], absolute: false)] : null,
             ],
         ];
     }
