@@ -11,7 +11,7 @@ defineProps<{
       :key="g.group"
       class="flex flex-col gap-0.5"
     >
-      <span class="px-2 pb-1.5 font-mono text-[10px] tracking-[.14em] text-neutral-500">{{ g.group }}</span>
+      <span class="px-2 pb-1.5 font-mono text-[10px] tracking-[.14em] text-neutral-500 uppercase">{{ g.group }}</span>
       <span
         v-for="i in g.items"
         :key="i"

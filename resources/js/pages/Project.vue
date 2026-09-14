@@ -25,7 +25,7 @@ interface Project {
   nav: { group: string; items: string[] }[]
   on_this_page: string[]
   features: { t: string; d: string }[]
-  code: { filename: string; language: string; code: string }
+  code: { filename: string; language: string; code: string } | null
 }
 
 const props = defineProps<{
@@ -105,6 +105,7 @@ const onThisPageSheetOpen = ref(false)
         </div>
 
         <CodeBlock
+          v-if="project.code"
           :filename="project.code.filename"
           :language="project.code.language"
           :code="project.code.code"
@@ -128,7 +129,7 @@ const onThisPageSheetOpen = ref(false)
     <!-- Desktop right rail: facts, then navigation -->
     <aside class="hidden flex-col gap-5.5 border-l border-neutral-900 p-5.5 lg:flex">
       <div class="flex flex-col gap-2">
-        <UButton class="justify-center rounded-lg bg-foxrust-500 py-2.5 font-sans text-[13px] font-semibold text-neutral-950 hover:bg-foxrust-400">
+        <UButton class="justify-center rounded-lg bg-identity-500 py-2.5 font-sans text-[13px] font-semibold text-neutral-950 hover:bg-identity-400">
           Get started
         </UButton>
         <UButton

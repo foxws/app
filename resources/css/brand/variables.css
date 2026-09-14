@@ -1,15 +1,15 @@
 @theme {
-  --color-foxrust-50: #fdf4ed;
-  --color-foxrust-100: #fbe6d6;
-  --color-foxrust-200: #f6c8a8;
-  --color-foxrust-300: #f0a473;
-  --color-foxrust-400: #f0803f;
-  --color-foxrust-500: #e8622c;
-  --color-foxrust-600: #d4521f;
-  --color-foxrust-700: #b04119;
-  --color-foxrust-800: #8c3415;
-  --color-foxrust-900: #722c14;
-  --color-foxrust-950: #3d1608;
+  --color-identity-50: #fdf4ed;
+  --color-identity-100: #fbe6d6;
+  --color-identity-200: #f6c8a8;
+  --color-identity-300: #f0a473;
+  --color-identity-400: #f0803f;
+  --color-identity-500: #e8622c;
+  --color-identity-600: #d4521f;
+  --color-identity-700: #b04119;
+  --color-identity-800: #8c3415;
+  --color-identity-900: #722c14;
+  --color-identity-950: #3d1608;
 }
 
 :root {

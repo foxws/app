@@ -16,7 +16,7 @@ defineProps<{
 
     <UButton
       :to="href"
-      class="shrink-0 rounded-lg bg-foxrust-500 px-5 py-3 font-sans text-[13px] font-semibold text-neutral-950 hover:bg-foxrust-400"
+      class="shrink-0 rounded-lg bg-identity-500 px-5 py-3 font-sans text-[13px] font-semibold text-neutral-950 hover:bg-identity-400"
     >
       Explore Stry →
     </UButton>

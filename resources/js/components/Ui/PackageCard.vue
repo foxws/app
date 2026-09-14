@@ -18,7 +18,7 @@ defineProps<{
       <span class="font-sans text-xl font-semibold tracking-tight text-neutral-50">{{ name }}</span>
       <span
         v-if="role"
-        class="font-mono text-[9px] tracking-wider text-foxrust-500"
+        class="font-mono text-[9px] tracking-wider text-identity-500 uppercase"
       >{{ role }}</span>
     </div>
 

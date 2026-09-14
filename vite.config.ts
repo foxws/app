@@ -65,7 +65,7 @@ export default defineConfig(({ mode }) => {
         router: 'inertia',
         ui: {
           colors: {
-            primary: 'foxrust',
+            primary: 'identity',
             secondary: 'zinc',
             neutral: 'zinc',
           },

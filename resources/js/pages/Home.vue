@@ -28,7 +28,7 @@ const keyFor = (pkg: Package) => pkg.slug.replace('foxws/', '')
   <Head title="Home" />
 
   <section class="flex flex-col gap-6 border-b border-neutral-900 px-4 py-16 sm:px-7 sm:py-19">
-    <span class="font-mono text-[10px] tracking-[.18em] text-foxrust-500">LARAVEL INFRASTRUCTURE PACKAGES</span>
+    <span class="font-mono text-[10px] tracking-[.18em] text-identity-500">LARAVEL INFRASTRUCTURE PACKAGES</span>
     <h1 class="max-w-4xl font-sans text-4xl leading-[.98] font-semibold tracking-tight text-neutral-50 text-pretty sm:text-7xl">
       The hard parts, already solved.
     </h1>
@@ -39,7 +39,7 @@ const keyFor = (pkg: Package) => pkg.slug.replace('foxws/', '')
     <div class="mt-1.5 flex flex-col gap-2.25 sm:flex-row">
       <UButton
         to="#packages"
-        class="justify-center rounded-lg bg-foxrust-500 px-5 py-3 font-sans text-[13px] font-semibold text-neutral-950 hover:bg-foxrust-400"
+        class="justify-center rounded-lg bg-identity-500 px-5 py-3 font-sans text-[13px] font-semibold text-neutral-950 hover:bg-identity-400"
       >
         Browse packages
       </UButton>
