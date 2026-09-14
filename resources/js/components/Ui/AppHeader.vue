@@ -40,14 +40,7 @@ const searchOpen = ref(false)
         v-model:open="searchOpen"
         :scope="scope"
       />
-      <UButton
-        to="/docs"
-        variant="outline"
-        color="neutral"
-        class="hidden rounded-full sm:inline-flex"
-      >
-        Docs
-      </UButton>
+
       <UButton
         to="https://github.com/foxws"
         target="_blank"
@@ -57,6 +50,7 @@ const searchOpen = ref(false)
       >
         GitHub ↗
       </UButton>
+
       <UButton
         icon="i-lucide-menu"
         variant="outline"
