@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "08a8d78f9969bc46f66732cf704ce598",
+    "content-hash": "20140a5386083d749dc65040bd2e60fe",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1270,12 +1270,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-docs.git",
-                "reference": "d5608b777c8d0b6edb94447a68d190c3dbb71cd1"
+                "reference": "6ab27d7522f6cc48c69ae4bc250de34d320b6344"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/d5608b777c8d0b6edb94447a68d190c3dbb71cd1",
-                "reference": "d5608b777c8d0b6edb94447a68d190c3dbb71cd1",
+                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/6ab27d7522f6cc48c69ae4bc250de34d320b6344",
+                "reference": "6ab27d7522f6cc48c69ae4bc250de34d320b6344",
                 "shasum": ""
             },
             "require": {
@@ -1348,7 +1348,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-13T12:32:08+00:00"
+            "time": "2026-09-14T09:47:06+00:00"
         },
         {
             "name": "foxws/laravel-essentials",
@@ -17940,7 +17940,7 @@
     "stability-flags": {
         "foxws/laravel-docs": 20
     },
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.3"
