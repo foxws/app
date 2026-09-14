@@ -28,7 +28,7 @@ const keyFor = (pkg: Package) => pkg.slug.replace('foxws/', '')
   <Head title="Home" />
 
   <UPageHero
-    headline="Laravel · Linux · web solutions"
+    headline="Laravel · Linux · AI"
     title="The hard parts, already solved."
     description="I like digging into the technical details most developers skip — then sharing what comes out of it as something you can actually use."
     :ui="{
