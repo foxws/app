@@ -48,7 +48,7 @@ const searchOpen = ref(false)
         class="ml-2.5 min-w-0"
         :ui="{
           list: 'flex-nowrap',
-          link: 'min-w-0 font-mono text-[13px] font-normal text-neutral-500 hover:text-neutral-300 transition-colors',
+          link: 'min-w-0 font-mono text-[13px] font-normal text-neutral-500 transition-colors hover:text-neutral-300',
           linkLabel: 'min-w-0 truncate',
         }"
       >
@@ -66,21 +66,10 @@ const searchOpen = ref(false)
 
       <UButton
         to="https://github.com/foxws"
-        target="_blank"
-        variant="outline"
+        variant="ghost"
         color="neutral"
-        class="hidden rounded-full sm:inline-flex"
-      >
-        GitHub ↗
-      </UButton>
-
-      <UButton
-        icon="i-lucide-menu"
-        variant="outline"
-        color="neutral"
-        class="rounded-full sm:hidden"
-        square
-        aria-label="Menu"
+        icon="i-lucide-github"
+        external
       />
     </template>
   </UDashboardNavbar>
