@@ -11,9 +11,19 @@
         "documentation"
     ],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../laravel-docs",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "require": {
         "php": "^8.3",
         "foxws/laravel-ddd": "^0.0.3",
+        "foxws/laravel-docs": "@dev",
         "foxws/laravel-essentials": "^0.0.1",
         "foxws/laravel-pwa": "^2.5.1",
         "foxws/laravel-scout-builder": "^1.0",
