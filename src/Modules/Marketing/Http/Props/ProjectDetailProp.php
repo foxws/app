@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace Modules\Marketing\Http\Props;
 
+use Foxws\Docs\Enums\ProjectDriver;
 use Foxws\Docs\Models\Project;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
 use Modules\Marketing\Support\DocsNavigation;
+use Modules\Marketing\Support\DocumentHeadings;
 
 /**
- * A project's full page: hero, install command, docs tree, feature tiles.
+ * A project's full page: hero, install command, docs tree, and the
+ * project's overview document (docs/index.md, or docs/about.md when no
+ * index.md exists) rendered as the page body — the docs tree's other
+ * entries become sibling pages, not this one.
  */
 final class ProjectDetailProp implements ProvidesInertiaProperty
 {
@@ -22,25 +27,22 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
         $version = $this->project->versions->firstWhere('is_default', true) ?? $this->project->versions->first();
         $documents = $version?->documents()->orderBy('order')->get() ?? collect();
 
-        $nav = DocsNavigation::build($this->project, $documents);
+        $overview = $documents->firstWhere('slug', 'index') ?? $documents->firstWhere('slug', 'about');
+        $navDocuments = $overview ? $documents->reject(fn ($d) => $d->is($overview)) : $documents;
+
+        $rendered = $overview ? DocumentHeadings::extract($overview->toHtml(), $this->project->title) : null;
 
         return [
             'key' => $this->project->slug,
             'name' => $this->project->title,
             'slug' => $metadata['slug'] ?? $this->project->sourceLocation(),
-            'flagship' => (bool) ($metadata['flagship'] ?? false),
-            'role' => $metadata['role'] ?? null,
             'eyebrow' => $metadata['eyebrow'] ?? '',
-            'title_lines' => $metadata['title_lines'] ?? [$this->project->title, ''],
             'lead' => $metadata['lead'] ?? $metadata['desc'] ?? '',
             'install' => $metadata['install'] ?? "composer require {$this->project->sourceLocation()}",
-            'meta' => $metadata['meta'] ?? array_filter([
-                $version ? ['k' => 'Latest release', 'v' => $version->name] : null,
-            ]),
-            'nav' => $nav,
-            'on_this_page' => $documents->pluck('title')->all(),
-            'features' => $metadata['features'] ?? [],
-            'code' => $metadata['code'] ?? null,
+            'overview' => $rendered ? ['html' => $rendered['html'], 'toc' => $rendered['toc']] : null,
+            'nav' => DocsNavigation::build($this->project, $navDocuments),
+            'versions' => $this->project->versions->map(fn ($v) => ['name' => $v->name, 'is_default' => $v->is_default])->all(),
+            'github' => $this->project->driver === ProjectDriver::Github ? $this->project->sourceLocation() : null,
         ];
     }
 }

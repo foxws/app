@@ -1,41 +1,29 @@
 <script setup lang="ts">
-import CodeBlock from '@/components/Ui/CodeBlock.vue'
 import DocsTree from '@/components/Ui/DocsTree.vue'
-import FeatureTile from '@/components/Ui/FeatureTile.vue'
 import InstallCommand from '@/components/Ui/InstallCommand.vue'
 import MobileDocsSheet from '@/components/Ui/MobileDocsSheet.vue'
-import OnThisPage from '@/components/Ui/OnThisPage.vue'
-import PackageMeta from '@/components/Ui/PackageMeta.vue'
-import PrevNextNav from '@/components/Ui/PrevNextNav.vue'
 import ProjectHero from '@/components/Ui/ProjectHero.vue'
+import ProseContent from '@/components/Ui/ProseContent.vue'
+import VersionSwitcher from '@/components/Ui/VersionSwitcher.vue'
 import { Head } from '@inertiajs/vue3'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 
 interface Project {
   key: string
   name: string
   slug: string
-  flagship: boolean
-  role: string | null
   eyebrow: string
-  title_lines: [string, string]
   lead: string
   install: string
-  meta: { k: string; v: string }[]
+  overview: { html: string; toc: { id: string; text: string; children: { id: string; text: string }[] }[] } | null
   nav: { title: string; path?: string; children?: { title: string; path: string }[] }[]
-  on_this_page: string[]
-  features: { t: string; d: string }[]
-  code: { filename: string; language: string; code: string } | null
+  versions: { name: string; is_default: boolean }[]
+  github: string | null
 }
 
-const props = defineProps<{
+defineProps<{
   project: Project
 }>()
-
-const prevLabel = computed(() => props.project.nav[0]?.children?.[0]?.title)
-const nextLabel = computed(
-  () => props.project.nav[0]?.children?.[1]?.title ?? props.project.nav[1]?.children?.[0]?.title,
-)
 
 const docsSheetOpen = ref(false)
 const onThisPageSheetOpen = ref(false)
@@ -74,75 +62,43 @@ const onThisPageSheetOpen = ref(false)
       <div class="flex flex-col gap-5.5 p-4 sm:p-5.5">
         <ProjectHero
           :eyebrow="project.eyebrow"
-          :title-lines="project.title_lines"
+          :title="project.name"
           :lead="project.lead"
         />
 
-        <!-- Mobile-only inline meta grid, in place of the desktop right rail -->
-        <div
-          class="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900 lg:hidden"
-        >
-          <div
-            v-for="m in project.meta"
-            :key="m.k"
-            class="flex flex-col gap-0.5 bg-neutral-950 p-2.75"
-          >
-            <span class="font-mono text-[10px] tracking-wider text-neutral-500">{{ m.k }}</span>
-            <span class="font-mono text-[13px] text-neutral-200">{{ m.v }}</span>
-          </div>
+        <!-- Mobile-only version switcher, in place of the desktop right rail -->
+        <div class="lg:hidden">
+          <VersionSwitcher :versions="project.versions" />
         </div>
 
         <InstallCommand :command="project.install" />
 
-        <div class="flex flex-col gap-2">
-          <h2 class="font-sans text-xl font-semibold tracking-tight text-neutral-50 sm:text-[22px]">What it does</h2>
-          <p class="max-w-xl font-sans text-[15px] leading-relaxed text-neutral-400">{{ project.lead }}</p>
-        </div>
-
-        <div class="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-          <FeatureTile
-            v-for="f in project.features"
-            :key="f.t"
-            :t="f.t"
-            :d="f.d"
-          />
-        </div>
-
-        <CodeBlock
-          v-if="project.code"
-          :filename="project.code.filename"
-          :language="project.code.language"
-          :code="project.code.code"
-        />
-
-        <PrevNextNav
-          :prev="prevLabel"
-          :next="nextLabel"
+        <ProseContent
+          v-if="project.overview"
+          :html="project.overview.html"
         />
       </div>
     </main>
 
-    <!-- Desktop right rail: facts, then navigation -->
+    <!-- Desktop right rail: version switcher, GitHub link, then on-this-page -->
     <aside class="hidden flex-col gap-5.5 border-l border-neutral-900 p-5.5 lg:flex">
-      <div class="flex flex-col gap-2">
-        <UButton
-          class="justify-center rounded-lg bg-identity-500 py-2.5 font-sans text-[13px] font-semibold text-neutral-950 hover:bg-identity-400"
-        >
-          Get started
-        </UButton>
-        <UButton
-          :to="`https://github.com/${project.slug}`"
-          target="_blank"
-          variant="outline"
-          color="neutral"
-          class="justify-center rounded-lg py-2.5 font-sans text-[13px] font-medium"
-        >
-          GitHub ↗
-        </UButton>
-      </div>
+      <VersionSwitcher :versions="project.versions" />
 
-      <PackageMeta :meta="project.meta" />
-      <OnThisPage :sections="project.on_this_page" />
+      <UButton
+        v-if="project.github"
+        :to="`https://github.com/${project.github}`"
+        target="_blank"
+        variant="outline"
+        color="neutral"
+        class="justify-center rounded-lg py-2.5 font-sans text-[13px] font-medium"
+      >
+        GitHub ↗
+      </UButton>
+
+      <UContentToc
+        v-if="project.overview?.toc.length"
+        :links="project.overview.toc"
+      />
     </aside>
   </div>
 
@@ -169,7 +125,10 @@ const onThisPageSheetOpen = ref(false)
         </button>
       </div>
       <div class="p-4.5">
-        <OnThisPage :sections="project.on_this_page" />
+        <UContentToc
+          v-if="project.overview?.toc.length"
+          :links="project.overview.toc"
+        />
       </div>
     </template>
   </USlideover>
