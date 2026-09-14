@@ -7,7 +7,6 @@ namespace Domain\Tags\Models;
 use ArrayAccess;
 use Database\Factories\TagFactory;
 use Domain\Media\Concerns\InteractsWithMedia;
-use Domain\Relates\Concerns\InteractsWithRelated;
 use Domain\Shared\Casts\AsDateTime;
 use Domain\Shared\Concerns\InteractsWithCache;
 use Domain\Tags\Collections\TagCollection;
@@ -37,7 +36,6 @@ class Tag extends BaseTag implements HasMedia
     use HasUlids;
     use InteractsWithCache;
     use InteractsWithMedia;
-    use InteractsWithRelated;
     use InteractsWithUser;
     use Searchable;
 
@@ -213,14 +211,12 @@ class Tag extends BaseTag implements HasMedia
     public function makeSearchableUsing(TagCollection $models): TagCollection
     {
         return $models
-            ->loadMissing('related')
             ->loadCount('videos');
     }
 
     protected function makeAllSearchableUsing(TagQueryBuilder $query): TagQueryBuilder
     {
         return $query
-            ->with('related')
             ->withCount('videos');
     }
 
@@ -235,13 +231,6 @@ class Tag extends BaseTag implements HasMedia
     {
         return Attribute::make(
             get: fn () => $this->type?->label(),
-        )->shouldCache();
-    }
-
-    protected function synonyms(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => TagCollection::make($this->getRelates())->synonyms(),
         )->shouldCache();
     }
 

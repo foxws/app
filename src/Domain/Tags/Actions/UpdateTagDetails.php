@@ -20,13 +20,6 @@ class UpdateTagDetails
                 Arr::only($attributes, $tag->getFillable()),
             );
 
-            // Sync related tags if provided
-            if (array_key_exists('related', $attributes)) {
-                $tagIds = Tag::query()->options(data_get($attributes, 'related.*.id', []))->get();
-
-                $tag->syncRelated($tagIds);
-            }
-
             // Keep tags in their natural display order
             $this->sorter->handle();
         });

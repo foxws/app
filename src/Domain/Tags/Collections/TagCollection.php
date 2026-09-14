@@ -9,23 +9,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 class TagCollection extends Collection
 {
-    public function relates(): mixed
-    {
-        return $this
-            ->flatMap(fn (Tag $item) => $item->getRelates())
-            ->unique('id');
-    }
-
-    public function synonyms(): mixed
-    {
-        return $this
-            ->map(fn (Tag $related) => $related->only(['name', 'description']))
-            ->flatten()
-            ->filter()
-            ->unique()
-            ->values();
-    }
-
     public function translated(): mixed
     {
         return $this
