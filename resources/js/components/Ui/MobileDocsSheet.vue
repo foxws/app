@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import DocsTree from '@/components/Ui/DocsTree.vue'
+import type { DocsNavItem } from '@/types'
 
 defineProps<{
   title: string
-  nav: { title: string; path?: string; children?: { title: string; path: string }[] }[]
+  nav: DocsNavItem[]
 }>()
 
 const open = defineModel<boolean>('open', { default: false })

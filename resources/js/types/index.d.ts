@@ -1,4 +1,21 @@
-import type { AvatarProps, BadgeProps, SelectItem, SelectMenuItem } from '@nuxt/ui'
+import type { AvatarProps, BadgeProps, SelectItem } from '@nuxt/ui'
+
+export type DocsNavItem = {
+  title: string
+  path?: string
+  children?: { title: string; path: string }[]
+}
+
+export type DocsTocItem = {
+  id: string
+  text: string
+  children: { id: string; text: string }[]
+}
+
+export type DocsSurroundLink = {
+  title: string
+  path: string
+}
 
 export type EchoConfig = {
   readonly key: string
@@ -44,7 +61,6 @@ export type ModelState = {
   icon: string
   color: BadgeProps['color']
 }
-
 
 export type Paginator = {
   data: Model[] | undefined
@@ -96,20 +112,6 @@ export type GeneralSettings = {
   time_format: string
 }
 
-export type AppearanceSettings = {
-  theme: string
-  default_view: string
-}
-
-export type ApplicationSettings = {
-  site_name: string
-  timezone: string
-  default_locale: 'en-US' | 'nl-NL'
-  allow_registration: boolean
-  max_profiles_per_user: number | null
-  maintenance_message: string | null
-}
-
 export type Media = Model & {
   name: string
   url?: string | null
@@ -131,22 +133,3 @@ export type Media = Model & {
 export type MediaCollection = Omit<Paginator, 'data'> & {
   data: Media[] | undefined
 }
-
-export type Tag = Model & {
-  name: string
-  slug: string
-  summary: string | null
-  description?: string
-  category: string
-  type: string | null
-  adult: boolean
-  thumb?: AvatarProps['src'] | null
-  related?: Tag[]
-  videos?: number
-}
-
-export type TagCollection = Omit<Paginator, 'data'> & {
-  data: Tag[] | undefined
-}
-
-export type TagMenuItem = Tag & SelectMenuItem

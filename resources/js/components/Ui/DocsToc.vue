@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import UContentToc from '@nuxt/ui/components/content/ContentToc.vue'
+import type { DocsTocItem } from '@/types'
 import { useTemplateRef } from 'vue'
 
 defineProps<{
-  links: { id: string; text: string; children: { id: string; text: string }[] }[]
+  links: DocsTocItem[]
   ui?: Record<string, string>
 }>()
 
