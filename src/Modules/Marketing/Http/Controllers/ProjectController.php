@@ -22,9 +22,9 @@ final class ProjectController
         }
 
         return Inertia::render('Project', [
-            'project' => new ProjectDetailProp($model),
-            'crumbs' => [['label' => $model->slug]],
-            'scope' => $model->title,
+            'project' => fn () => new ProjectDetailProp($model),
+            'crumbs' => fn (): array => [['label' => $model->slug]],
+            'scope' => fn (): string => $model->title,
         ]);
     }
 }

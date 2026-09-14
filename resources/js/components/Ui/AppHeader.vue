@@ -35,7 +35,7 @@ const searchOpen = ref(false)
   <UDashboardNavbar
     as="header"
     :toggle="false"
-    :ui="{ root: 'border-neutral-900 px-4 sm:px-7' }"
+    :ui="{ root: 'sticky top-0 z-50 border-neutral-900 bg-neutral-950/95 px-4 backdrop-blur-sm sm:px-7' }"
   >
     <template #left>
       <AppLogo

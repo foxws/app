@@ -104,7 +104,7 @@ const tocSheetOpen = ref(false)
   <USlideover
     v-model:open="tocSheetOpen"
     side="bottom"
-    :ui="{ content: 'top-16 rounded-t-2xl border-t border-neutral-700 bg-neutral-900' }"
+    :ui="{ content: 'max-h-[70vh] rounded-t-2xl border-t border-neutral-700 bg-neutral-900' }"
   >
     <template #content>
       <div class="flex items-center justify-between border-b border-neutral-800 px-4.5 py-3">
@@ -118,10 +118,11 @@ const tocSheetOpen = ref(false)
         </button>
       </div>
 
-      <div class="p-4.5">
+      <div class="overflow-y-auto p-4.5">
         <DocsToc
           :links="document.toc"
           :ui="{ trigger: 'hidden', link: 'min-w-0', linkText: 'min-w-0 truncate' }"
+          @navigate="tocSheetOpen = false"
         />
       </div>
     </template>

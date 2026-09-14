@@ -14,7 +14,7 @@ const open = defineModel<boolean>('open', { default: false })
     v-model:open="open"
     side="bottom"
     :ui="{
-      content: 'top-16 rounded-t-2xl border-t border-neutral-700 bg-neutral-900',
+      content: 'max-h-[70vh] rounded-t-2xl border-t border-neutral-700 bg-neutral-900',
     }"
   >
     <template #content>

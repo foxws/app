@@ -7,6 +7,13 @@ defineProps<{
   ui?: Record<string, string>
 }>()
 
+/**
+ * Fires whenever a heading link is clicked, before the scroll happens —
+ * lets a parent hosting this inside a USlideover/sheet close it first (the
+ * sheet's own scroll-lock otherwise swallows the scrollIntoView below).
+ */
+const emit = defineEmits<{ navigate: [id: string] }>()
+
 const root = useTemplateRef('root')
 
 /**
@@ -30,8 +37,17 @@ function onClickCapture(event: MouseEvent) {
   event.preventDefault()
   event.stopPropagation()
 
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  history.replaceState(null, '', `#${id}`)
+  emit('navigate', id)
+
+  // A parent hosting this inside a USlideover closes it in response to
+  // `navigate` (above), but the sheet keeps its scroll lock — and restores
+  // the exact scroll position it captured on open — until its 200ms close
+  // transition finishes. A `nextTick()` fires well before that and gets
+  // clobbered by the restore; wait it out instead.
+  setTimeout(() => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    history.replaceState(null, '', `#${id}`)
+  }, 300)
 }
 </script>
 
