@@ -22,7 +22,17 @@ const searchOpen = ref(false)
     />
 
     <span class="ml-2.5 min-w-0 truncate font-mono text-[13px] text-neutral-500">
-      {{ app }}<template v-for="c in crumbs" :key="c"> / <span class="text-neutral-50">{{ c }}</span></template>
+      <ULink
+        to="/"
+        class="text-inherit hover:text-inherit"
+        >{{ app }}</ULink
+      >
+      <template
+        v-for="c in crumbs"
+        :key="c"
+      >
+        / <span class="text-neutral-50">{{ c }}</span></template
+      >
     </span>
 
     <nav class="ml-auto flex items-center gap-2">

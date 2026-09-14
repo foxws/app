@@ -27,32 +27,20 @@ const keyFor = (pkg: Package) => pkg.slug.replace('foxws/', '')
 <template>
   <Head title="Home" />
 
-  <section class="flex flex-col gap-6 border-b border-neutral-900 px-4 py-16 sm:px-7 sm:py-19">
-    <span class="font-mono text-[10px] tracking-[.18em] text-identity-500">LARAVEL INFRASTRUCTURE PACKAGES</span>
-    <h1 class="max-w-4xl font-sans text-4xl leading-[.98] font-semibold tracking-tight text-neutral-50 text-pretty sm:text-7xl">
-      The hard parts, already solved.
-    </h1>
-    <p class="max-w-xl font-sans text-base leading-relaxed text-neutral-400 sm:text-lg">
-      Every site eventually needs containers it can trust, video that plays everywhere, and a cache that
-      invalidates itself. We package those layers so you can go back to building the actual product.
-    </p>
-    <div class="mt-1.5 flex flex-col gap-2.25 sm:flex-row">
-      <UButton
-        to="#packages"
-        class="justify-center rounded-lg bg-identity-500 px-5 py-3 font-sans text-[13px] font-semibold text-neutral-950 hover:bg-identity-400"
-      >
-        Browse packages
-      </UButton>
-      <UButton
-        to="/docs"
-        variant="outline"
-        color="neutral"
-        class="justify-center rounded-lg px-5 py-3 font-sans text-[13px] font-medium"
-      >
-        Read the docs
-      </UButton>
-    </div>
-  </section>
+  <UPageHero
+    headline="LARAVEL INFRASTRUCTURE PACKAGES"
+    title="The hard parts, already solved."
+    description="Every site eventually needs containers it can trust, video that plays everywhere, and a cache that invalidates itself. We package those layers so you can go back to building the actual product."
+    :ui="{
+      root: 'border-b border-neutral-900',
+      container: 'mx-0 max-w-none px-4 py-16 sm:px-7 sm:py-19 lg:flex lg:flex-col lg:px-7 lg:py-19',
+      wrapper: 'text-left',
+      header: 'flex flex-col gap-6',
+      headline: 'mb-0 block font-mono text-[10px] font-normal tracking-[.18em] text-identity-500',
+      title: 'mt-0 max-w-4xl font-sans text-4xl leading-[.98] font-semibold text-neutral-50 sm:text-7xl',
+      description: 'mt-0 max-w-xl font-sans text-base leading-relaxed text-neutral-400 sm:text-lg',
+    }"
+  />
 
   <section
     id="packages"
