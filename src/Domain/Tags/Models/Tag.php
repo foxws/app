@@ -13,7 +13,7 @@ use Domain\Tags\Collections\TagCollection;
 use Domain\Tags\Enums\TagType;
 use Domain\Tags\QueryBuilders\TagQueryBuilder;
 use Domain\Users\Concerns\InteractsWithUser;
-use Domain\Videos\Models\Video;
+use Foxws\Docs\Models\Project;
 use Foxws\ScoutRelations\Concerns\HasSearchableRelations;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Database\Eloquent\BroadcastsEvents;
@@ -122,9 +122,9 @@ class Tag extends BaseTag implements HasMedia
             ->sharpen(10);
     }
 
-    public function videos(): MorphToMany
+    public function projects(): MorphToMany
     {
-        return $this->morphedByMany(Video::class, 'taggable');
+        return $this->morphedByMany(Project::class, 'taggable');
     }
 
     /**
@@ -197,7 +197,7 @@ class Tag extends BaseTag implements HasMedia
             'synonyms' => (array) $this->synonyms->toArray(),
             'translated' => (array) $this->translated->toArray(),
             'order' => (int) $this->order_column,
-            'videos' => (int) $this->videos_count,
+            'projects' => (int) $this->projects_count,
             'created_at' => (int) $this->created_at->getTimestamp(),
             'updated_at' => (int) $this->updated_at->getTimestamp(),
         ];
@@ -205,19 +205,17 @@ class Tag extends BaseTag implements HasMedia
 
     public function searchableRelations(): array
     {
-        return ['videos'];
+        return ['projects'];
     }
 
     public function makeSearchableUsing(TagCollection $models): TagCollection
     {
-        return $models
-            ->loadCount('videos');
+        return $models->loadCount('projects');
     }
 
     protected function makeAllSearchableUsing(TagQueryBuilder $query): TagQueryBuilder
     {
-        return $query
-            ->withCount('videos');
+        return $query->withCount('projects');
     }
 
     protected function summary(): Attribute
