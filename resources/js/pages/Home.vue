@@ -28,17 +28,17 @@ const keyFor = (pkg: Package) => pkg.slug.replace('foxws/', '')
   <Head title="Home" />
 
   <UPageHero
-    headline="LARAVEL INFRASTRUCTURE PACKAGES"
+    headline="Laravel · Linux · web solutions"
     title="The hard parts, already solved."
-    description="Every site eventually needs containers it can trust, video that plays everywhere, and a cache that invalidates itself. We package those layers so you can go back to building the actual product."
+    description="I like digging into the technical details most developers skip — then sharing what comes out of it as something you can actually use."
     :ui="{
       root: 'border-b border-neutral-900',
       container: 'mx-0 max-w-none px-4 py-16 sm:px-7 sm:py-19 lg:flex lg:flex-col lg:px-7 lg:py-19',
       wrapper: 'text-left',
       header: 'flex flex-col gap-6',
-      headline: 'mb-0 block font-mono text-[10px] font-normal tracking-[.18em] text-identity-500',
+      headline: 'mb-0 block',
       title: 'mt-0 max-w-4xl font-sans text-4xl leading-[.98] font-semibold text-neutral-50 sm:text-7xl',
-      description: 'mt-0 max-w-xl font-sans text-base leading-relaxed text-neutral-400 sm:text-lg',
+      description: 'mt-0 max-w-2xl font-sans text-base leading-relaxed text-neutral-400 sm:text-lg',
     }"
   />
 

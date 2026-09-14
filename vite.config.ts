@@ -84,6 +84,11 @@ export default defineConfig(({ mode }) => {
               root: 'w-full',
             },
           },
+          pageHero: {
+            slots: {
+              headline: 'font-mono text-[10px] font-normal uppercase tracking-[.18em] text-identity-500',
+            },
+          },
         },
       }),
     ],
