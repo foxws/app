@@ -8,7 +8,24 @@ import { computed, ref } from 'vue'
 
 const { app } = useAppearance()
 
-const crumbs = computed<string[]>(() => (usePage().props.crumbs as string[] | undefined) ?? [])
+interface Crumb {
+  label: string
+  href?: string
+}
+
+const crumbs = computed<Crumb[]>(() => (usePage().props.crumbs as Crumb[] | undefined) ?? [])
+
+const breadcrumbItems = computed(() => {
+  const items = [{ label: app.value, to: '/' }, ...crumbs.value.map((c) => ({ label: c.label, to: c.href }))]
+
+  // The current page's own crumb (the last one, when there is one beyond the
+  // app root) reads brighter than the links leading up to it.
+  return items.map((item, index) => ({
+    ...item,
+    ui: index > 0 && index === items.length - 1 ? { link: 'text-neutral-50' } : undefined,
+  }))
+})
+
 const scope = computed<string | undefined>(() => usePage().props.scope as string | undefined)
 
 const searchOpen = ref(false)
@@ -21,19 +38,19 @@ const searchOpen = ref(false)
       :size="26"
     />
 
-    <span class="ml-2.5 min-w-0 truncate font-mono text-[13px] text-neutral-500">
-      <ULink
-        to="/"
-        class="text-inherit hover:text-inherit"
-        >{{ app }}</ULink
-      >
-      <template
-        v-for="c in crumbs"
-        :key="c"
-      >
-        / <span class="text-neutral-50">{{ c }}</span></template
-      >
-    </span>
+    <UBreadcrumb
+      :items="breadcrumbItems"
+      class="ml-2.5 min-w-0"
+      :ui="{
+        list: 'flex-nowrap',
+        link: 'font-mono text-[13px] font-normal text-neutral-500 hover:text-neutral-300 transition-colors',
+        linkLabel: 'truncate',
+      }"
+    >
+      <template #separator>
+        <span class="font-mono text-[13px] text-neutral-500">/</span>
+      </template>
+    </UBreadcrumb>
 
     <nav class="ml-auto flex items-center gap-2">
       <SearchTrigger

@@ -33,7 +33,10 @@ final class DocumentController
 
         return Inertia::render('Document', [
             'document' => new DocumentDetailProp($model, $current, $documents),
-            'crumbs' => [$model->slug, $current->slug],
+            'crumbs' => [
+                ['label' => $model->slug, 'href' => route('project', $model->slug)],
+                ['label' => $current->slug],
+            ],
             'scope' => $model->title,
         ]);
     }
