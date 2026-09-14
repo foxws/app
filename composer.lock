@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d11310e4e1907a1ef09a0bc84239ae35",
+    "content-hash": "64ece9f51e102d7c86189c9f1b4415db",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1270,12 +1270,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-docs.git",
-                "reference": "f40696a811cf9cf42d7e6a13f0c4743b9a306155"
+                "reference": "b3cc42e28606e5ea9729a15861b29714e08805ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/f40696a811cf9cf42d7e6a13f0c4743b9a306155",
-                "reference": "f40696a811cf9cf42d7e6a13f0c4743b9a306155",
+                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/b3cc42e28606e5ea9729a15861b29714e08805ce",
+                "reference": "b3cc42e28606e5ea9729a15861b29714e08805ce",
                 "shasum": ""
             },
             "require": {
@@ -1286,8 +1286,9 @@
                 "illuminate/support": "^12.0|^13.0",
                 "laravel/scout": "^10.0|^11.0",
                 "league/commonmark": "^2.4",
+                "league/flysystem": "^3.0",
                 "php": "^8.3",
-                "spatie/yaml-front-matter": "^2.1"
+                "symfony/yaml": "^6.4|^7.0|^8.0"
             },
             "require-dev": {
                 "larastan/larastan": "^3.9",
@@ -1348,7 +1349,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-14T12:37:54+00:00"
+            "time": "2026-09-14T13:41:59+00:00"
         },
         {
             "name": "foxws/laravel-essentials",
@@ -7157,16 +7158,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "11.23.7",
+            "version": "11.23.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "94b11766ea5e10b1e2a88159b24937eae89a5d5f"
+                "reference": "32bd3926b1065c4dc154789b9c6b17567acaaa15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/94b11766ea5e10b1e2a88159b24937eae89a5d5f",
-                "reference": "94b11766ea5e10b1e2a88159b24937eae89a5d5f",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/32bd3926b1065c4dc154789b9c6b17567acaaa15",
+                "reference": "32bd3926b1065c4dc154789b9c6b17567acaaa15",
                 "shasum": ""
             },
             "require": {
@@ -7251,7 +7252,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-medialibrary/issues",
-                "source": "https://github.com/spatie/laravel-medialibrary/tree/11.23.7"
+                "source": "https://github.com/spatie/laravel-medialibrary/tree/11.23.8"
             },
             "funding": [
                 {
@@ -7263,7 +7264,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-03T13:52:57+00:00"
+            "time": "2026-09-14T11:54:24+00:00"
         },
         {
             "name": "spatie/laravel-model-states",
@@ -7935,68 +7936,6 @@
                 }
             ],
             "time": "2026-06-22T07:55:44+00:00"
-        },
-        {
-            "name": "spatie/yaml-front-matter",
-            "version": "2.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/yaml-front-matter.git",
-                "reference": "3066996d0e4ed74bcc22c261084a9df727bf7e36"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/yaml-front-matter/zipball/3066996d0e4ed74bcc22c261084a9df727bf7e36",
-                "reference": "3066996d0e4ed74bcc22c261084a9df727bf7e36",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.0",
-                "symfony/yaml": "^6.0|^7.0|^8.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\YamlFrontMatter\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Sebastian De Deyne",
-                    "email": "sebastian@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A to the point yaml front matter parser",
-            "homepage": "https://github.com/sebastiandedeyne/yaml-front-matter",
-            "keywords": [
-                "front matter",
-                "jekyll",
-                "spatie",
-                "yaml"
-            ],
-            "support": {
-                "source": "https://github.com/spatie/yaml-front-matter/tree/2.1.1"
-            },
-            "funding": [
-                {
-                    "url": "https://spatie.be/open-source/support-us",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/spatie",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-11-24T16:17:28+00:00"
         },
         {
             "name": "spomky-labs/cbor-php",
