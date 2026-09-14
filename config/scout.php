@@ -1,13 +1,5 @@
 <?php
 
-use Domain\Groups\Models\Group;
-use Domain\Groups\Models\Groupable;
-use Domain\Profiles\Models\Profile;
-use Domain\Tags\Models\Tag;
-use Domain\Transcodes\Models\Transcode;
-use Domain\Users\Models\User;
-use Domain\Videos\Models\Video;
-
 return [
 
     /*
@@ -19,7 +11,7 @@ return [
     | using Laravel Scout. This connection is used when syncing all models
     | to the search service. You should adjust this based on your needs.
     |
-    | Supported: "algolia", "meilisearch", "typesense",
+    | Supported: "algolia", "meilisearch", "typesense", "turbopuffer",
     |            "database", "collection", "null"
     |
     */
@@ -50,7 +42,7 @@ return [
     |
     */
 
-    'queue' => env('SCOUT_QUEUE', true),
+    'queue' => env('SCOUT_QUEUE', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -92,7 +84,7 @@ return [
     |
     */
 
-    'soft_delete' => true,
+    'soft_delete' => env('SCOUT_SOFT_DELETE', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -149,7 +141,21 @@ return [
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
             // 'users' => [
-            //     'filterableAttributes'=> ['id', 'name', 'email'],
+            //     'filterableAttributes' => ['id', 'name', 'email'],
+            //     'embedders' => [
+            //         'default' => [
+            //             'source' => 'userProvided',
+            //             'dimensions' => 1536,
+            //         ],
+            //     ],
+            // ],
+        ],
+        'model-settings' => [
+            // User::class => [
+            //     'embedding' => [
+            //         'embedder' => 'default',
+            //         'dimensions' => 1536,
+            //     ],
             // ],
         ],
     ],
@@ -166,7 +172,6 @@ return [
     */
 
     'typesense' => [
-
         'client-settings' => [
             'api_key' => env('TYPESENSE_API_KEY', 'xyz'),
             'nodes' => [
@@ -188,143 +193,72 @@ return [
             'num_retries' => env('TYPESENSE_NUM_RETRIES', 3),
             'retry_interval_seconds' => env('TYPESENSE_RETRY_INTERVAL_SECONDS', 1),
         ],
-
-        'max_total_results' => env('TYPESENSE_MAX_TOTAL_RESULTS', 4500),
-
+        // 'max_total_results' => env('TYPESENSE_MAX_TOTAL_RESULTS', 1000),
         'model-settings' => [
+            // User::class => [
+            //     'collection-schema' => [
+            //         'fields' => [
+            //             [
+            //                 'name' => 'id',
+            //                 'type' => 'string',
+            //             ],
+            //             [
+            //                 'name' => 'name',
+            //                 'type' => 'string',
+            //             ],
+            //             [
+            //                 'name' => 'created_at',
+            //                 'type' => 'int64',
+            //             ],
+            //         ],
+            //         'default_sorting_field' => 'created_at',
+            //     ],
+            //     'search-parameters' => [
+            //         'query_by' => 'name'
+            //     ],
+            //     'embedding' => [
+            //         'attribute' => 'embedding',
+            //         'dimensions' => 1536,
+            //     ],
+            // ],
+        ],
+        'import_action' => env('TYPESENSE_IMPORT_ACTION', 'upsert'),
+    ],
 
-            User::class => [
-                'collection-schema' => [
-                    'fields' => [
-                        [
-                            'name' => 'id',
-                            'type' => 'string',
-                        ],
-                        [
-                            'name' => 'name',
-                            'type' => 'string',
-                            'sort' => true,
-                        ],
-                        [
-                            'name' => 'email',
-                            'type' => 'string',
-                            'sort' => true,
-                        ],
-                        [
-                            'name' => 'state',
-                            'type' => 'string',
-                            'facet' => true,
-                        ],
-                        [
-                            'name' => 'email_verified_at',
-                            'type' => 'int64',
-                            'optional' => true,
-                            'sort' => true,
-                        ],
-                        [
-                            'name' => 'created_at',
-                            'type' => 'int64',
-                            'sort' => true,
-                        ],
-                        [
-                            'name' => 'updated_at',
-                            'type' => 'int64',
-                            'sort' => true,
-                        ],
-                        [
-                            'name' => '__soft_deleted',
-                            'type' => 'int64',
-                            'optional' => true,
-                            'sort' => true,
-                        ],
-                    ],
+    /*
+    |--------------------------------------------------------------------------
+    | Turbopuffer Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure your Turbopuffer connection and the schema and
+    | searchable attributes defined by each of your application's models.
+    | Turbopuffer is a scalable engine with full-text + vector search.
+    |
+    */
 
-                    'token_separators' => ['+', '-', '_', '@', '.', '|'],
-
-                ],
-
-                'search-parameters' => [
-                    'query_by' => 'name, email',
-                    'facet_by' => 'state',
-                ],
-            ],
-
-            Tag::class => [
-                'collection-schema' => [
-                    'fields' => [
-                        [
-                            'name' => 'id',
-                            'type' => 'string',
-                        ],
-                        [
-                            'name' => 'name',
-                            'type' => 'string',
-                            'sort' => true,
-                        ],
-                        [
-                            'name' => 'description',
-                            'type' => 'string',
-                            'optional' => true,
-                        ],
-                        [
-                            'name' => 'category',
-                            'type' => 'string',
-                            'optional' => true,
-                            'facet' => true,
-                        ],
-                        [
-                            'name' => 'type',
-                            'type' => 'string',
-                            'optional' => true,
-                            'facet' => true,
-                        ],
-                        [
-                            'name' => 'synonyms',
-                            'type' => 'string[]',
-                            'optional' => true,
-                        ],
-                        [
-                            'name' => 'translated',
-                            'type' => 'string[]',
-                            'optional' => true,
-                        ],
-                        [
-                            'name' => 'adult',
-                            'type' => 'bool',
-                            'facet' => true,
-                        ],
-                        [
-                            'name' => 'order',
-                            'type' => 'int64',
-                            'sort' => true,
-                        ],
-                        [
-                            'name' => 'videos',
-                            'type' => 'int64',
-                            'sort' => true,
-                        ],
-                        [
-                            'name' => 'created_at',
-                            'type' => 'int64',
-                            'sort' => true,
-                        ],
-                        [
-                            'name' => 'updated_at',
-                            'type' => 'int64',
-                            'sort' => true,
-                        ],
-                    ],
-
-                    'token_separators' => ['+', '-', '_', '@', '.', '|', '#', '/', ':', '(', ')', '[', ']'],
-
-                ],
-
-                'search-parameters' => [
-                    'query_by' => 'name, description, synonyms, translated, category',
-                    'facet_by' => 'category, type, adult',
-                ],
-            ],
-
+    'turbopuffer' => [
+        'api_key' => env('TURBOPUFFER_API_KEY'),
+        'region' => env('TURBOPUFFER_REGION', 'gcp-us-central1'),
+        'base_url' => env('TURBOPUFFER_BASE_URL'),
+        'timeout' => env('TURBOPUFFER_TIMEOUT', 60),
+        'connect_timeout' => env('TURBOPUFFER_CONNECT_TIMEOUT', 5),
+        'retries' => env('TURBOPUFFER_RETRIES', 3),
+        'model-settings' => [
+            // User::class => [
+            //     'searchable-attributes' => [
+            //         'name' => 2,
+            //         'email' => 1,
+            //     ],
+            //     'embedding' => [
+            //         'attribute' => 'embedding',
+            //         'dimensions' => 1536,
+            //     ],
+            //     'schema' => [
+            //         'name' => ['type' => 'string', 'full_text_search' => true],
+            //         'email' => ['type' => 'string', 'full_text_search' => true],
+            //         'embedding' => ['type' => '[1536]f32', 'ann' => true],
+            //     ],
+            // ],
         ],
     ],
 
