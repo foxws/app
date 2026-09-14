@@ -32,10 +32,12 @@ const searchOpen = ref(false)
 </script>
 
 <template>
-  <UDashboardNavbar
-    as="header"
+  <UHeader
     :toggle="false"
-    :ui="{ root: 'sticky top-0 z-50 border-neutral-900 bg-neutral-950/95 px-4 backdrop-blur-sm sm:px-7' }"
+    :ui="{
+      root: 'border-neutral-900 bg-neutral-950/95',
+      container: 'px-4 sm:px-7',
+    }"
   >
     <template #left>
       <AppLogo
@@ -72,7 +74,7 @@ const searchOpen = ref(false)
         external
       />
     </template>
-  </UDashboardNavbar>
+  </UHeader>
 
   <CommandPalette
     v-model:open="searchOpen"

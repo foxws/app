@@ -33,7 +33,7 @@ const keyFor = (pkg: Package) => pkg.slug.replace('foxws/', '')
     description="I like digging into the technical details most developers skip — then sharing what comes out of it as something you can actually use."
     :ui="{
       root: 'border-b border-neutral-900',
-      container: 'mx-0 max-w-none px-4 py-16 sm:px-7 sm:py-19 lg:flex lg:flex-col lg:px-7 lg:py-19',
+      container: 'px-4 py-16 sm:px-7 sm:py-19 lg:flex lg:flex-col lg:px-7 lg:py-19',
       wrapper: 'text-left',
       header: 'flex flex-col gap-6',
       headline: 'mb-0 block',
@@ -42,8 +42,9 @@ const keyFor = (pkg: Package) => pkg.slug.replace('foxws/', '')
     }"
   />
 
-  <section
+  <UContainer
     id="packages"
+    as="section"
     class="grid grid-cols-1 gap-3.5 px-4 py-6 sm:grid-cols-2 sm:px-7"
   >
     <PackageCard
@@ -56,12 +57,13 @@ const keyFor = (pkg: Package) => pkg.slug.replace('foxws/', '')
       :version="pkg.version"
       :href="`/${keyFor(pkg)}`"
     />
-  </section>
+  </UContainer>
 
-  <section
+  <UContainer
     v-if="stry"
+    as="section"
     class="px-4 pb-7 sm:px-7"
   >
     <StryCallout :href="`/${keyFor(stry)}`" />
-  </section>
+  </UContainer>
 </template>

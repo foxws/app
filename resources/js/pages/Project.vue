@@ -33,15 +33,16 @@ const onThisPageSheetOpen = ref(false)
 <template>
   <Head :title="project.name" />
 
-  <div class="lg:grid lg:grid-cols-[224px_1fr_232px]">
-    <!-- Desktop docs tree -->
-    <aside class="hidden min-w-0 border-r border-neutral-900 p-5.5 lg:block">
-      <DocsTree :nav="project.nav" />
-    </aside>
+  <UContainer class="px-4 sm:px-7">
+    <UPage>
+      <template #left>
+        <UPageAside>
+          <DocsTree :nav="project.nav" />
+        </UPageAside>
+      </template>
 
-    <main class="min-w-0">
       <!-- Mobile sticky docs/on-this-page bar -->
-      <div class="grid grid-cols-2 gap-2 border-b border-neutral-900 bg-neutral-950/95 px-4 py-2.5 lg:hidden">
+      <div class="-mx-4 grid grid-cols-2 gap-2 border-b border-neutral-900 bg-neutral-950/95 px-4 py-2.5 sm:-mx-7 sm:px-7 lg:hidden">
         <button
           type="button"
           class="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900 px-3.25 py-2.5"
@@ -60,7 +61,7 @@ const onThisPageSheetOpen = ref(false)
         </button>
       </div>
 
-      <div class="flex flex-col gap-5.5 p-4 sm:p-5.5">
+      <div class="flex flex-col gap-5.5 py-4 sm:py-5.5">
         <ProjectHero
           :eyebrow="project.eyebrow"
           :title="project.name"
@@ -79,30 +80,32 @@ const onThisPageSheetOpen = ref(false)
           :html="project.overview.html"
         />
       </div>
-    </main>
 
-    <!-- Desktop right rail: version switcher, GitHub link, then on-this-page -->
-    <aside class="hidden min-w-0 flex-col gap-5.5 border-l border-neutral-900 p-5.5 lg:flex">
-      <VersionSwitcher :versions="project.versions" />
+      <!-- Desktop right rail: version switcher, GitHub link, then on-this-page -->
+      <template #right>
+        <div class="hidden flex-col gap-5.5 py-8 lg:sticky lg:top-(--ui-header-height) lg:flex lg:max-h-[calc(100vh-var(--ui-header-height))] lg:overflow-y-auto">
+          <VersionSwitcher :versions="project.versions" />
 
-      <UButton
-        v-if="project.github"
-        :to="`https://github.com/${project.github}`"
-        target="_blank"
-        variant="outline"
-        color="neutral"
-        class="justify-center rounded-lg py-2.5 font-sans text-[13px] font-medium"
-      >
-        GitHub ↗
-      </UButton>
+          <UButton
+            v-if="project.github"
+            :to="`https://github.com/${project.github}`"
+            target="_blank"
+            variant="outline"
+            color="neutral"
+            class="justify-center rounded-lg py-2.5 font-sans text-[13px] font-medium"
+          >
+            GitHub ↗
+          </UButton>
 
-      <DocsToc
-        v-if="project.overview?.toc.length"
-        :links="project.overview.toc"
-        :ui="{ link: 'min-w-0', linkText: 'min-w-0 truncate' }"
-      />
-    </aside>
-  </div>
+          <DocsToc
+            v-if="project.overview?.toc.length"
+            :links="project.overview.toc"
+            :ui="{ link: 'min-w-0', linkText: 'min-w-0 truncate' }"
+          />
+        </div>
+      </template>
+    </UPage>
+  </UContainer>
 
   <MobileDocsSheet
     v-model:open="docsSheetOpen"

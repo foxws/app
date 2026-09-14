@@ -28,19 +28,17 @@ const tocSheetOpen = ref(false)
 <template>
   <Head :title="`${document.title} - ${document.project.name}`" />
 
-  <div
-    class="lg:grid"
-    :class="document.toc.length ? 'lg:grid-cols-[224px_1fr_232px]' : 'lg:grid-cols-[224px_1fr]'"
-  >
-    <!-- Desktop docs tree -->
-    <aside class="hidden min-w-0 border-r border-neutral-900 p-5.5 lg:block">
-      <DocsTree :nav="document.nav" />
-    </aside>
+  <UContainer class="px-4 sm:px-7">
+    <UPage>
+      <template #left>
+        <UPageAside>
+          <DocsTree :nav="document.nav" />
+        </UPageAside>
+      </template>
 
-    <main class="min-w-0">
       <!-- Mobile sticky docs/on-this-page bar -->
       <div
-        class="grid gap-2 border-b border-neutral-900 bg-neutral-950/95 px-4 py-2.5 lg:hidden"
+        class="-mx-4 grid gap-2 border-b border-neutral-900 bg-neutral-950/95 px-4 py-2.5 sm:-mx-7 sm:px-7 lg:hidden"
         :class="document.toc.length ? 'grid-cols-2' : 'grid-cols-1'"
       >
         <button
@@ -62,7 +60,7 @@ const tocSheetOpen = ref(false)
         </button>
       </div>
 
-      <div class="flex flex-col gap-5.5 p-4 sm:p-5.5">
+      <div class="flex flex-col gap-5.5 py-4 sm:py-5.5">
         <ULink
           :to="`/${document.project.slug}`"
           class="font-mono text-[11px] text-neutral-500 hover:text-neutral-300"
@@ -81,19 +79,18 @@ const tocSheetOpen = ref(false)
         -->
         <UContentSurround :surround="document.surround as unknown as ContentSurroundLink[]" />
       </div>
-    </main>
 
-    <!-- Desktop right rail -->
-    <aside
-      v-if="document.toc.length"
-      class="hidden min-w-0 flex-col gap-5.5 border-l border-neutral-900 p-5.5 lg:flex"
-    >
-      <DocsToc
-        :links="document.toc"
-        :ui="{ link: 'min-w-0', linkText: 'min-w-0 truncate' }"
-      />
-    </aside>
-  </div>
+      <template
+        v-if="document.toc.length"
+        #right
+      >
+        <DocsToc
+          :links="document.toc"
+          :ui="{ link: 'min-w-0', linkText: 'min-w-0 truncate' }"
+        />
+      </template>
+    </UPage>
+  </UContainer>
 
   <MobileDocsSheet
     v-model:open="docsSheetOpen"
