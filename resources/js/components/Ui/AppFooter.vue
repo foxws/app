@@ -3,8 +3,19 @@ const year = new Date().getFullYear()
 </script>
 
 <template>
-  <footer class="flex justify-between border-t border-neutral-900 px-4 py-5 font-mono text-[11px] tracking-wider text-neutral-500 sm:px-7">
-    <span>FOXWS.NL</span>
-    <span>MIT LICENCE · {{ year }}</span>
-  </footer>
+  <UFooter
+    :ui="{
+      root: 'border-t border-neutral-900',
+      container: 'mx-0 max-w-none flex items-center justify-between px-4 py-5 font-mono text-[11px] uppercase tracking-wider text-neutral-500 sm:px-7',
+      left: 'order-1',
+      right: 'order-2',
+    }"
+  >
+    <template #left>
+      <span>foxws.nl</span>
+    </template>
+    <template #right>
+      <span>MIT licence · {{ year }}</span>
+    </template>
+  </UFooter>
 </template>

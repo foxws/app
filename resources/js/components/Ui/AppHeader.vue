@@ -32,27 +32,33 @@ const searchOpen = ref(false)
 </script>
 
 <template>
-  <header class="flex items-center justify-between border-b border-neutral-900 px-4 py-3.5 sm:px-7">
-    <AppLogo
-      :label="false"
-      :size="26"
-    />
+  <UDashboardNavbar
+    as="header"
+    :toggle="false"
+    :ui="{ root: 'border-neutral-900 px-4 sm:px-7' }"
+  >
+    <template #left>
+      <AppLogo
+        :label="false"
+        :size="26"
+      />
 
-    <UBreadcrumb
-      :items="breadcrumbItems"
-      class="ml-2.5 min-w-0"
-      :ui="{
-        list: 'flex-nowrap',
-        link: 'font-mono text-[13px] font-normal text-neutral-500 hover:text-neutral-300 transition-colors',
-        linkLabel: 'truncate',
-      }"
-    >
-      <template #separator>
-        <span class="font-mono text-[13px] text-neutral-500">/</span>
-      </template>
-    </UBreadcrumb>
+      <UBreadcrumb
+        :items="breadcrumbItems"
+        class="ml-2.5 min-w-0"
+        :ui="{
+          list: 'flex-nowrap',
+          link: 'min-w-0 font-mono text-[13px] font-normal text-neutral-500 hover:text-neutral-300 transition-colors',
+          linkLabel: 'min-w-0 truncate',
+        }"
+      >
+        <template #separator>
+          <span class="font-mono text-[13px] text-neutral-500">/</span>
+        </template>
+      </UBreadcrumb>
+    </template>
 
-    <nav class="ml-auto flex items-center gap-2">
+    <template #right>
       <SearchTrigger
         v-model:open="searchOpen"
         :scope="scope"
@@ -76,11 +82,11 @@ const searchOpen = ref(false)
         square
         aria-label="Menu"
       />
-    </nav>
+    </template>
+  </UDashboardNavbar>
 
-    <CommandPalette
-      v-model:open="searchOpen"
-      :scope="scope"
-    />
-  </header>
+  <CommandPalette
+    v-model:open="searchOpen"
+    :scope="scope"
+  />
 </template>

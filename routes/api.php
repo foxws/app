@@ -3,11 +3,9 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use Modules\Marketing\Http\Controllers\SearchController;
 
 Route::name('api.')->prefix('v1')->group(function () {
-    // Authentication
-    // Route::get('/', HomeController::class)->name('home');
-
-    // Tags
-    // Route::apiResource('tags', TagController::class)->only('index');
+    // Search
+    Route::get('search', SearchController::class)->name('search');
 });

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { useDebounceFn } from '@vueuse/core'
+import { computed, ref, watch } from 'vue'
 
 withDefaults(
   defineProps<{
@@ -11,18 +12,56 @@ withDefaults(
 )
 
 const open = defineModel<boolean>('open', { default: false })
+const query = defineModel<string>('searchTerm', { default: '' })
 
-// Static placeholder results — wire up to real content search once the docs
-// backend (foxws/laravel-docs) is populated.
+interface SearchResult {
+  label: string
+  suffix: string
+  prefix: string
+  to: string
+}
+
+const results = ref<SearchResult[]>([])
+const loading = ref(false)
+
+let controller: AbortController | undefined
+
+const search = useDebounceFn(async (term: string) => {
+  controller?.abort()
+
+  if (term.trim().length < 2) {
+    loading.value = false
+    results.value = []
+
+    return
+  }
+
+  controller = new AbortController()
+  loading.value = true
+
+  try {
+    const response = await fetch(`/api/v1/search?${new URLSearchParams({ query: term })}`, {
+      headers: { Accept: 'application/json' },
+      signal: controller.signal,
+    })
+
+    results.value = response.ok ? await response.json() : []
+  } catch (error) {
+    if (!(error instanceof DOMException && error.name === 'AbortError')) {
+      results.value = []
+    }
+  } finally {
+    loading.value = false
+  }
+}, 200)
+
+watch(query, (term) => search(term))
+
 const groups = computed(() => [
   {
     id: 'results',
-    items: [
-      { label: 'Podman runners', suffix: 'Configure rootless transcode workers', prefix: 'STRY' },
-      { label: 'Shaka setup', suffix: 'Wire the player to a DASH manifest', prefix: 'STRY' },
-      { label: 'Typed page props', suffix: 'Share validated props with the client', prefix: 'INERTIAUSE' },
-      { label: 'Creating an algo', suffix: 'Generate and register an algorithm', prefix: 'ALGOS' },
-    ],
+    ignoreFilter: true,
+    items: results.value,
   },
 ])
 </script>
@@ -36,7 +75,9 @@ const groups = computed(() => [
   >
     <template #content>
       <UCommandPalette
+        v-model:search-term="query"
         :groups="groups"
+        :loading="loading"
         :placeholder="scope ? `Search ${scope}…` : 'Search…'"
         close
         @close="open = false"
