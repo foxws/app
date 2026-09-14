@@ -8,12 +8,12 @@ use Database\Factories\UserFactory;
 use Domain\Media\Concerns\InteractsWithMedia;
 use Domain\Shared\Casts\AsDateTime;
 use Domain\Users\Collections\UserCollection;
-use Domain\Users\DataObjects\UserSettings;
 use Domain\Users\QueryBuilders\UserQueryBuilder;
 use Domain\Users\States\UserState;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\BroadcastsEvents;
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -69,9 +69,9 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
     protected function casts(): array
     {
         return [
-            'state' => UserState::class,
-            'settings' => UserSettings::class.':default',
             'password' => 'hashed',
+            'state' => UserState::class,
+            'settings' => AsArrayObject::class,
             'email_verified_at' => AsDateTime::class,
             'created_at' => AsDateTime::class,
             'updated_at' => AsDateTime::class,
@@ -221,11 +221,6 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         return rescue(fn () => TemporaryUrls::make($media)->getUrl('thumb'));
     }
 
-    public function getSettings(): UserSettings
-    {
-        return UserSettings::fromModel($this)->include('*');
-    }
-
     protected function avatar(): Attribute
     {
         return Attribute::make(
@@ -244,13 +239,6 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
     {
         return Attribute::make(
             get: fn (): Collection => $this->getAllPermissions()->pluck('name'),
-        )->shouldCache();
-    }
-
-    protected function userSettings(): Attribute
-    {
-        return Attribute::make(
-            get: fn (): array => $this->getSettings()->toArray(),
         )->shouldCache();
     }
 }
