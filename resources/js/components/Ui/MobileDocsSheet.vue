@@ -22,10 +22,10 @@ const open = defineModel<boolean>('open', { default: false })
         <span class="font-sans text-[15px] font-semibold text-neutral-50">{{ title }}</span>
         <button
           type="button"
-          class="rounded-full bg-neutral-800 px-2.5 py-1 font-mono text-[10px] text-neutral-300"
+          class="rounded-full bg-neutral-800 px-2.5 py-1 font-mono text-[10px] text-neutral-300 uppercase"
           @click="open = false"
         >
-          CLOSE
+          Close
         </button>
       </div>
 

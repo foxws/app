@@ -14,7 +14,7 @@ const current = computed(() => props.versions.find((v) => v.is_default)?.name ??
     v-if="versions.length"
     class="flex flex-col gap-2"
   >
-    <span class="font-mono text-[10px] tracking-[.14em] text-neutral-500">VERSION</span>
+    <span class="font-mono text-[10px] tracking-[.14em] text-neutral-500 uppercase">Version</span>
     <!--
       Only one version is ever synced/routable today (DocumentController and
       ProjectController always resolve the project's default version) — this

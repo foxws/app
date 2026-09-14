@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DocsToc from '@/components/Ui/DocsToc.vue'
 import DocsTree from '@/components/Ui/DocsTree.vue'
 import InstallCommand from '@/components/Ui/InstallCommand.vue'
 import MobileDocsSheet from '@/components/Ui/MobileDocsSheet.vue'
@@ -6,8 +7,6 @@ import ProjectHero from '@/components/Ui/ProjectHero.vue'
 import ProseContent from '@/components/Ui/ProseContent.vue'
 import VersionSwitcher from '@/components/Ui/VersionSwitcher.vue'
 import { Head } from '@inertiajs/vue3'
-// Not auto-registered outside a @nuxt/content app (see vite.config.ts's `content: true`).
-import UContentToc from '@nuxt/ui/components/content/ContentToc.vue'
 import { ref } from 'vue'
 
 interface Project {
@@ -97,7 +96,7 @@ const onThisPageSheetOpen = ref(false)
         GitHub ↗
       </UButton>
 
-      <UContentToc
+      <DocsToc
         v-if="project.overview?.toc.length"
         :links="project.overview.toc"
         :ui="{ link: 'min-w-0', linkText: 'min-w-0 truncate' }"
@@ -121,17 +120,18 @@ const onThisPageSheetOpen = ref(false)
         <span class="font-sans text-[15px] font-semibold text-neutral-50">On this page</span>
         <button
           type="button"
-          class="rounded-full bg-neutral-800 px-2.5 py-1 font-mono text-[10px] text-neutral-300"
+          class="rounded-full bg-neutral-800 px-2.5 py-1 font-mono text-[10px] text-neutral-300 uppercase"
           @click="onThisPageSheetOpen = false"
         >
-          CLOSE
+          Close
         </button>
       </div>
+
       <div class="p-4.5">
-        <UContentToc
+        <DocsToc
           v-if="project.overview?.toc.length"
           :links="project.overview.toc"
-          :ui="{ link: 'min-w-0', linkText: 'min-w-0 truncate' }"
+          :ui="{ trigger: 'hidden', link: 'min-w-0', linkText: 'min-w-0 truncate' }"
         />
       </div>
     </template>

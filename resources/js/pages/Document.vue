@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import DocsToc from '@/components/Ui/DocsToc.vue'
 import DocsTree from '@/components/Ui/DocsTree.vue'
 import MobileDocsSheet from '@/components/Ui/MobileDocsSheet.vue'
 import ProseContent from '@/components/Ui/ProseContent.vue'
 import { Head } from '@inertiajs/vue3'
 import type { ContentSurroundLink } from '@nuxt/ui/components/content/ContentSurround.vue'
 import UContentSurround from '@nuxt/ui/components/content/ContentSurround.vue'
-import UContentToc from '@nuxt/ui/components/content/ContentToc.vue'
 import { ref } from 'vue'
 
 interface DocumentPage {
@@ -28,7 +28,10 @@ const tocSheetOpen = ref(false)
 <template>
   <Head :title="`${document.title} - ${document.project.name}`" />
 
-  <div class="lg:grid lg:grid-cols-[224px_1fr_232px]">
+  <div
+    class="lg:grid"
+    :class="document.toc.length ? 'lg:grid-cols-[224px_1fr_232px]' : 'lg:grid-cols-[224px_1fr]'"
+  >
     <!-- Desktop docs tree -->
     <aside class="hidden min-w-0 border-r border-neutral-900 p-5.5 lg:block">
       <DocsTree :nav="document.nav" />
@@ -36,7 +39,10 @@ const tocSheetOpen = ref(false)
 
     <main class="min-w-0">
       <!-- Mobile sticky docs/on-this-page bar -->
-      <div class="grid grid-cols-2 gap-2 border-b border-neutral-900 bg-neutral-950/95 px-4 py-2.5 lg:hidden">
+      <div
+        class="grid gap-2 border-b border-neutral-900 bg-neutral-950/95 px-4 py-2.5 lg:hidden"
+        :class="document.toc.length ? 'grid-cols-2' : 'grid-cols-1'"
+      >
         <button
           type="button"
           class="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900 px-3.25 py-2.5"
@@ -46,6 +52,7 @@ const tocSheetOpen = ref(false)
           <span class="font-mono text-[10px] text-neutral-500">▾</span>
         </button>
         <button
+          v-if="document.toc.length"
           type="button"
           class="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900 px-3.25 py-2.5"
           @click="tocSheetOpen = true"
@@ -77,8 +84,11 @@ const tocSheetOpen = ref(false)
     </main>
 
     <!-- Desktop right rail -->
-    <aside class="hidden min-w-0 flex-col gap-5.5 border-l border-neutral-900 p-5.5 lg:flex">
-      <UContentToc
+    <aside
+      v-if="document.toc.length"
+      class="hidden min-w-0 flex-col gap-5.5 border-l border-neutral-900 p-5.5 lg:flex"
+    >
+      <DocsToc
         :links="document.toc"
         :ui="{ link: 'min-w-0', linkText: 'min-w-0 truncate' }"
       />
@@ -101,16 +111,17 @@ const tocSheetOpen = ref(false)
         <span class="font-sans text-[15px] font-semibold text-neutral-50">On this page</span>
         <button
           type="button"
-          class="rounded-full bg-neutral-800 px-2.5 py-1 font-mono text-[10px] text-neutral-300"
+          class="rounded-full bg-neutral-800 px-2.5 py-1 font-mono text-[10px] text-neutral-300 uppercase"
           @click="tocSheetOpen = false"
         >
-          CLOSE
+          Close
         </button>
       </div>
+
       <div class="p-4.5">
-        <UContentToc
+        <DocsToc
           :links="document.toc"
-          :ui="{ link: 'min-w-0', linkText: 'min-w-0 truncate' }"
+          :ui="{ trigger: 'hidden', link: 'min-w-0', linkText: 'min-w-0 truncate' }"
         />
       </div>
     </template>
