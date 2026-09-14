@@ -228,7 +228,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Sibling services (S3/rustfs, Reverb, ...) run on the same internal
-    | "stry" network as this container, so FrankenPHP's embedded Caddy can
+    | "foxws" network as this container, so FrankenPHP's embedded Caddy can
     | reverse proxy them directly by hostname instead of each one opening
     | its own host port and needing its own reverse proxy entry upstream.
     | Add a service by extending the map below with its public hostname
