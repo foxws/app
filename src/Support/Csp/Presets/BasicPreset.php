@@ -44,8 +44,8 @@ class BasicPreset implements Preset
             ->addNonce(Directive::SCRIPT);
 
         // The S3/rustfs and Reverb hosts aren't necessarily subdomains of the
-        // app host (e.g. app on "stry.domain.tld" with storage/websockets on
-        // sibling hosts like "stry-s3.domain.tld"), so add their actual
+        // app host (e.g. app on "app.domain.tld" with storage/websockets on
+        // sibling hosts like "app-s3.domain.tld"), so add their actual
         // configured hosts explicitly rather than relying on "*.{$host}".
         if ($s3Host = $this->getS3Host()) {
             $policy

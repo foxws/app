@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import PackageCard from '@/components/Ui/PackageCard.vue'
-import StryCallout from '@/components/Ui/StryCallout.vue'
 import { Head } from '@inertiajs/vue3'
 import { computed } from 'vue'
 
@@ -8,6 +7,7 @@ interface Package {
   key?: string
   name: string
   slug: string
+  path: string
   role: string | null
   desc: string
   version?: string
@@ -18,10 +18,7 @@ const props = defineProps<{
   packages: Package[]
 }>()
 
-const stry = computed(() => props.packages.find((p) => p.flagship))
 const others = computed(() => props.packages.filter((p) => !p.flagship))
-
-const keyFor = (pkg: Package) => pkg.slug.replace('foxws/', '')
 </script>
 
 <template>
@@ -55,15 +52,7 @@ const keyFor = (pkg: Package) => pkg.slug.replace('foxws/', '')
       :role="pkg.role"
       :desc="pkg.desc"
       :version="pkg.version"
-      :href="`/${keyFor(pkg)}`"
+      :href="`/${pkg.path}`"
     />
-  </UContainer>
-
-  <UContainer
-    v-if="stry"
-    as="section"
-    class="px-4 pb-7 sm:px-7"
-  >
-    <StryCallout :href="`/${keyFor(stry)}`" />
   </UContainer>
 </template>

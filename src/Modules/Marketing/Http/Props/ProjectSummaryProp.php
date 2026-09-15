@@ -6,6 +6,7 @@ namespace Modules\Marketing\Http\Props;
 
 use Foxws\Docs\Models\Project;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
 
@@ -27,6 +28,7 @@ final class ProjectSummaryProp implements ProvidesInertiaProperty
             return [
                 'name' => $project->title,
                 'slug' => $project->slug,
+                'path' => Str::after($project->slug, '/'),
                 'role' => $metadata['role'] ?? null,
                 'desc' => $metadata['desc'] ?? '',
                 'version' => $project->defaultVersion()?->name,
