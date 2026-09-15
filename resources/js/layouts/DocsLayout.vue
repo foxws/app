@@ -73,7 +73,7 @@ const tocSheetOpen = ref(false)
       >
         <div
           v-if="project"
-          class="hidden flex-col gap-5.5 py-8 lg:sticky lg:top-(--ui-header-height) lg:flex lg:max-h-[calc(100vh-var(--ui-header-height))] lg:overflow-y-auto"
+          class="hidden flex-col gap-5.5 py-8 lg:sticky lg:top-(--ui-header-height) lg:flex lg:max-h-[calc(100vh-var(--ui-header-height))] lg:overflow-y-auto lg:overflow-x-hidden"
         >
           <VersionSwitcher :versions="project.versions" />
 
