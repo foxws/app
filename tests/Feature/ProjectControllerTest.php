@@ -6,7 +6,7 @@ use Foxws\Docs\Database\Factories\DocumentFactory;
 use Foxws\Docs\Database\Factories\ProjectFactory;
 use Foxws\Docs\Database\Factories\VersionFactory;
 
-test('renders the project overview document as the page body and excludes it from the nav', function () {
+test('renders the project overview document as the page body while keeping it in the nav', function () {
     $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
     $version = VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
 
@@ -37,7 +37,7 @@ test('renders the project overview document as the page body and excludes it fro
         ->and($project['nav'][0]['children'])
         ->toContain(['title' => 'Installation', 'path' => route('document', ['test-project', 'installation'], absolute: false)])
         ->and(collect($project['nav'][0]['children'])->pluck('title')->all())
-        ->not->toContain('Introduction')
+        ->toContain('Introduction')
         ->and($project['get_started'])->toBe(route('document', ['test-project', 'installation'], absolute: false));
 });
 

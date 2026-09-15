@@ -15,8 +15,9 @@ use Modules\Marketing\Support\DocumentLinks;
 /**
  * A project's full page: hero, install command, docs tree, and the
  * project's overview document (docs/index.md, or docs/about.md when no
- * index.md exists) rendered as the page body — the docs tree's other
- * entries become sibling pages, not this one.
+ * index.md exists) rendered as the page body. The overview stays in the
+ * docs tree alongside its siblings — same as on every other document page —
+ * so the tree's shape doesn't shift depending on which page you're viewing.
  */
 final class ProjectDetailProp implements ProvidesInertiaProperty
 {
@@ -59,7 +60,7 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'lead' => $metadata['lead'] ?? $metadata['desc'] ?? '',
             'install' => $metadata['install'] ?? "composer require {$this->project->sourceLocation()}",
             'overview' => $rendered ? ['html' => $rendered['html'], 'toc' => $rendered['toc']] : null,
-            'nav' => DocsNavigation::build($this->project, $navDocuments),
+            'nav' => DocsNavigation::build($this->project, $documents),
             'versions' => $this->project->versions->map(fn ($v) => ['name' => $v->name, 'is_default' => $v->is_default])->all(),
             'github' => $this->project->driver === ProjectDriver::Github ? $this->project->sourceLocation() : null,
             'package' => $package !== [] ? $package : null,
