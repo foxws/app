@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import InstallCommand from '@/components/Ui/InstallCommand.vue'
+import PackageInfo from '@/components/Ui/PackageInfo.vue'
 import ProjectHero from '@/components/Ui/ProjectHero.vue'
 import ProseContent from '@/components/Ui/ProseContent.vue'
 import VersionSwitcher from '@/components/Ui/VersionSwitcher.vue'
@@ -21,6 +22,7 @@ interface Project {
   github: string | null
   package: DocsPackageInfo | null
   used_by: DocsUsedBy | null
+  get_started: string | null
 }
 
 defineOptions({ layout: [AppLayout, DocsLayout] })
@@ -45,7 +47,24 @@ defineProps<{
       <VersionSwitcher :versions="project.versions" />
     </div>
 
+    <PackageInfo
+      v-if="project.package"
+      :info="project.package"
+      variant="grid"
+      class="lg:hidden"
+    />
+
     <InstallCommand :command="project.install" />
+
+    <UButton
+      v-if="project.get_started"
+      :to="project.get_started"
+      block
+      size="lg"
+      class="rounded-lg bg-identity-500 py-3 font-sans text-[15px] font-semibold text-neutral-950 hover:bg-identity-400 lg:hidden"
+    >
+      Get started
+    </UButton>
 
     <ProseContent
       v-if="project.overview"

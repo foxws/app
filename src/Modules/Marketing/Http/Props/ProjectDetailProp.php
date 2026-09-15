@@ -49,6 +49,8 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'href' => $metadata['used_by']['href'] ?? null,
         ], fn ($value) => $value !== null) : [];
 
+        $firstDocument = DocsNavigation::flatten($navDocuments)->first();
+
         return [
             'key' => $this->project->slug,
             'name' => $this->project->title,
@@ -62,6 +64,7 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'github' => $this->project->driver === ProjectDriver::Github ? $this->project->sourceLocation() : null,
             'package' => $package !== [] ? $package : null,
             'used_by' => isset($usedBy['name'], $usedBy['href']) ? $usedBy : null,
+            'get_started' => $firstDocument ? route('document', [$this->project->slug, $firstDocument->slug], absolute: false) : null,
         ];
     }
 }

@@ -2,9 +2,13 @@
 import type { DocsPackageInfo } from '@/types'
 import { computed } from 'vue'
 
-const props = defineProps<{
-  info: DocsPackageInfo
-}>()
+const props = withDefaults(
+  defineProps<{
+    info: DocsPackageInfo
+    variant?: 'list' | 'grid'
+  }>(),
+  { variant: 'list' },
+)
 
 const rows = computed(() =>
   (
@@ -21,7 +25,7 @@ const rows = computed(() =>
 
 <template>
   <div
-    v-if="rows.length"
+    v-if="rows.length && variant === 'list'"
     class="flex flex-col gap-2"
   >
     <span class="font-mono text-[10px] tracking-[.14em] text-neutral-500 uppercase">Package</span>
@@ -37,4 +41,22 @@ const rows = computed(() =>
       </div>
     </div>
   </div>
+
+  <UPageGrid
+    v-else-if="rows.length"
+    :ui="{ base: 'grid-cols-2 gap-2.5 sm:grid-cols-2 lg:grid-cols-2' }"
+  >
+    <UPageCard
+      v-for="[label, value] in rows"
+      :key="label"
+      :title="label"
+      :description="value"
+      variant="subtle"
+      :ui="{
+        container: 'gap-0 p-3.5 sm:p-3.5',
+        title: 'font-sans text-[12px] font-normal text-neutral-500',
+        description: 'mt-1 font-mono text-[15px] text-neutral-50',
+      }"
+    />
+  </UPageGrid>
 </template>
