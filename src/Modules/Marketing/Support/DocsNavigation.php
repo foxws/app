@@ -49,6 +49,17 @@ final class DocsNavigation
     }
 
     /**
+     * The first document in the same reading order flatten() walks — the
+     * one a "Get started" link should point to.
+     *
+     * @param  Collection<int, Document>  $documents
+     */
+    public static function firstDocument(Collection $documents): ?Document
+    {
+        return self::flatten($documents)->first();
+    }
+
+    /**
      * @param  Collection<int, Document>  $documents
      * @return Collection<string, Collection<int, Document>>
      */

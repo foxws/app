@@ -55,7 +55,7 @@ const tocSheetOpen = ref(false)
           color="neutral"
           trailing-icon="i-lucide-chevron-down"
           :label="currentPageLabel"
-          class="rounded-lg border border-neutral-800 bg-neutral-900 px-3.25 py-2.5 font-sans text-xs font-medium text-neutral-50"
+          class="rounded-lg border border-neutral-800 bg-neutral-900 py-2.5 font-sans text-xs font-medium text-neutral-50"
           :ui="{ label: 'min-w-0', trailingIcon: 'text-neutral-500' }"
           @click="docsSheetOpen = true"
         />
@@ -67,7 +67,7 @@ const tocSheetOpen = ref(false)
           color="neutral"
           trailing-icon="i-lucide-chevron-down"
           label="On this page"
-          class="rounded-lg border border-neutral-800 bg-neutral-900 px-3.25 py-2.5 font-sans text-xs font-medium text-neutral-50"
+          class="rounded-lg border border-neutral-800 bg-neutral-900 py-2.5 font-sans text-xs font-medium text-neutral-50"
           :ui="{ trailingIcon: 'text-neutral-500' }"
           @click="tocSheetOpen = true"
         />
@@ -104,7 +104,12 @@ const tocSheetOpen = ref(false)
           <DocsToc
             v-if="toc.length"
             :links="toc"
-            :ui="{ link: 'min-w-0', linkText: 'min-w-0 truncate' }"
+            :ui="{
+              root: 'flex flex-col',
+              container: 'flex flex-col lg:min-h-0',
+              link: 'min-w-0',
+              linkText: 'min-w-0 truncate',
+            }"
           />
 
           <UsedByCard
@@ -152,7 +157,13 @@ const tocSheetOpen = ref(false)
     <template #body>
       <DocsToc
         :links="toc"
-        :ui="{ trigger: 'hidden', link: 'min-w-0', linkText: 'min-w-0 truncate' }"
+        :ui="{
+          root: 'flex flex-col',
+          container: 'flex flex-col',
+          trigger: 'hidden',
+          link: 'min-w-0',
+          linkText: 'min-w-0 truncate',
+        }"
         @navigate="tocSheetOpen = false"
       />
     </template>

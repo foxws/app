@@ -21,9 +21,9 @@ final class DocumentController
             throw new NotFoundHttpException;
         }
 
-        $version = $model->versions->firstWhere('is_default', true) ?? $model->versions->first();
+        $version = $model->defaultVersion();
 
-        $documents = $version?->documents()->orderBy('order')->get() ?? collect();
+        $documents = $version?->orderedDocuments() ?? collect();
 
         $current = $documents->first(fn ($d) => $d->slug === $document);
 

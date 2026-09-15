@@ -29,7 +29,7 @@ final class ProjectSummaryProp implements ProvidesInertiaProperty
                 'slug' => $project->slug,
                 'role' => $metadata['role'] ?? null,
                 'desc' => $metadata['desc'] ?? '',
-                'version' => $project->versions->firstWhere('is_default', true)?->name,
+                'version' => $project->defaultVersion()?->name,
                 'flagship' => (bool) ($metadata['flagship'] ?? false),
             ];
         })->values()->all();

@@ -26,10 +26,10 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
     public function toInertiaProperty(PropertyContext $context): mixed
     {
         $metadata = $this->project->metadata?->getArrayCopy() ?? [];
-        $version = $this->project->versions->firstWhere('is_default', true) ?? $this->project->versions->first();
-        $documents = $version?->documents()->orderBy('order')->get() ?? collect();
+        $version = $this->project->defaultVersion();
+        $documents = $version?->orderedDocuments() ?? collect();
 
-        $overview = $documents->firstWhere('slug', 'index') ?? $documents->firstWhere('slug', 'about');
+        $overview = $this->project->indexDocument($documents);
         $navDocuments = $overview ? $documents->reject(fn ($d) => $d->is($overview)) : $documents;
 
         $rendered = $overview
@@ -50,7 +50,7 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'href' => $metadata['used_by']['href'] ?? null,
         ], fn ($value) => $value !== null) : [];
 
-        $firstDocument = DocsNavigation::flatten($navDocuments)->first();
+        $firstDocument = DocsNavigation::firstDocument($navDocuments);
 
         return [
             'key' => $this->project->slug,
