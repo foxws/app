@@ -30,7 +30,7 @@ const keyFor = (pkg: Package) => pkg.slug.replace('foxws/', '')
   <UPageHero
     headline="Laravel · Linux · AI"
     title="The hard parts, already solved."
-    description="I like digging into the technical details most developers skip — then sharing what comes out of it as something you can actually use."
+    description="I like building all kinds of solutions to all kinds of problems — video streaming, documentation generators, domain-driven design, or deep system integration with things like Podman."
     :ui="{
       root: 'border-b border-neutral-900',
       container: 'px-4 py-16 sm:px-7 sm:py-19 lg:flex lg:flex-col lg:px-7 lg:py-19',
