@@ -72,7 +72,7 @@ jobs:
                   php artisan podman:generate frankenphp-octane
 
             - name: Install dockerignore
-              run: cp containers/stubs/frankenphp-octane/runtimes/dockerignore .dockerignore
+              run: cp podman/frankenphp-octane/runtimes/dockerignore .dockerignore
 
             - name: Set platform pair
               id: platform
