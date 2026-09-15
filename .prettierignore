@@ -11,6 +11,8 @@
 **/.junie
 **/.svn
 /AGENTS.md
+/CLAUDE.md
+/boost.json
 /data
 /node_modules
 /public
