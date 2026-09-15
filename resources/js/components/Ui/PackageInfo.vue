@@ -30,16 +30,26 @@ const rows = computed(() =>
   >
     <span class="font-mono text-[10px] tracking-[.14em] text-neutral-500 uppercase">Package</span>
 
-    <div class="flex flex-col divide-y divide-neutral-900 border-t border-neutral-900">
-      <div
+    <UPageList
+      divide
+      class="border-t border-neutral-900"
+    >
+      <UPageCard
         v-for="[label, value] in rows"
         :key="label"
-        class="flex items-center justify-between py-2.5"
+        variant="ghost"
+        :ui="{
+          container: 'gap-0 p-0 py-2.5 sm:p-0 sm:py-2.5',
+          wrapper: 'items-stretch',
+          body: 'flex items-center justify-between gap-3',
+        }"
       >
-        <span class="font-sans text-[13px] text-neutral-400">{{ label }}</span>
-        <span class="font-mono text-[13px] text-neutral-50">{{ value }}</span>
-      </div>
-    </div>
+        <template #body>
+          <span class="font-sans text-[13px] text-neutral-400">{{ label }}</span>
+          <span class="font-mono text-[13px] text-neutral-50">{{ value }}</span>
+        </template>
+      </UPageCard>
+    </UPageList>
   </div>
 
   <UPageGrid
