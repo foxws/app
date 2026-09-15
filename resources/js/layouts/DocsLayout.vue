@@ -12,7 +12,7 @@ import { computed, ref } from 'vue'
  * Only one of the two is ever set, depending on which page rendered.
  */
 const props = defineProps<{
-  document?: { project: { name: string }; nav: DocsNavItem[]; toc: DocsTocItem[] }
+  document?: { title: string; project: { name: string }; nav: DocsNavItem[]; toc: DocsTocItem[] }
   project?: {
     name: string
     nav: DocsNavItem[]
@@ -25,6 +25,7 @@ const props = defineProps<{
 const nav = computed(() => props.document?.nav ?? props.project?.nav ?? [])
 const toc = computed(() => props.document?.toc ?? props.project?.overview?.toc ?? [])
 const docsTitle = computed(() => props.document?.project.name ?? props.project?.name ?? '')
+const currentPageLabel = computed(() => props.document?.title ?? 'Overview')
 
 const docsSheetOpen = ref(false)
 const tocSheetOpen = ref(false)
@@ -49,7 +50,7 @@ const tocSheetOpen = ref(false)
           class="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900 px-3.25 py-2.5"
           @click="docsSheetOpen = true"
         >
-          <span class="font-sans text-xs font-medium text-neutral-50">Docs</span>
+          <span class="min-w-0 truncate font-sans text-xs font-medium text-neutral-50">{{ currentPageLabel }}</span>
           <span class="font-mono text-[10px] text-neutral-500">▾</span>
         </button>
 
