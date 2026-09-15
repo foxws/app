@@ -21,8 +21,7 @@ final class DocsNavigation
      */
     public static function build(Project $project, Collection $documents): array
     {
-        return $documents
-            ->groupBy(fn ($document) => $document->section ?: 'Docs')
+        return self::groups($documents)
             ->map(fn ($items, $group) => [
                 'title' => $group,
                 'children' => $items->map(fn ($document) => [
@@ -32,5 +31,29 @@ final class DocsNavigation
             ])
             ->values()
             ->all();
+    }
+
+    /**
+     * Documents in the same order the sidebar presents them — grouped by
+     * section, sections in order of first appearance — so prev/next can
+     * walk this list. The raw `order` column alone isn't enough: it only
+     * ranks documents within their own section, so ties across different
+     * sections sort by database order and interleave unrelated sections.
+     *
+     * @param  Collection<int, Document>  $documents
+     * @return Collection<int, Document>
+     */
+    public static function flatten(Collection $documents): Collection
+    {
+        return self::groups($documents)->flatten(1)->values();
+    }
+
+    /**
+     * @param  Collection<int, Document>  $documents
+     * @return Collection<string, Collection<int, Document>>
+     */
+    private static function groups(Collection $documents): Collection
+    {
+        return $documents->groupBy(fn ($document) => $document->section ?: 'Docs');
     }
 }

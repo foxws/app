@@ -32,10 +32,11 @@ final class DocumentDetailProp implements ProvidesInertiaProperty
 
         $rendered = DocumentHeadings::extract($this->document->toHtml(), $this->document->title, $links);
 
-        $index = $this->siblings->search(fn (Document $d) => $d->is($this->document));
+        $ordered = DocsNavigation::flatten($this->siblings);
+        $index = $ordered->search(fn (Document $d) => $d->is($this->document));
 
-        $prev = $index !== false ? $this->siblings->get($index - 1) : null;
-        $next = $index !== false ? $this->siblings->get($index + 1) : null;
+        $prev = $index !== false ? $ordered->get($index - 1) : null;
+        $next = $index !== false ? $ordered->get($index + 1) : null;
 
         return [
             'project' => [
