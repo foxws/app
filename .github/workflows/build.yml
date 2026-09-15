@@ -88,7 +88,6 @@ jobs:
               run: |
                   {
                     echo "args<<EOF"
-                    echo "--target=production"
                     echo "--cache-from=${CACHE_IMAGE}"
                     echo "--cache-to=${CACHE_IMAGE}"
                     echo "EOF"
