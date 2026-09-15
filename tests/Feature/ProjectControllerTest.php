@@ -35,9 +35,8 @@ test('renders the project overview document as the page body while keeping it in
         ->and($project['overview']['toc'])->toContain(['id' => 'getting-started', 'text' => 'Getting Started', 'children' => []])
         ->and($project['nav'])->toHaveCount(1)
         ->and($project['nav'][0]['children'])
-        ->toContain(['title' => 'Installation', 'path' => route('document', ['test-project', 'installation'], absolute: false)])
-        ->and(collect($project['nav'][0]['children'])->pluck('title')->all())
-        ->toContain('Introduction')
+        ->toContain(['title' => 'Installation', 'path' => route('document', ['test-project', 'installation'], absolute: false), 'exact' => false])
+        ->toContain(['title' => 'Introduction', 'path' => route('project', 'test-project', absolute: false), 'exact' => true])
         ->and($project['get_started'])->toBe(route('document', ['test-project', 'installation'], absolute: false));
 });
 

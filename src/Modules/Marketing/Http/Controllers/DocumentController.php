@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Marketing\Http\Controllers;
 
 use Foxws\Docs\Models\Project;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -13,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class DocumentController
 {
-    public function __invoke(Request $request, string $project, string $document): Response
+    public function __invoke(Request $request, string $project, string $document): Response|RedirectResponse
     {
         $model = Project::with('versions')->where('slug', $project)->first();
 
@@ -29,6 +30,15 @@ final class DocumentController
 
         if (! $current) {
             throw new NotFoundHttpException;
+        }
+
+        $overview = $model->indexDocument($documents);
+
+        // The overview already lives at /{project} — its own /{project}/index
+        // (or /about) is never linked to, but redirect a direct visit anyway
+        // rather than serving the same content twice at two URLs.
+        if ($overview && $current->is($overview)) {
+            return redirect()->route('project', $model->slug);
         }
 
         return Inertia::render('Document', [

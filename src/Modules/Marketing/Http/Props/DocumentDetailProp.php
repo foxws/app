@@ -32,6 +32,8 @@ final class DocumentDetailProp implements ProvidesInertiaProperty
 
         $rendered = DocumentHeadings::extract($this->document->toHtml(), $this->document->title, $links);
 
+        $overview = $this->project->indexDocument($this->siblings);
+
         $ordered = DocsNavigation::flatten($this->siblings);
         $index = $ordered->search(fn (Document $d) => $d->is($this->document));
 
@@ -48,8 +50,8 @@ final class DocumentDetailProp implements ProvidesInertiaProperty
             'toc' => $rendered['toc'],
             'nav' => DocsNavigation::build($this->project, $this->siblings),
             'surround' => [
-                $prev ? ['title' => $prev->title, 'path' => route('document', [$this->project->slug, $prev->slug], absolute: false)] : null,
-                $next ? ['title' => $next->title, 'path' => route('document', [$this->project->slug, $next->slug], absolute: false)] : null,
+                $prev ? ['title' => $prev->title, 'path' => DocsNavigation::pathFor($this->project, $prev, $overview)] : null,
+                $next ? ['title' => $next->title, 'path' => DocsNavigation::pathFor($this->project, $next, $overview)] : null,
             ],
         ];
     }

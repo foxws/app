@@ -22,8 +22,10 @@ final class DocumentLinks
      */
     public static function build(Project $project, Collection $documents): array
     {
-        return $documents->flatMap(function (Document $document) use ($project) {
-            $path = route('document', [$project->slug, $document->slug], absolute: false);
+        $overview = $project->indexDocument($documents);
+
+        return $documents->flatMap(function (Document $document) use ($project, $overview) {
+            $path = DocsNavigation::pathFor($project, $document, $overview);
 
             return [
                 "{$document->slug}.md" => $path,

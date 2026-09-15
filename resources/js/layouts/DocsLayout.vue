@@ -105,8 +105,8 @@ const tocSheetOpen = ref(false)
             v-if="toc.length"
             :links="toc"
             :ui="{
-              root: 'flex flex-col',
-              container: 'flex flex-col lg:min-h-0',
+              root: 'static mx-0 px-0 sm:mx-0 sm:px-0 max-h-none overflow-visible',
+              container: 'p-0 sm:p-0 lg:p-0 lg:min-h-0',
               link: 'min-w-0',
               linkText: 'min-w-0 truncate',
             }"
@@ -158,8 +158,8 @@ const tocSheetOpen = ref(false)
       <DocsToc
         :links="toc"
         :ui="{
-          root: 'flex flex-col',
-          container: 'flex flex-col',
+          root: 'static mx-0 px-0 sm:mx-0 sm:px-0 max-h-none overflow-visible',
+          container: 'p-0 sm:p-0 lg:p-0',
           trigger: 'hidden',
           link: 'min-w-0',
           linkText: 'min-w-0 truncate',

@@ -37,7 +37,7 @@ test('renders a document with relative nav, surround, and breadcrumb links', fun
     // scheme as external and falls back to a hard browser navigation instead
     // of an SPA visit.
     expect($document['nav'][0]['children'])
-        ->toContain(['title' => 'Installation', 'path' => route('document', ['test-project', 'installation'], absolute: false)])
+        ->toContain(['title' => 'Installation', 'path' => route('document', ['test-project', 'installation'], absolute: false), 'exact' => false])
         ->and($document['surround'][1])
         ->toBe(['title' => 'Configuration', 'path' => route('document', ['test-project', 'configuration'], absolute: false)])
         ->and($crumbs[0]['href'])->toBe(route('project', 'test-project', absolute: false))
@@ -80,4 +80,52 @@ test('surrounds a document with its neighbors in the same section, not raw datab
         ->toBe(['title' => 'Upgrading', 'path' => route('document', ['test-project', 'upgrading'], absolute: false)])
         ->and($document['surround'][1])
         ->toBe(['title' => 'Registering Projects', 'path' => route('document', ['test-project', 'registering-projects'], absolute: false)]);
+});
+
+test('redirects a direct visit to the overview document\'s own route to the project page', function () {
+    $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
+    $version = VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+
+    DocumentFactory::new()->create([
+        'version_id' => $version->id,
+        'slug' => 'index',
+        'title' => 'Introduction',
+        'body' => '# Test Project',
+    ]);
+
+    $response = $this->get('/test-project/index');
+
+    $response->assertRedirect(route('project', 'test-project', absolute: false));
+});
+
+test('points prev/next and cross-reference links at the project page when the neighbor is the overview', function () {
+    $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
+    $version = VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+
+    DocumentFactory::new()->create([
+        'version_id' => $version->id,
+        'slug' => 'index',
+        'title' => 'Introduction',
+        'order' => 1,
+        'body' => '# Test Project',
+    ]);
+    DocumentFactory::new()->create([
+        'version_id' => $version->id,
+        'slug' => 'installation',
+        'title' => 'Installation',
+        'order' => 2,
+        'body' => "# Installation\n\nSee [the intro](index.md) first.\n",
+    ]);
+
+    $response = $this->get('/test-project/installation');
+
+    $response->assertOk();
+
+    $document = $response->inertiaProps('document');
+
+    expect($document['surround'][0])
+        ->toBe(['title' => 'Introduction', 'path' => route('project', 'test-project', absolute: false)])
+        ->and($document['html'])
+        ->toContain('href="'.route('project', 'test-project', absolute: false).'"')
+        ->not->toContain('test-project/index');
 });

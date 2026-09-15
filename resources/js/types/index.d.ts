@@ -3,7 +3,8 @@ import type { AvatarProps, BadgeProps, SelectItem } from '@nuxt/ui'
 export type DocsNavItem = {
   title: string
   path?: string
-  children?: { title: string; path: string }[]
+  exact?: boolean
+  children?: { title: string; path: string; exact?: boolean }[]
 }
 
 export type DocsTocItem = {

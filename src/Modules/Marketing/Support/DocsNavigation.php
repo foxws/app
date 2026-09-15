@@ -17,20 +17,44 @@ final class DocsNavigation
 {
     /**
      * @param  Collection<int, Document>  $documents
-     * @return array<int, array{title: string, children: array<int, array{title: string, path: string}>}>
+     * @return array<int, array{title: string, children: array<int, array{title: string, path: string, exact: bool}>}>
      */
     public static function build(Project $project, Collection $documents): array
     {
+        $overview = $project->indexDocument($documents);
+
         return self::groups($documents)
             ->map(fn ($items, $group) => [
                 'title' => $group,
                 'children' => $items->map(fn ($document) => [
                     'title' => $document->title,
-                    'path' => route('document', [$project->slug, $document->slug], absolute: false),
+                    'path' => self::pathFor($project, $document, $overview),
+                    // The overview's path is /{project} — a prefix of every
+                    // sibling document's own /{project}/{document} URL — so
+                    // without exact matching, Nuxt UI's Link would mark it
+                    // "active" (and highlight it) on every one of them too.
+                    'exact' => (bool) ($overview && $document->is($overview)),
                 ])->all(),
             ])
             ->values()
             ->all();
+    }
+
+    /**
+     * The route for a single document — the project's own overview page
+     * for whichever document is $overview, /{project}/{document} for every
+     * other one. Rendering the overview at both /{project} and its own
+     * /{project}/index (or /about) would give the same content two URLs;
+     * this keeps every generated link pointed at the one that's actually
+     * meant to be shared/indexed.
+     */
+    public static function pathFor(Project $project, Document $document, ?Document $overview): string
+    {
+        if ($overview && $document->is($overview)) {
+            return route('project', $project->slug, absolute: false);
+        }
+
+        return route('document', [$project->slug, $document->slug], absolute: false);
     }
 
     /**
