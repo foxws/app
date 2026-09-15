@@ -52,7 +52,6 @@ settings.json
 settings.local.json
 auto-imports.d.ts
 components.d.ts
-env.d.ts
 frankenphp
 npm-debug.log
 Thumbs.db
