@@ -16,7 +16,10 @@ env:
     REGISTRY: ghcr.io
     IMAGE_NAME: ${{ github.event.repository.name }}
     IMAGE: ghcr.io/${{ github.repository }}
-    CACHE_IMAGE: ghcr.io/${{ github.repository }}-cache
+    # -v2: every prior build here failed, so this cache was only ever
+    # populated by broken attempts — bump the tag to start clean rather than
+    # risk reusing a layer baked under whatever earlier, since-fixed state.
+    CACHE_IMAGE: ghcr.io/${{ github.repository }}-cache-v2
 
 permissions:
     contents: read
