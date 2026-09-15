@@ -10,11 +10,14 @@ const current = computed(() => props.versions.find((v) => v.is_default)?.name ??
 </script>
 
 <template>
-  <div
+  <UFormField
     v-if="versions.length"
-    class="flex flex-col gap-2"
+    label="Version"
+    :ui="{
+      root: 'flex flex-col gap-2',
+      label: 'font-mono text-[10px] tracking-[.14em] text-neutral-500 uppercase',
+    }"
   >
-    <span class="font-mono text-[10px] tracking-[.14em] text-neutral-500 uppercase">Version</span>
     <!--
       Only one version is ever synced/routable today (DocumentController and
       ProjectController always resolve the project's default version) — this
@@ -32,5 +35,5 @@ const current = computed(() => props.versions.find((v) => v.is_default)?.name ??
         item: 'font-sans text-[13px] text-neutral-200',
       }"
     />
-  </div>
+  </UFormField>
 </template>

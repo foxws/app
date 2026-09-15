@@ -5,22 +5,31 @@ defineProps<{
 </script>
 
 <template>
-  <div
-    class="flex flex-col items-start gap-5 rounded-xl border border-neutral-800 bg-neutral-900 p-6 sm:flex-row sm:items-center sm:justify-between"
+  <UPageCard
+    title="Want to see all four working together?"
+    variant="outline"
+    :ui="{
+      root: 'rounded-xl bg-neutral-900 ring-neutral-800',
+      container: 'p-6 sm:p-6',
+      wrapper: 'flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between',
+      body: 'max-w-xl',
+      title: 'font-sans text-lg font-semibold text-neutral-50',
+      description: 'mt-1.5 font-sans text-sm leading-relaxed text-neutral-400',
+      footer: 'mt-0 shrink-0',
+    }"
   >
-    <div class="flex max-w-xl flex-col gap-1.5">
-      <span class="font-sans text-lg font-semibold text-neutral-50">Want to see all four working together?</span>
-      <span class="font-sans text-sm leading-relaxed text-neutral-400">
-        Stry is the self-hosted video platform these packages were extracted from — transcoding, packaging, playback and
-        catalogue, in one open-source app.
-      </span>
-    </div>
+    <template #description>
+      Stry is the self-hosted video platform these packages were extracted from — transcoding, packaging, playback and
+      catalogue, in one open-source app.
+    </template>
 
-    <UButton
-      :to="href"
-      class="shrink-0 rounded-lg bg-identity-500 px-5 py-3 font-sans text-[13px] font-semibold text-neutral-950 hover:bg-identity-400"
-    >
-      Explore Stry →
-    </UButton>
-  </div>
+    <template #footer>
+      <UButton
+        :to="href"
+        class="rounded-lg bg-identity-500 px-5 py-3 font-sans text-[13px] font-semibold text-neutral-950 hover:bg-identity-400"
+      >
+        Explore Stry →
+      </UButton>
+    </template>
+  </UPageCard>
 </template>

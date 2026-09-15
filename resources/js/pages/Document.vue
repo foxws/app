@@ -27,12 +27,15 @@ defineProps<{
   <Head :title="`${document.title} - ${document.project.name}`" />
 
   <div class="flex flex-col gap-5.5 py-4 sm:py-5.5">
-    <ULink
+    <UButton
       :to="`/${document.project.slug}`"
-      class="font-mono text-[11px] text-neutral-500 hover:text-neutral-300"
+      icon="i-lucide-arrow-left"
+      variant="link"
+      color="neutral"
+      :ui="{ base: 'p-0 font-mono text-[11px] text-neutral-500 hover:text-neutral-300' }"
     >
-      ← {{ document.project.name }}
-    </ULink>
+      {{ document.project.name }}
+    </UButton>
 
     <h1 class="font-sans text-3xl font-semibold tracking-tight text-neutral-50">{{ document.title }}</h1>
 
