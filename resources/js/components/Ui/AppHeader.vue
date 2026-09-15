@@ -37,6 +37,7 @@ const searchOpen = ref(false)
     :ui="{
       root: 'sticky top-0 z-50 border-neutral-900 bg-neutral-950/95',
       container: 'px-4 sm:px-7',
+      left: 'min-w-0',
     }"
   >
     <template #left>
