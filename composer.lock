@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3fdcf2abe36a94d57172d33695226123",
+    "content-hash": "0482754b641fcf074e639daa28ace577",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1266,16 +1266,16 @@
         },
         {
             "name": "foxws/laravel-docs",
-            "version": "v1.0.1",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-docs.git",
-                "reference": "63ffbfbb9d023c2dc13d1d847f82c1c2134db538"
+                "reference": "466bf0e21f8d20753a4b0b04ed55bb07c5da2790"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/63ffbfbb9d023c2dc13d1d847f82c1c2134db538",
-                "reference": "63ffbfbb9d023c2dc13d1d847f82c1c2134db538",
+                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/466bf0e21f8d20753a4b0b04ed55bb07c5da2790",
+                "reference": "466bf0e21f8d20753a4b0b04ed55bb07c5da2790",
                 "shasum": ""
             },
             "require": {
@@ -1340,7 +1340,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-docs/issues",
-                "source": "https://github.com/foxws/laravel-docs/tree/v1.0.1"
+                "source": "https://github.com/foxws/laravel-docs/tree/v1.1.0"
             },
             "funding": [
                 {
@@ -1348,7 +1348,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-15T20:07:57+00:00"
+            "time": "2026-09-15T20:39:09+00:00"
         },
         {
             "name": "foxws/laravel-essentials",

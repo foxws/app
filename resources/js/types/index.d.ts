@@ -32,6 +32,43 @@ export type DocsUsedBy = {
   href: string
 }
 
+export type DocsVersion = {
+  name: string
+  is_default: boolean
+}
+
+export type DocsProjectRef = {
+  name: string
+  slug: string
+  href: string
+}
+
+export type DocsProject = {
+  key: string
+  name: string
+  slug: string
+  eyebrow: string
+  lead: string
+  install: string
+  overview: { html: string; toc: DocsTocItem[] } | null
+  nav: DocsNavItem[]
+  versions: DocsVersion[]
+  version: string | null
+  github: string | null
+  package: DocsPackageInfo | null
+  used_by: DocsUsedBy | null
+  get_started: string | null
+}
+
+export type DocsDocument = {
+  project: DocsProjectRef
+  title: string
+  html: string
+  toc: DocsTocItem[]
+  nav: DocsNavItem[]
+  surround: (DocsSurroundLink | null)[]
+}
+
 export type EchoConfig = {
   readonly key: string
   readonly host: string

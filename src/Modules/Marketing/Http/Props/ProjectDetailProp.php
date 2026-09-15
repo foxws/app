@@ -21,19 +21,26 @@ use Modules\Marketing\Support\DocumentLinks;
  */
 final class ProjectDetailProp implements ProvidesInertiaProperty
 {
-    public function __construct(private readonly Project $project) {}
+    public function __construct(
+        private readonly Project $project,
+        private readonly ?string $requestedVersion = null,
+    ) {}
 
     public function toInertiaProperty(PropertyContext $context): mixed
     {
         $metadata = $this->project->metadata?->getArrayCopy() ?? [];
-        $version = $this->project->defaultVersion();
+        $version = $this->project->versionOrDefault($this->requestedVersion);
         $documents = $version?->orderedDocuments() ?? collect();
 
         $overview = $this->project->indexDocument($documents);
         $navDocuments = $overview ? $documents->reject(fn ($d) => $d->is($overview)) : $documents;
 
+        // Only stamp generated links with ?version= when browsing something
+        // other than the default — keeps the common case's URLs clean.
+        $versionParam = $version && ! $version->is_default ? $version->name : null;
+
         $rendered = $overview
-            ? DocumentHeadings::extract($overview->toHtml(), $this->project->title, DocumentLinks::build($this->project, $documents))
+            ? DocumentHeadings::extract($overview->toHtml(), $this->project->title, DocumentLinks::build($this->project, $documents, $versionParam))
             : null;
 
         $package = array_filter([
@@ -60,12 +67,13 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'lead' => $metadata['lead'] ?? $metadata['desc'] ?? '',
             'install' => $metadata['install'] ?? "composer require {$this->project->sourceLocation()}",
             'overview' => $rendered ? ['html' => $rendered['html'], 'toc' => $rendered['toc']] : null,
-            'nav' => DocsNavigation::build($this->project, $documents),
+            'nav' => DocsNavigation::build($this->project, $documents, $versionParam),
             'versions' => $this->project->versions->map(fn ($v) => ['name' => $v->name, 'is_default' => $v->is_default])->all(),
+            'version' => $version?->name,
             'github' => $this->project->driver === ProjectDriver::Github ? $this->project->sourceLocation() : null,
             'package' => $package !== [] ? $package : null,
             'used_by' => isset($usedBy['name'], $usedBy['href']) ? $usedBy : null,
-            'get_started' => $firstDocument ? route('document', [$this->project->slug, $firstDocument->slug], absolute: false) : null,
+            'get_started' => $firstDocument ? DocsNavigation::pathFor($this->project, $firstDocument, $overview, $versionParam) : null,
         ];
     }
 }

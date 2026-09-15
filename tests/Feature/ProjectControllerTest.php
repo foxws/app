@@ -147,6 +147,87 @@ test('builds the "used by" card from index metadata', function () {
     ]);
 });
 
+test('resolves a project page under a requested version, stamping generated links with ?version=', function () {
+    $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
+    $default = VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true, 'name' => '1.0.0']);
+    $latest = VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => false, 'name' => 'latest']);
+
+    DocumentFactory::new()->create([
+        'version_id' => $latest->id,
+        'slug' => 'index',
+        'title' => 'Introduction',
+        'body' => "# Test Project\n\nSee [installation](installation.md).\n",
+    ]);
+    DocumentFactory::new()->create([
+        'version_id' => $latest->id,
+        'slug' => 'installation',
+        'title' => 'Installation',
+        'body' => "# Installation\n\nRun the installer.\n",
+    ]);
+    // A default-version document with the same slug, so a passing test here
+    // proves ?version= actually changes which content gets read, not just
+    // which links get decorated.
+    DocumentFactory::new()->create([
+        'version_id' => $default->id,
+        'slug' => 'index',
+        'title' => 'Introduction',
+        'body' => '# Stable docs',
+    ]);
+
+    $response = $this->get('/test-project?version=latest');
+
+    $response->assertOk();
+
+    $project = $response->inertiaProps('project');
+    $installationPath = route('document', ['project' => 'test-project', 'document' => 'installation', 'version' => 'latest'], absolute: false);
+
+    expect($project['version'])->toBe('latest')
+        ->and($project['overview']['html'])
+        ->not->toContain('Stable docs')
+        ->toContain('href="'.$installationPath.'"')
+        ->and($project['nav'][0]['children'])
+        ->toContain(['title' => 'Installation', 'path' => $installationPath, 'exact' => false])
+        ->and($project['get_started'])->toBe($installationPath);
+});
+
+test('omits ?version= from generated links when the requested version is the default', function () {
+    $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
+    $default = VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true, 'name' => '1.0.0']);
+
+    DocumentFactory::new()->create([
+        'version_id' => $default->id,
+        'slug' => 'installation',
+        'title' => 'Installation',
+        'body' => "# Installation\n\nRun the installer.\n",
+    ]);
+
+    $response = $this->get('/test-project?version=1.0.0');
+
+    $response->assertOk();
+
+    expect($response->inertiaProps('project')['get_started'])
+        ->toBe(route('document', ['test-project', 'installation'], absolute: false));
+});
+
+test('falls back to the default version when the requested version does not exist', function () {
+    $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
+    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true, 'name' => '1.0.0']);
+
+    $response = $this->get('/test-project?version=nonexistent');
+
+    $response->assertOk();
+
+    expect($response->inertiaProps('project')['version'])->toBe('1.0.0');
+});
+
+test('rejects a non-string version query parameter', function () {
+    ProjectFactory::new()->create(['slug' => 'test-project']);
+
+    $response = $this->get('/test-project?version[]=a&version[]=b');
+
+    $response->assertInvalid('version');
+});
+
 test('omits the "used by" card when the index has no used_by metadata, or it is missing a name or href', function () {
     $project = ProjectFactory::new()->create([
         'slug' => 'test-project',

@@ -20,12 +20,12 @@ final class DocumentLinks
      * @param  Collection<int, Document>  $documents
      * @return array<string, string>
      */
-    public static function build(Project $project, Collection $documents): array
+    public static function build(Project $project, Collection $documents, ?string $version = null): array
     {
         $overview = $project->indexDocument($documents);
 
-        return $documents->flatMap(function (Document $document) use ($project, $overview) {
-            $path = DocsNavigation::pathFor($project, $document, $overview);
+        return $documents->flatMap(function (Document $document) use ($project, $overview, $version) {
+            $path = DocsNavigation::pathFor($project, $document, $overview, $version);
 
             return [
                 "{$document->slug}.md" => $path,

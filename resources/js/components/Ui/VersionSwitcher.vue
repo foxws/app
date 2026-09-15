@@ -1,12 +1,27 @@
 <script setup lang="ts">
+import ProjectController from '@/actions/Modules/Marketing/Http/Controllers/ProjectController'
+import type { DocsVersion } from '@/types'
+import { router } from '@inertiajs/vue3'
 import { computed } from 'vue'
 
 const props = defineProps<{
-  versions: { name: string; is_default: boolean }[]
+  project: string
+  versions: DocsVersion[]
+  current?: string
 }>()
 
-const items = computed(() => props.versions.map((v) => v.name))
-const current = computed(() => props.versions.find((v) => v.is_default)?.name ?? props.versions[0]?.name)
+const items = computed(() => props.versions.map((v: DocsVersion) => v.name))
+const current = computed(() => props.current ?? props.versions.find((v: DocsVersion) => v.is_default)?.name ?? props.versions[0]?.name)
+
+function onSelect(name: string | number | undefined) {
+  if (typeof name !== 'string' || name === current.value) {
+    return
+  }
+
+  const target = props.versions.find((v: DocsVersion) => v.name === name)
+
+  router.visit(ProjectController.url({ project: props.project }, { query: target?.is_default ? {} : { version: name } }))
+}
 </script>
 
 <template>
@@ -18,12 +33,6 @@ const current = computed(() => props.versions.find((v) => v.is_default)?.name ??
       label: 'font-mono text-[10px] tracking-[.14em] text-neutral-500 uppercase',
     }"
   >
-    <!--
-      Only one version is ever synced/routable today (DocumentController and
-      ProjectController always resolve the project's default version) — this
-      switcher is UI-only until multi-version routing lands, so it stays
-      disabled until there's more than one version to actually switch to.
-    -->
     <USelect
       :model-value="current"
       :items="items"
@@ -34,6 +43,7 @@ const current = computed(() => props.versions.find((v) => v.is_default)?.name ??
         content: 'rounded-lg border border-neutral-800 bg-neutral-900',
         item: 'font-sans text-[13px] text-neutral-200',
       }"
+      @update:model-value="onSelect"
     />
   </UFormField>
 </template>
