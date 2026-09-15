@@ -16,10 +16,7 @@ env:
     REGISTRY: ghcr.io
     IMAGE_NAME: ${{ github.event.repository.name }}
     IMAGE: ghcr.io/${{ github.repository }}
-    # -v2: every prior build here failed, so this cache was only ever
-    # populated by broken attempts — bump the tag to start clean rather than
-    # risk reusing a layer baked under whatever earlier, since-fixed state.
-    CACHE_IMAGE: ghcr.io/${{ github.repository }}-cache-v2
+    CACHE_IMAGE: ghcr.io/${{ github.repository }}-cache
 
 permissions:
     contents: read
@@ -89,10 +86,19 @@ jobs:
             - name: Determine build args
               id: buildargs
               run: |
+                  # TEMPORARY: cache args dropped entirely for one clean,
+                  # cache-free diagnostic run — every push to ghcr.io/foxws/
+                  # app-cache-v2 (a brand-new package name) 403'd because
+                  # buildah pushes cache incrementally mid-build and the
+                  # default GITHUB_TOKEN can't create a new package on the
+                  # fly, so we never actually got past step 33/43 to see
+                  # whether the real target step (pnpm install) passes.
+                  # Restore --cache-from/--cache-to (pointing at the
+                  # original ghcr.io/foxws/app-cache, which already exists
+                  # and has working write perms) once this run confirms a
+                  # clean build end to end.
                   {
                     echo "args<<EOF"
-                    echo "--cache-from=${CACHE_IMAGE}"
-                    echo "--cache-to=${CACHE_IMAGE}"
                     echo "EOF"
                   } >> "$GITHUB_OUTPUT"
 
