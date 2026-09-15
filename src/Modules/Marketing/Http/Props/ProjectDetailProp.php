@@ -10,6 +10,7 @@ use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
 use Modules\Marketing\Support\DocsNavigation;
 use Modules\Marketing\Support\DocumentHeadings;
+use Modules\Marketing\Support\DocumentLinks;
 
 /**
  * A project's full page: hero, install command, docs tree, and the
@@ -30,7 +31,9 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
         $overview = $documents->firstWhere('slug', 'index') ?? $documents->firstWhere('slug', 'about');
         $navDocuments = $overview ? $documents->reject(fn ($d) => $d->is($overview)) : $documents;
 
-        $rendered = $overview ? DocumentHeadings::extract($overview->toHtml(), $this->project->title) : null;
+        $rendered = $overview
+            ? DocumentHeadings::extract($overview->toHtml(), $this->project->title, DocumentLinks::build($this->project, $documents))
+            : null;
 
         return [
             'key' => $this->project->slug,

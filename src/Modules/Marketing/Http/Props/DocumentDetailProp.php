@@ -11,6 +11,7 @@ use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
 use Modules\Marketing\Support\DocsNavigation;
 use Modules\Marketing\Support\DocumentHeadings;
+use Modules\Marketing\Support\DocumentLinks;
 
 /**
  * A single doc's reading page: rendered body, on-this-page headings, and
@@ -27,15 +28,7 @@ final class DocumentDetailProp implements ProvidesInertiaProperty
 
     public function toInertiaProperty(PropertyContext $context): mixed
     {
-        $links = $this->siblings->flatMap(function (Document $d) {
-            $path = route('document', [$this->project->slug, $d->slug], absolute: false);
-
-            return [
-                "{$d->slug}.md" => $path,
-                $d->slug => $path,
-                basename((string) $d->source_path) => $path,
-            ];
-        })->all();
+        $links = DocumentLinks::build($this->project, $this->siblings);
 
         $rendered = DocumentHeadings::extract($this->document->toHtml(), $this->document->title, $links);
 
