@@ -1,0 +1,74 @@
+<script setup lang="ts">
+import InstallCommand from '@/components/Ui/InstallCommand.vue'
+import PackageInfo from '@/components/Ui/PackageInfo.vue'
+import ProjectHero from '@/components/Ui/ProjectHero.vue'
+import ProseContent from '@/components/Ui/ProseContent.vue'
+import VersionSwitcher from '@/components/Ui/VersionSwitcher.vue'
+import AppLayout from '@/layouts/AppLayout.vue'
+import DocsLayout from '@/layouts/DocsLayout.vue'
+import type { DocsNavItem, DocsPackageInfo, DocsTocItem, DocsUsedBy } from '@/types'
+import { Head } from '@inertiajs/vue3'
+
+interface Project {
+  key: string
+  name: string
+  slug: string
+  eyebrow: string
+  lead: string
+  install: string
+  overview: { html: string; toc: DocsTocItem[] } | null
+  nav: DocsNavItem[]
+  versions: { name: string; is_default: boolean }[]
+  github: string | null
+  package: DocsPackageInfo | null
+  used_by: DocsUsedBy | null
+  get_started: string | null
+}
+
+defineOptions({ layout: [AppLayout, DocsLayout] })
+
+defineProps<{
+  project: Project
+}>()
+</script>
+
+<template>
+  <Head :title="project.name" />
+
+  <div class="flex flex-col gap-5.5 py-4 sm:py-5.5">
+    <ProjectHero
+      :eyebrow="project.eyebrow"
+      :title="project.name"
+      :lead="project.lead"
+    />
+
+    <!-- Mobile-only version switcher, in place of the desktop right rail -->
+    <div class="lg:hidden">
+      <VersionSwitcher :versions="project.versions" />
+    </div>
+
+    <PackageInfo
+      v-if="project.package"
+      :info="project.package"
+      variant="grid"
+      class="lg:hidden"
+    />
+
+    <InstallCommand :command="project.install" />
+
+    <UButton
+      v-if="project.get_started"
+      :to="project.get_started"
+      block
+      size="lg"
+      class="rounded-lg bg-identity-500 py-3 font-sans text-[15px] font-semibold text-neutral-950 hover:bg-identity-400 lg:hidden"
+    >
+      Get started
+    </UButton>
+
+    <ProseContent
+      v-if="project.overview"
+      :html="project.overview.html"
+    />
+  </div>
+</template>

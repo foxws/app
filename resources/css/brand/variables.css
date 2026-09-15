@@ -1,0 +1,29 @@
+@theme {
+  --color-identity-50: #fdf4ed;
+  --color-identity-100: #fbe6d6;
+  --color-identity-200: #f6c8a8;
+  --color-identity-300: #f0a473;
+  --color-identity-400: #f0803f;
+  --color-identity-500: #e8622c;
+  --color-identity-600: #d4521f;
+  --color-identity-700: #b04119;
+  --color-identity-800: #8c3415;
+  --color-identity-900: #722c14;
+  --color-identity-950: #3d1608;
+}
+
+:root {
+  --font-sans: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --ui-header-height: --spacing(16);
+  --ui-container: 90rem;
+  --ui-bg: var(--ui-color-neutral-950);
+  --ui-sidebar: var(--ui-color-neutral-950);
+  --ui-primary: var(--ui-color-primary-500);
+  --ui-secondary: var(--ui-color-secondary-400);
+  --ui-border-accented: var(--ui-color-neutral-800);
+
+  /* Ink sitting directly on a solid --ui-primary fill (e.g. the accent hero,
+     the primary button) is always near-black, never white/alpha-faded. */
+  --ui-primary-ink: var(--ui-color-neutral-950);
+}

@@ -1,0 +1,12 @@
+/* Tailwind */
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+/* Custom */
+@import './brand/variables.css';
+@import './brand/variants.css';
+@import './brand/utilities.css';
+
+/* Blade & Vue */
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
