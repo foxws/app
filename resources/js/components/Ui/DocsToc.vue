@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import UContentToc from '@nuxt/ui/components/content/ContentToc.vue'
 import type { DocsTocItem } from '@/types'
+import UContentToc from '@nuxt/ui/components/content/ContentToc.vue'
 import { useTemplateRef } from 'vue'
 
 defineProps<{
@@ -65,7 +65,6 @@ function onClickCapture(event: MouseEvent) {
     -->
     <UContentToc
       :links="links"
-      :default-open="true"
       :ui="ui"
     />
   </div>
