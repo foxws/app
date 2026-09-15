@@ -19,7 +19,7 @@ final class DocsNavigation
      * @param  Collection<int, Document>  $documents
      * @return array<int, array{title: string, children: array<int, array{title: string, path: string, exact: bool}>}>
      */
-    public static function build(Project $project, Collection $documents): array
+    public static function build(Project $project, Collection $documents, ?string $version = null): array
     {
         $overview = $project->indexDocument($documents);
 
@@ -28,7 +28,7 @@ final class DocsNavigation
                 'title' => $group,
                 'children' => $items->map(fn ($document) => [
                     'title' => $document->title,
-                    'path' => self::pathFor($project, $document, $overview),
+                    'path' => self::pathFor($project, $document, $overview, $version),
                     // The overview's path is /{project} — a prefix of every
                     // sibling document's own /{project}/{document} URL — so
                     // without exact matching, Nuxt UI's Link would mark it
@@ -41,6 +41,20 @@ final class DocsNavigation
     }
 
     /**
+     * The project's own overview page, optionally stamped with a `?version=`
+     * query string. $version is the version's *name*, not the Version model
+     * itself, and should be omitted (null) when it's the project's default —
+     * keeps the common case's URLs clean.
+     */
+    public static function projectPath(Project $project, ?string $version = null): string
+    {
+        return route('project', array_filter([
+            'project' => $project->slug,
+            'version' => $version,
+        ], fn ($value) => $value !== null), absolute: false);
+    }
+
+    /**
      * The route for a single document — the project's own overview page
      * for whichever document is $overview, /{project}/{document} for every
      * other one. Rendering the overview at both /{project} and its own
@@ -48,13 +62,17 @@ final class DocsNavigation
      * this keeps every generated link pointed at the one that's actually
      * meant to be shared/indexed.
      */
-    public static function pathFor(Project $project, Document $document, ?Document $overview): string
+    public static function pathFor(Project $project, Document $document, ?Document $overview, ?string $version = null): string
     {
         if ($overview && $document->is($overview)) {
-            return route('project', $project->slug, absolute: false);
+            return self::projectPath($project, $version);
         }
 
-        return route('document', [$project->slug, $document->slug], absolute: false);
+        return route('document', array_filter([
+            'project' => $project->slug,
+            'document' => $document->slug,
+            'version' => $version,
+        ], fn ($value) => $value !== null), absolute: false);
     }
 
     /**

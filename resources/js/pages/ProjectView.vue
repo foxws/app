@@ -6,29 +6,13 @@ import ProseContent from '@/components/Ui/ProseContent.vue'
 import VersionSwitcher from '@/components/Ui/VersionSwitcher.vue'
 import AppLayout from '@/layouts/AppLayout.vue'
 import DocsLayout from '@/layouts/DocsLayout.vue'
-import type { DocsNavItem, DocsPackageInfo, DocsTocItem, DocsUsedBy } from '@/types'
+import type { DocsProject } from '@/types'
 import { Head } from '@inertiajs/vue3'
-
-interface Project {
-  key: string
-  name: string
-  slug: string
-  eyebrow: string
-  lead: string
-  install: string
-  overview: { html: string; toc: DocsTocItem[] } | null
-  nav: DocsNavItem[]
-  versions: { name: string; is_default: boolean }[]
-  github: string | null
-  package: DocsPackageInfo | null
-  used_by: DocsUsedBy | null
-  get_started: string | null
-}
 
 defineOptions({ layout: [AppLayout, DocsLayout] })
 
 defineProps<{
-  project: Project
+  project: DocsProject
 }>()
 </script>
 
@@ -44,7 +28,11 @@ defineProps<{
 
     <!-- Mobile-only version switcher, in place of the desktop right rail -->
     <div class="lg:hidden">
-      <VersionSwitcher :versions="project.versions" />
+      <VersionSwitcher
+        :project="project.key"
+        :versions="project.versions"
+        :current="project.version ?? undefined"
+      />
     </div>
 
     <PackageInfo

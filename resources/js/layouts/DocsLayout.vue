@@ -5,7 +5,7 @@ import MobileDocsSheet from '@/components/Ui/MobileDocsSheet.vue'
 import PackageInfo from '@/components/Ui/PackageInfo.vue'
 import UsedByCard from '@/components/Ui/UsedByCard.vue'
 import VersionSwitcher from '@/components/Ui/VersionSwitcher.vue'
-import type { DocsNavItem, DocsPackageInfo, DocsTocItem, DocsUsedBy } from '@/types'
+import type { DocsDocument, DocsProject } from '@/types'
 import { computed, ref } from 'vue'
 
 /**
@@ -14,16 +14,8 @@ import { computed, ref } from 'vue'
  * Only one of the two is ever set, depending on which page rendered.
  */
 const props = defineProps<{
-  document?: { title: string; project: { name: string }; nav: DocsNavItem[]; toc: DocsTocItem[] }
-  project?: {
-    name: string
-    nav: DocsNavItem[]
-    versions: { name: string; is_default: boolean }[]
-    github: string | null
-    overview: { toc: DocsTocItem[] } | null
-    package: DocsPackageInfo | null
-    used_by: DocsUsedBy | null
-  }
+  document?: DocsDocument
+  project?: DocsProject
 }>()
 
 const nav = computed(() => props.document?.nav ?? props.project?.nav ?? [])
@@ -67,7 +59,11 @@ const docsSheetOpen = ref(false)
           v-if="project"
           class="hidden flex-col gap-5.5 py-8 lg:sticky lg:top-(--ui-header-height) lg:flex lg:max-h-[calc(100vh-var(--ui-header-height))] lg:overflow-x-hidden lg:overflow-y-auto"
         >
-          <VersionSwitcher :versions="project.versions" />
+          <VersionSwitcher
+            :project="project.key"
+            :versions="project.versions"
+            :current="project.version ?? undefined"
+          />
 
           <UButton
             v-if="project.github"

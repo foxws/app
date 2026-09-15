@@ -24,11 +24,12 @@ final class DocumentDetailProp implements ProvidesInertiaProperty
         private readonly Document $document,
         /** @var Collection<int, Document> */
         private readonly Collection $siblings,
+        private readonly ?string $version = null,
     ) {}
 
     public function toInertiaProperty(PropertyContext $context): mixed
     {
-        $links = DocumentLinks::build($this->project, $this->siblings);
+        $links = DocumentLinks::build($this->project, $this->siblings, $this->version);
 
         $rendered = DocumentHeadings::extract($this->document->toHtml(), $this->document->title, $links);
 
@@ -44,14 +45,15 @@ final class DocumentDetailProp implements ProvidesInertiaProperty
             'project' => [
                 'name' => $this->project->title,
                 'slug' => $this->project->slug,
+                'href' => DocsNavigation::projectPath($this->project, $this->version),
             ],
             'title' => $this->document->title,
             'html' => $rendered['html'],
             'toc' => $rendered['toc'],
-            'nav' => DocsNavigation::build($this->project, $this->siblings),
+            'nav' => DocsNavigation::build($this->project, $this->siblings, $this->version),
             'surround' => [
-                $prev ? ['title' => $prev->title, 'path' => DocsNavigation::pathFor($this->project, $prev, $overview)] : null,
-                $next ? ['title' => $next->title, 'path' => DocsNavigation::pathFor($this->project, $next, $overview)] : null,
+                $prev ? ['title' => $prev->title, 'path' => DocsNavigation::pathFor($this->project, $prev, $overview, $this->version)] : null,
+                $next ? ['title' => $next->title, 'path' => DocsNavigation::pathFor($this->project, $next, $overview, $this->version)] : null,
             ],
         ];
     }

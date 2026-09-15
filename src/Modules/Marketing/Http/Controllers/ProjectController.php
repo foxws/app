@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace Modules\Marketing\Http\Controllers;
 
 use Foxws\Docs\Models\Project;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Modules\Marketing\Http\Props\ProjectDetailProp;
+use Modules\Marketing\Http\Requests\ViewDocsRequest;
 
 final class ProjectController
 {
-    public function __invoke(Request $request, Project $project): Response
+    public function __invoke(ViewDocsRequest $request, Project $project): Response
     {
         $project->load('versions');
 
         return Inertia::render('ProjectView', [
-            'project' => fn () => new ProjectDetailProp($project),
+            'project' => fn () => new ProjectDetailProp($project, $request->version()),
             'crumbs' => fn (): array => [['label' => $project->slug]],
             'scope' => fn (): string => $project->title,
         ]);

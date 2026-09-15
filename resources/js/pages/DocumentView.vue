@@ -5,21 +5,12 @@ import DocsLayout from '@/layouts/DocsLayout.vue'
 import { Head } from '@inertiajs/vue3'
 import type { ContentSurroundLink } from '@nuxt/ui/components/content/ContentSurround.vue'
 import UContentSurround from '@nuxt/ui/components/content/ContentSurround.vue'
-import type { DocsNavItem, DocsSurroundLink, DocsTocItem } from '@/types'
-
-interface DocumentPage {
-  project: { name: string; slug: string }
-  title: string
-  html: string
-  toc: DocsTocItem[]
-  nav: DocsNavItem[]
-  surround: (DocsSurroundLink | null)[]
-}
+import type { DocsDocument } from '@/types'
 
 defineOptions({ layout: [AppLayout, DocsLayout] })
 
 defineProps<{
-  document: DocumentPage
+  document: DocsDocument
 }>()
 </script>
 
@@ -28,7 +19,7 @@ defineProps<{
 
   <div class="flex flex-col gap-5.5 py-4 sm:py-5.5">
     <UButton
-      :to="`/${document.project.slug}`"
+      :to="document.project.href"
       icon="i-lucide-arrow-left"
       variant="link"
       color="neutral"
