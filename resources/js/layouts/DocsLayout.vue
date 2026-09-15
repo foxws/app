@@ -2,8 +2,10 @@
 import DocsToc from '@/components/Ui/DocsToc.vue'
 import DocsTree from '@/components/Ui/DocsTree.vue'
 import MobileDocsSheet from '@/components/Ui/MobileDocsSheet.vue'
+import PackageInfo from '@/components/Ui/PackageInfo.vue'
+import UsedByCard from '@/components/Ui/UsedByCard.vue'
 import VersionSwitcher from '@/components/Ui/VersionSwitcher.vue'
-import type { DocsNavItem, DocsTocItem } from '@/types'
+import type { DocsNavItem, DocsPackageInfo, DocsTocItem, DocsUsedBy } from '@/types'
 import { computed, ref } from 'vue'
 
 /**
@@ -19,6 +21,8 @@ const props = defineProps<{
     versions: { name: string; is_default: boolean }[]
     github: string | null
     overview: { toc: DocsTocItem[] } | null
+    package: DocsPackageInfo | null
+    used_by: DocsUsedBy | null
   }
 }>()
 
@@ -73,7 +77,7 @@ const tocSheetOpen = ref(false)
       >
         <div
           v-if="project"
-          class="hidden flex-col gap-5.5 py-8 lg:sticky lg:top-(--ui-header-height) lg:flex lg:max-h-[calc(100vh-var(--ui-header-height))] lg:overflow-y-auto lg:overflow-x-hidden"
+          class="hidden flex-col gap-5.5 py-8 lg:sticky lg:top-(--ui-header-height) lg:flex lg:max-h-[calc(100vh-var(--ui-header-height))] lg:overflow-x-hidden lg:overflow-y-auto"
         >
           <VersionSwitcher :versions="project.versions" />
 
@@ -88,10 +92,22 @@ const tocSheetOpen = ref(false)
             GitHub ↗
           </UButton>
 
+          <PackageInfo
+            v-if="project.package"
+            :info="project.package"
+          />
+
           <DocsToc
             v-if="toc.length"
             :links="toc"
             :ui="{ link: 'min-w-0', linkText: 'min-w-0 truncate' }"
+          />
+
+          <UsedByCard
+            v-if="project.used_by"
+            :name="project.used_by.name"
+            :desc="project.used_by.desc"
+            :href="project.used_by.href"
           />
         </div>
 

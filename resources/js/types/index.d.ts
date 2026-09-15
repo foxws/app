@@ -17,6 +17,20 @@ export type DocsSurroundLink = {
   path: string
 }
 
+export type DocsPackageInfo = {
+  version?: string
+  requires?: string
+  laravel?: string
+  runtime?: string
+  licence?: string
+}
+
+export type DocsUsedBy = {
+  name: string
+  desc?: string
+  href: string
+}
+
 export type EchoConfig = {
   readonly key: string
   readonly host: string

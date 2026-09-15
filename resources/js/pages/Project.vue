@@ -5,7 +5,7 @@ import ProseContent from '@/components/Ui/ProseContent.vue'
 import VersionSwitcher from '@/components/Ui/VersionSwitcher.vue'
 import AppLayout from '@/layouts/AppLayout.vue'
 import DocsLayout from '@/layouts/DocsLayout.vue'
-import type { DocsNavItem, DocsTocItem } from '@/types'
+import type { DocsNavItem, DocsPackageInfo, DocsTocItem, DocsUsedBy } from '@/types'
 import { Head } from '@inertiajs/vue3'
 
 interface Project {
@@ -19,6 +19,8 @@ interface Project {
   nav: DocsNavItem[]
   versions: { name: string; is_default: boolean }[]
   github: string | null
+  package: DocsPackageInfo | null
+  used_by: DocsUsedBy | null
 }
 
 defineOptions({ layout: [AppLayout, DocsLayout] })

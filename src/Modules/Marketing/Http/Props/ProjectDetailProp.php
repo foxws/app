@@ -35,6 +35,20 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             ? DocumentHeadings::extract($overview->toHtml(), $this->project->title, DocumentLinks::build($this->project, $documents))
             : null;
 
+        $package = array_filter([
+            'version' => $version?->name,
+            'requires' => $metadata['requires'] ?? null,
+            'laravel' => $metadata['laravel'] ?? null,
+            'runtime' => $metadata['runtime'] ?? null,
+            'licence' => $metadata['licence'] ?? null,
+        ], fn ($value) => $value !== null);
+
+        $usedBy = is_array($metadata['used_by'] ?? null) ? array_filter([
+            'name' => $metadata['used_by']['name'] ?? null,
+            'desc' => $metadata['used_by']['desc'] ?? null,
+            'href' => $metadata['used_by']['href'] ?? null,
+        ], fn ($value) => $value !== null) : [];
+
         return [
             'key' => $this->project->slug,
             'name' => $this->project->title,
@@ -46,6 +60,8 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'nav' => DocsNavigation::build($this->project, $navDocuments),
             'versions' => $this->project->versions->map(fn ($v) => ['name' => $v->name, 'is_default' => $v->is_default])->all(),
             'github' => $this->project->driver === ProjectDriver::Github ? $this->project->sourceLocation() : null,
+            'package' => $package !== [] ? $package : null,
+            'used_by' => isset($usedBy['name'], $usedBy['href']) ? $usedBy : null,
         ];
     }
 }

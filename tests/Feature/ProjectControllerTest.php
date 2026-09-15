@@ -67,3 +67,79 @@ test('rewrites cross-reference links in the project overview to their sibling do
         ->toContain('href="'.route('document', ['test-project', 'installation'], absolute: false).'"')
         ->not->toContain('href="installation.md"');
 });
+
+test('builds the package info box from index metadata and the default version', function () {
+    $project = ProjectFactory::new()->create([
+        'slug' => 'test-project',
+        'title' => 'Test Project',
+        'metadata' => [
+            'requires' => 'PHP ^8.3',
+            'laravel' => '11.x',
+            'runtime' => 'Podman 5',
+            'licence' => 'MIT',
+        ],
+    ]);
+    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true, 'name' => 'v1.0.3']);
+
+    $response = $this->get('/test-project');
+
+    $response->assertOk();
+
+    expect($response->inertiaProps('project')['package'])->toBe([
+        'version' => 'v1.0.3',
+        'requires' => 'PHP ^8.3',
+        'laravel' => '11.x',
+        'runtime' => 'Podman 5',
+        'licence' => 'MIT',
+    ]);
+});
+
+test('omits the package info box when there is no version or relevant metadata', function () {
+    ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
+
+    $response = $this->get('/test-project');
+
+    $response->assertOk();
+
+    expect($response->inertiaProps('project')['package'])->toBeNull();
+});
+
+test('builds the "used by" card from index metadata', function () {
+    $project = ProjectFactory::new()->create([
+        'slug' => 'test-project',
+        'title' => 'Test Project',
+        'metadata' => [
+            'used_by' => [
+                'name' => 'Stry',
+                'desc' => 'See it running in production',
+                'href' => '/stry',
+            ],
+        ],
+    ]);
+    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+
+    $response = $this->get('/test-project');
+
+    $response->assertOk();
+
+    expect($response->inertiaProps('project')['used_by'])->toBe([
+        'name' => 'Stry',
+        'desc' => 'See it running in production',
+        'href' => '/stry',
+    ]);
+});
+
+test('omits the "used by" card when the index has no used_by metadata, or it is missing a name or href', function () {
+    $project = ProjectFactory::new()->create([
+        'slug' => 'test-project',
+        'title' => 'Test Project',
+        'metadata' => ['used_by' => ['desc' => 'Missing name and href']],
+    ]);
+    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+
+    $response = $this->get('/test-project');
+
+    $response->assertOk();
+
+    expect($response->inertiaProps('project')['used_by'])->toBeNull();
+});
