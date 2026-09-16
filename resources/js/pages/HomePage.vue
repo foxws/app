@@ -6,15 +6,24 @@ import { Head } from '@inertiajs/vue3'
 defineProps<{
   packages: DocsPackageSummary[]
 }>()
+
+const heroDescription =
+  'I like building all kinds of solutions to all kinds of problems — video streaming, documentation generators, domain-driven design, or deep system integration with things like Podman.'
 </script>
 
 <template>
-  <Head title="Home" />
+  <Head title="Home">
+    <meta
+      head-key="description"
+      name="description"
+      :content="heroDescription"
+    />
+  </Head>
 
   <UPageHero
     headline="Laravel · Linux · AI"
     title="The hard parts, already solved."
-    description="I like building all kinds of solutions to all kinds of problems — video streaming, documentation generators, domain-driven design, or deep system integration with things like Podman."
+    :description="heroDescription"
     :ui="{
       root: 'border-b border-neutral-900',
       container: 'px-4 py-16 sm:px-7 sm:py-19 lg:flex lg:flex-col lg:px-7 lg:py-19',

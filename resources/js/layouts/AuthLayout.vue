@@ -16,6 +16,11 @@ useFlash()
       name="description"
       content="Manage your account and access your dashboard."
     />
+    <meta
+      head-key="robots"
+      name="robots"
+      content="noindex, nofollow"
+    />
   </Head>
 
   <UApp :nonce="nonce">

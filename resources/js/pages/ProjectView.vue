@@ -17,7 +17,13 @@ defineProps<{
 </script>
 
 <template>
-  <Head :title="project.name" />
+  <Head :title="project.name">
+    <meta
+      head-key="description"
+      name="description"
+      :content="project.lead"
+    />
+  </Head>
 
   <div class="flex flex-col gap-5.5 py-4 sm:py-5.5">
     <ProjectHero
