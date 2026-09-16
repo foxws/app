@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "75a1cd9213dab7bc94b237b63aee9c91",
+    "content-hash": "fa7029608bb807c7ce9549da789ad5cf",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1191,16 +1191,16 @@
         },
         {
             "name": "foxws/laravel-ddd",
-            "version": "0.0.3",
+            "version": "0.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-ddd.git",
-                "reference": "189cae2694bf4e3cb91b2157884ba2d20c774448"
+                "reference": "9c576b8d7f0c7be8f3132abf518c383f84755647"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-ddd/zipball/189cae2694bf4e3cb91b2157884ba2d20c774448",
-                "reference": "189cae2694bf4e3cb91b2157884ba2d20c774448",
+                "url": "https://api.github.com/repos/foxws/laravel-ddd/zipball/9c576b8d7f0c7be8f3132abf518c383f84755647",
+                "reference": "9c576b8d7f0c7be8f3132abf518c383f84755647",
                 "shasum": ""
             },
             "require": {
@@ -1254,7 +1254,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-ddd/issues",
-                "source": "https://github.com/foxws/laravel-ddd/tree/0.0.3"
+                "source": "https://github.com/foxws/laravel-ddd/tree/0.0.4"
             },
             "funding": [
                 {
@@ -1262,7 +1262,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-12T20:37:23+00:00"
+            "time": "2026-09-15T14:41:19+00:00"
         },
         {
             "name": "foxws/laravel-docs",
@@ -1352,16 +1352,16 @@
         },
         {
             "name": "foxws/laravel-essentials",
-            "version": "0.0.1",
+            "version": "0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-essentials.git",
-                "reference": "a2a441ea952b06a0a50a2d2fe65166f9c088ffd1"
+                "reference": "6a9df2af51770c9298293534e8759312cad40922"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-essentials/zipball/a2a441ea952b06a0a50a2d2fe65166f9c088ffd1",
-                "reference": "a2a441ea952b06a0a50a2d2fe65166f9c088ffd1",
+                "url": "https://api.github.com/repos/foxws/laravel-essentials/zipball/6a9df2af51770c9298293534e8759312cad40922",
+                "reference": "6a9df2af51770c9298293534e8759312cad40922",
                 "shasum": ""
             },
             "require": {
@@ -1414,7 +1414,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-essentials/issues",
-                "source": "https://github.com/foxws/laravel-essentials/tree/0.0.1"
+                "source": "https://github.com/foxws/laravel-essentials/tree/0.0.3"
             },
             "funding": [
                 {
@@ -1422,7 +1422,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-02T20:45:07+00:00"
+            "time": "2026-09-16T18:39:11+00:00"
         },
         {
             "name": "foxws/laravel-pwa",
