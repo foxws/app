@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { router } from '@inertiajs/vue3'
 import { useDebounceFn } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
 
@@ -56,7 +57,14 @@ const search = useDebounceFn(async (term: string) => {
   }
 }, 200)
 
-watch(query, (term) => search(term))
+function onSelect(item: Partial<SearchResult>) {
+  if (!item?.to) {
+    return
+  }
+
+  open.value = false
+  router.visit(item.to)
+}
 
 const groups = computed(() => [
   {
@@ -65,6 +73,8 @@ const groups = computed(() => [
     items: results.value,
   },
 ])
+
+watch(query, (term) => search(term))
 </script>
 
 <template>
@@ -86,6 +96,7 @@ const groups = computed(() => [
           empty: 'font-sans text-[13px] text-neutral-500',
         }"
         @close="open = false"
+        @update:model-value="onSelect"
       >
         <template #item-label="{ item }">
           <div class="flex w-full items-center gap-3">
