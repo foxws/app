@@ -26,6 +26,17 @@ export type DocsPackageInfo = {
   licence?: string
 }
 
+export type DocsPackageSummary = {
+  key?: string
+  name: string
+  slug: string
+  path: string
+  role: string | null
+  desc: string
+  version?: string
+  flagship: boolean
+}
+
 export type DocsUsedBy = {
   name: string
   desc?: string

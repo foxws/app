@@ -1,24 +1,11 @@
 <script setup lang="ts">
 import PackageCard from '@/components/Ui/PackageCard.vue'
+import type { DocsPackageSummary } from '@/types'
 import { Head } from '@inertiajs/vue3'
-import { computed } from 'vue'
 
-interface Package {
-  key?: string
-  name: string
-  slug: string
-  path: string
-  role: string | null
-  desc: string
-  version?: string
-  flagship: boolean
-}
-
-const props = defineProps<{
-  packages: Package[]
+defineProps<{
+  packages: DocsPackageSummary[]
 }>()
-
-const others = computed(() => props.packages.filter((p) => !p.flagship))
 </script>
 
 <template>
@@ -40,19 +27,51 @@ const others = computed(() => props.packages.filter((p) => !p.flagship))
   />
 
   <UContainer
-    id="packages"
     as="section"
-    class="grid grid-cols-1 gap-3.5 px-4 py-6 sm:grid-cols-2 sm:px-7"
+    class="flex flex-col gap-3.5 px-4 py-6 sm:px-7"
   >
-    <PackageCard
-      v-for="pkg in others"
-      :key="pkg.slug"
-      :name="pkg.name"
-      :slug="pkg.slug"
-      :role="pkg.role"
-      :desc="pkg.desc"
-      :version="pkg.version"
-      :href="`/${pkg.path}`"
-    />
+    <div
+      id="packages"
+      class="grid grid-cols-1 gap-3.5 sm:grid-cols-2"
+    >
+      <PackageCard
+        v-for="pkg in packages"
+        :key="pkg.slug"
+        :name="pkg.name"
+        :slug="pkg.slug"
+        :role="pkg.role"
+        :desc="pkg.desc"
+        :version="pkg.version"
+        :href="`/${pkg.path}`"
+      />
+    </div>
+
+    <UPageCard
+      variant="outline"
+      :ui="{
+        root: 'rounded-xl bg-neutral-900 ring-neutral-800',
+        container: 'p-5.5 sm:p-5.5',
+        wrapper: 'items-stretch gap-2.75',
+        header: 'mb-0',
+        description: 'font-sans text-sm text-neutral-400',
+        footer: 'mt-0 pt-0',
+      }"
+    >
+      <template #header>
+        <span class="font-sans text-xl font-semibold tracking-tight text-neutral-50">Let's connect</span>
+      </template>
+
+      <template #description>I'm on LinkedIn — feel free to connect if you want to talk Laravel, Linux, or anything in between.</template>
+
+      <template #footer>
+        <UButton
+          label="Connect on LinkedIn"
+          to="https://www.linkedin.com/in/francoismenning/"
+          trailing-icon="i-lucide-user-round-plus"
+          size="sm"
+          external
+        />
+      </template>
+    </UPageCard>
   </UContainer>
 </template>
