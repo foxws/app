@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>You're offline</title>
+    <title>Reconnecting…</title>
     <style>
       body {
         margin: 0;
@@ -19,14 +19,124 @@
         body { background: #0a0a0a; color: #fafafa; }
       }
       .wrap { text-align: center; padding: 2rem; }
+      .spinner {
+        width: 1.75rem;
+        height: 1.75rem;
+        margin: 0 auto 1rem;
+        border-radius: 50%;
+        border: 2.5px solid currentColor;
+        border-top-color: transparent;
+        opacity: 0.6;
+        animation: spin 0.8s linear infinite;
+      }
+      .spinner.paused { animation-play-state: paused; opacity: 0.3; }
+      @keyframes spin { to { transform: rotate(360deg); } }
       h1 { font-size: 1.5rem; font-weight: 600; margin: 0 0 0.5rem; }
       p { margin: 0; opacity: 0.6; font-size: 0.95rem; }
+      button {
+        margin-top: 1.5rem;
+        padding: 0.5rem 1.25rem;
+        font: inherit;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        border: 1px solid currentColor;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+        opacity: 0.85;
+      }
+      button:hover { opacity: 1; }
+      button:disabled { opacity: 0.4; cursor: default; }
     </style>
   </head>
   <body>
     <div class="wrap">
-      <h1>You're offline</h1>
-      <p>Check your connection and try again.</p>
+      <div class="spinner" id="spinner"></div>
+      <h1 id="heading">Booting up the application</h1>
+      <p id="message">This can take a few seconds on the first request. Hang tight…</p>
+      <div>
+        <button id="retry" type="button">Retry now</button>
+      </div>
     </div>
+    <script>
+      "use strict";
+
+      const heading = document.getElementById("heading");
+      const message = document.getElementById("message");
+      const spinner = document.getElementById("spinner");
+      const retryButton = document.getElementById("retry");
+
+      let pollTimer = null;
+      let pollDelay = 2000;
+      const maxPollDelay = 15000;
+
+      function render() {
+        if (navigator.onLine) {
+          heading.textContent = "Booting up the application";
+          message.textContent = "This can take a few seconds on the first request. Hang tight…";
+          spinner.classList.remove("paused");
+        } else {
+          heading.textContent = "You're offline";
+          message.textContent = "Check your connection and try again.";
+          spinner.classList.add("paused");
+        }
+      }
+
+      async function attempt() {
+        if (!navigator.onLine) return;
+
+        try {
+          const response = await fetch(location.href, { method: "HEAD", cache: "no-store" });
+
+          if (response.ok) {
+            location.reload();
+            return;
+          }
+        } catch {
+          // Still unreachable, keep polling below.
+        }
+
+        pollDelay = Math.min(pollDelay * 1.5, maxPollDelay);
+        pollTimer = setTimeout(attempt, pollDelay);
+      }
+
+      function scheduleNext() {
+        clearTimeout(pollTimer);
+        pollTimer = setTimeout(attempt, pollDelay);
+      }
+
+      retryButton.addEventListener("click", () => {
+        retryButton.disabled = true;
+        clearTimeout(pollTimer);
+        fetch(location.href, { method: "HEAD", cache: "no-store" })
+          .then((response) => {
+            if (response.ok) {
+              location.reload();
+            } else {
+              retryButton.disabled = false;
+              scheduleNext();
+            }
+          })
+          .catch(() => {
+            retryButton.disabled = false;
+            scheduleNext();
+          });
+      });
+
+      window.addEventListener("online", () => {
+        render();
+        clearTimeout(pollTimer);
+        pollDelay = 2000;
+        attempt();
+      });
+
+      window.addEventListener("offline", () => {
+        render();
+        clearTimeout(pollTimer);
+      });
+
+      render();
+      scheduleNext();
+    </script>
   </body>
 </html>

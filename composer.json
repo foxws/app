@@ -50,6 +50,7 @@
         "foxws/laravel-podman": "^2.1.6",
         "larastan/larastan": "^3.12.1",
         "laravel/boost": "^2.9.0",
+        "laravel/cloud-cli": "^0.6.1",
         "laravel/doctor": "^0.1.0",
         "laravel/envoy": "^2.12.2",
         "laravel/pail": "^1.2.7",
