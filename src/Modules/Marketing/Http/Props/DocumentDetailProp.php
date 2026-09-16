@@ -10,7 +10,6 @@ use Illuminate\Support\Collection;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
 use Modules\Marketing\Support\DocsNavigation;
-use Modules\Marketing\Support\DocumentDescription;
 use Modules\Marketing\Support\DocumentHeadings;
 use Modules\Marketing\Support\DocumentLinks;
 
@@ -49,11 +48,7 @@ final class DocumentDetailProp implements ProvidesInertiaProperty
                 'href' => DocsNavigation::projectPath($this->project, $this->version),
             ],
             'title' => $this->document->title,
-            'description' => DocumentDescription::resolve(
-                $this->document->seo['description'] ?? null,
-                $this->project->seo['description'] ?? null,
-                $rendered['html'],
-            ),
+            'description' => $this->document->resolveSeoDescription(html: $rendered['html']),
             'html' => $rendered['html'],
             'toc' => $rendered['toc'],
             'nav' => DocsNavigation::build($this->project, $this->siblings, $this->version),

@@ -101,13 +101,6 @@ watch(query, (term) => search(term))
         <template #item-label="{ item }">
           <div class="flex w-full items-center gap-3">
             <div class="flex min-w-0 flex-col gap-0.5">
-              <!--
-                labelHtml/suffixHtml are only ever set by UCommandPalette's own
-                fuzzy-match highlighter, which escapes the source text before
-                wrapping matches in <mark> — safe to render as-is. The plain
-                label/suffix fallback is unescaped data straight from the API
-                response, so it must go through text interpolation, not v-html.
-              -->
               <span
                 v-if="item.labelHtml"
                 class="font-sans text-[13px] font-semibold text-neutral-50 [&_mark]:bg-primary/15 [&_mark]:text-primary"

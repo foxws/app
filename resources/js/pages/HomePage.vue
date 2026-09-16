@@ -10,10 +10,6 @@ defineProps<{
 
 <template>
   <Head title="Home">
-    <!--
-      Kept short and distinct from the hero copy below — search engines
-      truncate meta descriptions around 155-160 characters.
-    -->
     <meta
       head-key="description"
       name="description"
