@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aead1e39f726105fa45aa2dc2e1dc8b7",
+    "content-hash": "c5408ed13293408bf31f896331330a63",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.395.3",
+            "version": "3.395.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "22f2bce297541ae41ca9e03207032ede4e805ad4"
+                "reference": "0756c511a913b57ab5415db6136d8c0c250ace15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/22f2bce297541ae41ca9e03207032ede4e805ad4",
-                "reference": "22f2bce297541ae41ca9e03207032ede4e805ad4",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/0756c511a913b57ab5415db6136d8c0c250ace15",
+                "reference": "0756c511a913b57ab5415db6136d8c0c250ace15",
                 "shasum": ""
             },
             "require": {
@@ -153,9 +153,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.395.3"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.395.4"
             },
-            "time": "2026-09-15T18:07:56+00:00"
+            "time": "2026-09-16T18:39:53+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -1266,16 +1266,16 @@
         },
         {
             "name": "foxws/laravel-docs",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-docs.git",
-                "reference": "f56f4313119b008c204651bc8920da60a376a427"
+                "reference": "ea21617ad76afd28ef6f9be8f501a1d64e56e7fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/f56f4313119b008c204651bc8920da60a376a427",
-                "reference": "f56f4313119b008c204651bc8920da60a376a427",
+                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/ea21617ad76afd28ef6f9be8f501a1d64e56e7fe",
+                "reference": "ea21617ad76afd28ef6f9be8f501a1d64e56e7fe",
                 "shasum": ""
             },
             "require": {
@@ -1340,7 +1340,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-docs/issues",
-                "source": "https://github.com/foxws/laravel-docs/tree/v1.2.0"
+                "source": "https://github.com/foxws/laravel-docs/tree/v1.3.0"
             },
             "funding": [
                 {
@@ -1348,7 +1348,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-16T10:22:39+00:00"
+            "time": "2026-09-16T20:18:43+00:00"
         },
         {
             "name": "foxws/laravel-essentials",
@@ -1426,16 +1426,16 @@
         },
         {
             "name": "foxws/laravel-pwa",
-            "version": "2.5.1",
+            "version": "2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-pwa.git",
-                "reference": "d43758de053a0b1da35d4b1616b64cb234f6265e"
+                "reference": "1eab9f3ed5ac20b98c7be3ee0210c98f53f85d90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-pwa/zipball/d43758de053a0b1da35d4b1616b64cb234f6265e",
-                "reference": "d43758de053a0b1da35d4b1616b64cb234f6265e",
+                "url": "https://api.github.com/repos/foxws/laravel-pwa/zipball/1eab9f3ed5ac20b98c7be3ee0210c98f53f85d90",
+                "reference": "1eab9f3ed5ac20b98c7be3ee0210c98f53f85d90",
                 "shasum": ""
             },
             "require": {
@@ -1496,7 +1496,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-pwa/issues",
-                "source": "https://github.com/foxws/laravel-pwa/tree/2.5.1"
+                "source": "https://github.com/foxws/laravel-pwa/tree/2.5.2"
             },
             "funding": [
                 {
@@ -1504,20 +1504,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-07T10:42:31+00:00"
+            "time": "2026-09-16T19:03:02+00:00"
         },
         {
             "name": "foxws/laravel-scout-builder",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-scout-builder.git",
-                "reference": "d5c808e4e24c210bd8e051675088fbd90a1268b4"
+                "reference": "ee1710a1113b7852622f4e411113760c7a2644ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-scout-builder/zipball/d5c808e4e24c210bd8e051675088fbd90a1268b4",
-                "reference": "d5c808e4e24c210bd8e051675088fbd90a1268b4",
+                "url": "https://api.github.com/repos/foxws/laravel-scout-builder/zipball/ee1710a1113b7852622f4e411113760c7a2644ee",
+                "reference": "ee1710a1113b7852622f4e411113760c7a2644ee",
                 "shasum": ""
             },
             "require": {
@@ -1575,7 +1575,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-scout-builder/issues",
-                "source": "https://github.com/foxws/laravel-scout-builder/tree/1.0.0"
+                "source": "https://github.com/foxws/laravel-scout-builder/tree/1.0.1"
             },
             "funding": [
                 {
@@ -1583,20 +1583,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-07-27T15:19:19+00:00"
+            "time": "2026-09-16T19:09:10+00:00"
         },
         {
             "name": "foxws/laravel-scout-relations",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-scout-relations.git",
-                "reference": "b5739ab1876dd32c5cf67d173881702bfd95cc55"
+                "reference": "0cc7d1cbf17b7e5cc43696741bb6aad584addc45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-scout-relations/zipball/b5739ab1876dd32c5cf67d173881702bfd95cc55",
-                "reference": "b5739ab1876dd32c5cf67d173881702bfd95cc55",
+                "url": "https://api.github.com/repos/foxws/laravel-scout-relations/zipball/0cc7d1cbf17b7e5cc43696741bb6aad584addc45",
+                "reference": "0cc7d1cbf17b7e5cc43696741bb6aad584addc45",
                 "shasum": ""
             },
             "require": {
@@ -1654,7 +1654,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-scout-relations/issues",
-                "source": "https://github.com/foxws/laravel-scout-relations/tree/1.0.0"
+                "source": "https://github.com/foxws/laravel-scout-relations/tree/1.0.1"
             },
             "funding": [
                 {
@@ -1662,7 +1662,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-07-27T15:30:32+00:00"
+            "time": "2026-09-16T18:53:00+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -6277,16 +6277,16 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "4.x-dev",
+            "version": "4.9.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "40988c506689c11cfc76c18445f7b26819d0d259"
+                "reference": "75d73f48d02797c2c285a7e9f348fadc0102ffe2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/40988c506689c11cfc76c18445f7b26819d0d259",
-                "reference": "40988c506689c11cfc76c18445f7b26819d0d259",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/75d73f48d02797c2c285a7e9f348fadc0102ffe2",
+                "reference": "75d73f48d02797c2c285a7e9f348fadc0102ffe2",
                 "shasum": ""
             },
             "require": {
@@ -6323,7 +6323,6 @@
                 "paragonie/random-lib": "Provides RandomLib for use with the RandomLibAdapter",
                 "ramsey/uuid-doctrine": "Allows the use of Ramsey\\Uuid\\Uuid as Doctrine field type."
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "captainhook": {
@@ -6350,9 +6349,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ramsey/uuid/issues",
-                "source": "https://github.com/ramsey/uuid/tree/4.x"
+                "source": "https://github.com/ramsey/uuid/tree/4.9.4"
             },
-            "time": "2026-09-13T14:33:28+00:00"
+            "time": "2026-09-16T11:39:30+00:00"
         },
         {
             "name": "ratchet/rfc6455",
@@ -13850,16 +13849,16 @@
         },
         {
             "name": "foxws/laravel-podman",
-            "version": "2.1.6",
+            "version": "2.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-podman.git",
-                "reference": "824f9ccd10f886f15defc264ea215fa869cc67f3"
+                "reference": "321145d2aaf1fed3a3179d294132a544cb12e4e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-podman/zipball/824f9ccd10f886f15defc264ea215fa869cc67f3",
-                "reference": "824f9ccd10f886f15defc264ea215fa869cc67f3",
+                "url": "https://api.github.com/repos/foxws/laravel-podman/zipball/321145d2aaf1fed3a3179d294132a544cb12e4e2",
+                "reference": "321145d2aaf1fed3a3179d294132a544cb12e4e2",
                 "shasum": ""
             },
             "require": {
@@ -13929,7 +13928,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-podman/issues",
-                "source": "https://github.com/foxws/laravel-podman/tree/2.1.6"
+                "source": "https://github.com/foxws/laravel-podman/tree/2.1.7"
             },
             "funding": [
                 {
@@ -13937,7 +13936,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-12T20:20:23+00:00"
+            "time": "2026-09-16T13:42:05+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
