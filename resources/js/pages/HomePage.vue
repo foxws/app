@@ -9,7 +9,13 @@ defineProps<{
 </script>
 
 <template>
-  <Head title="Home" />
+  <Head title="Home">
+    <meta
+      head-key="description"
+      name="description"
+      content="I build Laravel packages and tools for video streaming, documentation, domain-driven design, and Podman-based deployments."
+    />
+  </Head>
 
   <UPageHero
     headline="Laravel · Linux · AI"

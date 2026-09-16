@@ -74,6 +74,7 @@ export type DocsProject = {
 export type DocsDocument = {
   project: DocsProjectRef
   title: string
+  description: string
   html: string
   toc: DocsTocItem[]
   nav: DocsNavItem[]

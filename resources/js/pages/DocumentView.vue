@@ -15,7 +15,13 @@ defineProps<{
 </script>
 
 <template>
-  <Head :title="`${document.title} - ${document.project.name}`" />
+  <Head :title="`${document.title} - ${document.project.name}`">
+    <meta
+      head-key="description"
+      name="description"
+      :content="document.description"
+    />
+  </Head>
 
   <div class="flex flex-col gap-5.5 py-4 sm:py-5.5">
     <UButton

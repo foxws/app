@@ -48,6 +48,7 @@ final class DocumentDetailProp implements ProvidesInertiaProperty
                 'href' => DocsNavigation::projectPath($this->project, $this->version),
             ],
             'title' => $this->document->title,
+            'description' => $this->document->resolveSeoDescription(html: $rendered['html']),
             'html' => $rendered['html'],
             'toc' => $rendered['toc'],
             'nav' => DocsNavigation::build($this->project, $this->siblings, $this->version),

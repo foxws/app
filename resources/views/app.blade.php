@@ -6,6 +6,12 @@
     <meta name="color-scheme" content="dark" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="csp-nonce" content="{{ Vite::cspNonce() }}" />
+    <meta
+        data-inertia="description"
+        name="description"
+        content="Building with the Laravel ecosystem — PHP, Inertia.js, Livewire, and modern JS/TypeScript."
+    />
+    <meta data-inertia="robots" name="robots" content="index, follow" />
     <link rel="preconnect" href="{{ config('filesystems.disks.s3.url') }}" crossorigin="anonymous" />
     @pwaHead
     @fonts
