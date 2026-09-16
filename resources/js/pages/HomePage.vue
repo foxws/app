@@ -6,19 +6,18 @@ import { Head } from '@inertiajs/vue3'
 defineProps<{
   packages: DocsPackageSummary[]
 }>()
-
-// Kept short and distinct from the hero copy below — search engines
-// truncate meta descriptions around 155-160 characters.
-const metaDescription =
-  'I build Laravel packages and tools for video streaming, documentation, domain-driven design, and Podman-based deployments.'
 </script>
 
 <template>
   <Head title="Home">
+    <!--
+      Kept short and distinct from the hero copy below — search engines
+      truncate meta descriptions around 155-160 characters.
+    -->
     <meta
       head-key="description"
       name="description"
-      :content="metaDescription"
+      content="I build Laravel packages and tools for video streaming, documentation, domain-driven design, and Podman-based deployments."
     />
   </Head>
 
