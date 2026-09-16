@@ -14,11 +14,11 @@
     "require": {
         "php": "^8.3",
         "foxws/laravel-ddd": "^0.0.3",
-        "foxws/laravel-docs": "^1.2.0",
+        "foxws/laravel-docs": "^1.3.0",
         "foxws/laravel-essentials": "^0.0.1",
-        "foxws/laravel-pwa": "^2.5.1",
-        "foxws/laravel-scout-builder": "^1.0",
-        "foxws/laravel-scout-relations": "^1.0",
+        "foxws/laravel-pwa": "^2.5.2",
+        "foxws/laravel-scout-builder": "^1.0.1",
+        "foxws/laravel-scout-relations": "^1.0.1",
         "guzzlehttp/guzzle": "^7.15.5",
         "http-interop/http-factory-guzzle": "^1.2.1",
         "inertiajs/inertia-laravel": "^3.3.4",
@@ -44,10 +44,10 @@
         "typesense/typesense-php": "^6.0"
     },
     "require-dev": {
-        "aws/aws-sdk-php": "^3.395.3",
+        "aws/aws-sdk-php": "^3.395.4",
         "barryvdh/laravel-ide-helper": "^3.7",
         "fakerphp/faker": "^1.24.1",
-        "foxws/laravel-podman": "^2.1.6",
+        "foxws/laravel-podman": "^2.1.7",
         "larastan/larastan": "^3.12.1",
         "laravel/boost": "^2.9.0",
         "laravel/cloud-cli": "^0.6.1",
