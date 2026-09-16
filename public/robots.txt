@@ -1,2 +1,7 @@
 User-agent: *
 Disallow: /api/
+Disallow: /_inertia/
+Disallow: /livewire/
+
+User-agent: ia_archiver
+Disallow: /
