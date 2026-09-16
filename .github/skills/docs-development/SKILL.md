@@ -50,6 +50,8 @@ php artisan docs:sync --project={slug} # only that project
 
 Syncs every registered version of every registered project, or just one with `--project`. Before syncing, per project: auto-discovers the latest release as the default version (if enabled), then prunes old non-default versions beyond `docs.sync.keep_versions` (default `5`; set to `0` to keep everything; capped at `docs.sync.prune_chunk_size` per run; the default version is never pruned). Schedule it (e.g. `Schedule::command('docs:sync')->daily()` in `routes/console.php`) rather than relying on a webhook — there is none in v1.
 
+Pass `--queue` (or set `docs.sync.queue.enabled` to make it the default; override back to inline with `--sync`) to chain one queued job per project instead of syncing inline — jobs run one at a time, never in parallel, and each project's job is protected against overlapping with another sync of the same project. See [syncing.md](../../../../docs/syncing.md#queued-syncing).
+
 ### 4. Query and render
 
 ```php
