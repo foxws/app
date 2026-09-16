@@ -7,6 +7,7 @@
         "allowArbitraryExtensions": true,
         "paths": {
             "@/*": ["./resources/js/*"],
+            "@images/*": ["./resources/images/*"],
             "#build/ui/*": ["./node_modules/.nuxt-ui/ui/*"]
         }
     }

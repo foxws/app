@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useAppearance } from '@/composables/appearance'
+import logo from '@images/logo.png'
 
 withDefaults(
   defineProps<{
@@ -22,7 +23,7 @@ const { app } = useAppearance()
     :to="location || '/'"
   >
     <img
-      src="https://avatars.githubusercontent.com/u/111247253?s=400&v=4"
+      :src="logo"
       alt="Foxws"
       class="block shrink-0 rounded-none object-cover"
       :style="{ width: `${size}px`, height: `${size}px` }"
