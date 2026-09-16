@@ -47,10 +47,9 @@ defineProps<{
     </div>
 
     <UPageCard
-      variant="outline"
+      variant="naked"
       :ui="{
-        root: 'rounded-xl bg-neutral-900 ring-neutral-800',
-        container: 'p-5.5 sm:p-5.5',
+        container: 'py-5.5 sm:py-5.5',
         wrapper: 'items-stretch gap-2.75',
         header: 'mb-0',
         description: 'font-sans text-sm text-neutral-400',
