@@ -21,6 +21,12 @@ it('treats a blank seo description as unset and falls through', function () {
     expect($result)->toBe('Body text.');
 });
 
+it('collapses stray whitespace in a multi-line seo description', function () {
+    $result = DocumentDescription::resolve("Install the package,\n  then publish   the config.", null, '<p>Body text.</p>');
+
+    expect($result)->toBe('Install the package, then publish the config.');
+});
+
 it('falls back to an excerpt of the rendered body', function () {
     $result = DocumentDescription::resolve(null, null, '<p>Install the package, then publish the config file.</p>');
 

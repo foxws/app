@@ -15,12 +15,10 @@ final class DocumentDescription
 {
     public static function resolve(?string $documentSeoDescription, ?string $projectSeoDescription, string $html): string
     {
-        if (filled($documentSeoDescription)) {
-            return $documentSeoDescription;
-        }
-
-        if (filled($projectSeoDescription)) {
-            return $projectSeoDescription;
+        foreach ([$documentSeoDescription, $projectSeoDescription] as $candidate) {
+            if (filled($candidate)) {
+                return Str::of($candidate)->squish()->toString();
+            }
         }
 
         return Str::of($html)->stripTags()->squish()->limit(160)->toString();

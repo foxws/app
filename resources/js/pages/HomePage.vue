@@ -7,8 +7,10 @@ defineProps<{
   packages: DocsPackageSummary[]
 }>()
 
-const heroDescription =
-  'I like building all kinds of solutions to all kinds of problems — video streaming, documentation generators, domain-driven design, or deep system integration with things like Podman.'
+// Kept short and distinct from the hero copy below — search engines
+// truncate meta descriptions around 155-160 characters.
+const metaDescription =
+  'I build Laravel packages and tools for video streaming, documentation, domain-driven design, and Podman-based deployments.'
 </script>
 
 <template>
@@ -16,14 +18,14 @@ const heroDescription =
     <meta
       head-key="description"
       name="description"
-      :content="heroDescription"
+      :content="metaDescription"
     />
   </Head>
 
   <UPageHero
     headline="Laravel · Linux · AI"
     title="The hard parts, already solved."
-    :description="heroDescription"
+    description="I like building all kinds of solutions to all kinds of problems — video streaming, documentation generators, domain-driven design, or deep system integration with things like Podman."
     :ui="{
       root: 'border-b border-neutral-900',
       container: 'px-4 py-16 sm:px-7 sm:py-19 lg:flex lg:flex-col lg:px-7 lg:py-19',
