@@ -55,9 +55,21 @@ defineProps<{
       :to="project.get_started"
       block
       size="lg"
-      class="rounded-lg bg-identity-500 py-3 font-sans text-[15px] font-semibold text-neutral-950 hover:bg-identity-400 lg:hidden"
+      class="rounded-lg bg-identity-500 py-3 font-sans text-base font-semibold text-neutral-950 hover:bg-identity-400 lg:hidden"
     >
       Get started
+    </UButton>
+
+    <UButton
+      v-if="project.source"
+      :to="project.source"
+      target="_blank"
+      block
+      variant="outline"
+      color="neutral"
+      class="justify-center rounded-lg py-2.5 font-sans text-sm font-medium lg:hidden"
+    >
+      Source ↗
     </UButton>
 
     <ProseContent

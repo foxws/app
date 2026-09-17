@@ -65,7 +65,7 @@ export type DocsProject = {
   nav: DocsNavItem[]
   versions: DocsVersion[]
   version: string | null
-  github: string | null
+  source: string | null
   package: DocsPackageInfo | null
   used_by: DocsUsedBy | null
   get_started: string | null

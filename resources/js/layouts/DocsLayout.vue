@@ -66,14 +66,14 @@ const docsSheetOpen = ref(false)
           />
 
           <UButton
-            v-if="project.github"
-            :to="`https://github.com/${project.github}`"
+            v-if="project.source"
+            :to="project.source"
             target="_blank"
             variant="outline"
             color="neutral"
-            class="justify-center rounded-lg py-2.5 font-sans text-[13px] font-medium"
+            class="justify-center rounded-lg py-2.5 font-sans text-sm font-medium"
           >
-            GitHub ↗
+            Source ↗
           </UButton>
 
           <PackageInfo

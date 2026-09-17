@@ -28,7 +28,7 @@ const rows = computed(() =>
     v-if="rows.length && variant === 'list'"
     class="flex flex-col gap-2"
   >
-    <span class="font-mono text-[10px] tracking-[.14em] text-neutral-500 uppercase">Package</span>
+    <span class="font-mono text-xs tracking-[.14em] text-neutral-500 uppercase">Package</span>
 
     <UPageList
       divide
@@ -45,8 +45,8 @@ const rows = computed(() =>
         }"
       >
         <template #body>
-          <span class="font-sans text-[13px] text-neutral-400">{{ label }}</span>
-          <span class="font-mono text-[13px] text-neutral-50">{{ value }}</span>
+          <span class="font-sans text-sm text-neutral-400">{{ label }}</span>
+          <span class="font-mono text-sm text-neutral-50">{{ value }}</span>
         </template>
       </UPageCard>
     </UPageList>
@@ -64,8 +64,8 @@ const rows = computed(() =>
       variant="subtle"
       :ui="{
         container: 'gap-0 p-3.5 sm:p-3.5',
-        title: 'font-sans text-[12px] font-normal text-neutral-500',
-        description: 'mt-1 font-mono text-[15px] text-neutral-50',
+        title: 'font-sans text-xs font-normal text-neutral-500',
+        description: 'mt-1 font-mono text-base text-neutral-50',
       }"
     />
   </UPageGrid>

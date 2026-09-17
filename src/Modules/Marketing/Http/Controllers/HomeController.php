@@ -15,7 +15,15 @@ final class HomeController
     public function __invoke(Request $request): Response
     {
         return Inertia::render('HomePage', [
-            'packages' => fn () => new ProjectSummaryProp(Project::with('versions')->get()),
+            'packages' => fn () => new ProjectSummaryProp(
+                Project::with('versions')
+                    ->withMax('versions', 'last_synced_at')
+                    // Postgres sorts NULLS FIRST on DESC by default — a
+                    // project with no synced version yet should read as
+                    // "never updated", not "just updated".
+                    ->orderByRaw('versions_max_last_synced_at DESC NULLS LAST')
+                    ->get()
+            ),
         ]);
     }
 }

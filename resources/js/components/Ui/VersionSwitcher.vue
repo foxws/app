@@ -30,7 +30,7 @@ function onSelect(name: string | number | undefined) {
     label="Version"
     :ui="{
       root: 'flex flex-col gap-2',
-      label: 'font-mono text-[10px] tracking-[.14em] text-neutral-500 uppercase',
+      label: 'font-mono text-xs tracking-[.14em] text-neutral-500 uppercase',
     }"
   >
     <USelect
@@ -39,9 +39,9 @@ function onSelect(name: string | number | undefined) {
       :disabled="versions.length <= 1"
       class="w-full"
       :ui="{
-        base: 'rounded-lg border-neutral-800 bg-neutral-900 py-2.5 font-sans text-[13px] font-medium text-neutral-50',
+        base: 'rounded-lg border-neutral-800 bg-neutral-900 py-2.5 font-sans text-sm font-medium text-neutral-50',
         content: 'rounded-lg border border-neutral-800 bg-neutral-900',
-        item: 'font-sans text-[13px] text-neutral-200',
+        item: 'font-sans text-sm text-neutral-200',
       }"
       @update:model-value="onSelect"
     />

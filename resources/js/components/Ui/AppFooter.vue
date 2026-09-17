@@ -7,8 +7,8 @@ const year = new Date().getFullYear()
     :ui="{
       root: 'border-t border-neutral-900',
       container:
-        'flex flex-col items-center justify-center gap-3 px-4 py-5 font-mono text-[11px] tracking-wider text-neutral-500 uppercase sm:flex-row sm:justify-between sm:px-7',
-      left: 'order-1',
+        'flex flex-col items-center justify-center gap-3 px-4 py-5 font-mono text-xs tracking-wider text-neutral-500 uppercase sm:flex-row sm:justify-between sm:px-7',
+      left: 'order-1 mt-0',
       center: 'order-2 mt-0',
       right: 'order-3',
     }"
@@ -29,11 +29,11 @@ const year = new Date().getFullYear()
     <template #right>
       <ULink
         to="/terms"
-        active-class="text-inhertit"
+        active-class="text-inherit"
       >
         Terms
       </ULink>
-      ·
+      <span aria-hidden="true">·</span>
       <span>© {{ year }}</span>
     </template>
   </UFooter>

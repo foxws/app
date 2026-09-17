@@ -51,6 +51,12 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'licence' => $metadata['licence'] ?? null,
         ], fn ($value) => $value !== null);
 
+        $source = match (true) {
+            is_string($metadata['source'] ?? null) && $metadata['source'] !== '' => $metadata['source'],
+            $this->project->driver === ProjectDriver::Github => "https://github.com/{$this->project->sourceLocation()}",
+            default => null,
+        };
+
         $usedBy = is_array($metadata['used_by'] ?? null) ? array_filter([
             'name' => $metadata['used_by']['name'] ?? null,
             'desc' => $metadata['used_by']['desc'] ?? null,
@@ -70,7 +76,7 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'nav' => DocsNavigation::build($this->project, $documents, $versionParam),
             'versions' => $this->project->versions->map(fn ($v) => ['name' => $v->name, 'is_default' => $v->is_default])->all(),
             'version' => $version?->name,
-            'github' => $this->project->driver === ProjectDriver::Github ? $this->project->sourceLocation() : null,
+            'source' => $source,
             'package' => $package !== [] ? $package : null,
             'used_by' => isset($usedBy['name'], $usedBy['href']) ? $usedBy : null,
             'get_started' => $firstDocument ? DocsNavigation::pathFor($this->project, $firstDocument, $overview, $versionParam) : null,

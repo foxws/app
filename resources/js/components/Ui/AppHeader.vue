@@ -51,12 +51,12 @@ const searchOpen = ref(false)
         class="ml-2.5 min-w-0"
         :ui="{
           list: 'flex-nowrap',
-          link: 'min-w-0 font-mono text-[13px] font-normal text-neutral-500 transition-colors hover:text-neutral-300',
+          link: 'min-w-0 font-mono text-sm font-normal text-neutral-500 transition-colors hover:text-neutral-300',
           linkLabel: 'min-w-0 truncate',
         }"
       >
         <template #separator>
-          <span class="font-mono text-[13px] text-neutral-500">/</span>
+          <span class="font-mono text-sm text-neutral-500">/</span>
         </template>
       </UBreadcrumb>
     </template>

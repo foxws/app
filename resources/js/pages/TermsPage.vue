@@ -18,7 +18,7 @@ import { Head } from '@inertiajs/vue3'
     <h1 class="font-sans text-3xl font-semibold tracking-tight text-neutral-50">Terms & Conditions</h1>
 
     <div
-      class="flex flex-col gap-4 font-sans text-[15px] leading-relaxed text-neutral-400 [&_a]:text-identity-500 [&_a]:underline [&_a]:underline-offset-2 [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-neutral-50"
+      class="flex flex-col gap-4 font-sans text-base leading-relaxed text-neutral-400 [&_a]:text-identity-500 [&_a]:underline [&_a]:underline-offset-2 [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-neutral-50"
     >
       <h2>Use at your own risk</h2>
       <p>

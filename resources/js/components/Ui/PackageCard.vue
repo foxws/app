@@ -27,7 +27,7 @@ defineProps<{
         <span class="font-sans text-xl font-semibold tracking-tight text-neutral-50">{{ name }}</span>
         <span
           v-if="role"
-          class="font-mono text-[9px] tracking-wider text-identity-500 uppercase"
+          class="font-mono text-xs tracking-wider text-identity-500 uppercase"
           >{{ role }}</span
         >
       </div>
@@ -37,10 +37,10 @@ defineProps<{
 
     <template #footer>
       <div class="flex items-center justify-between">
-        <span class="font-mono text-[11px] text-neutral-500">{{ slug }}</span>
+        <span class="font-mono text-xs text-neutral-500">{{ slug }}</span>
         <span
           v-if="version"
-          class="font-mono text-[11px] text-neutral-400"
+          class="font-mono text-xs text-neutral-400"
           >{{ version }}</span
         >
       </div>
