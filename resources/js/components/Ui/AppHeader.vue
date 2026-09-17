@@ -52,7 +52,7 @@ const searchOpen = ref(false)
         :ui="{
           list: 'flex-nowrap',
           link: 'min-w-0 font-mono text-sm font-normal text-neutral-500 transition-colors hover:text-neutral-300',
-          linkLabel: 'min-w-0 truncate',
+          linkLabel: 'min-w-0 truncate lowercase',
         }"
       >
         <template #separator>
