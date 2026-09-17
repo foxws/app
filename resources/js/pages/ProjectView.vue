@@ -60,6 +60,18 @@ defineProps<{
       Get started
     </UButton>
 
+    <UButton
+      v-if="project.source"
+      :to="project.source"
+      target="_blank"
+      block
+      variant="outline"
+      color="neutral"
+      class="justify-center rounded-lg py-2.5 font-sans text-sm font-medium lg:hidden"
+    >
+      Source ↗
+    </UButton>
+
     <ProseContent
       v-if="project.overview"
       :html="project.overview.html"
