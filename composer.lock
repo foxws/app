@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa7029608bb807c7ce9549da789ad5cf",
+    "content-hash": "e7be6dfc154613e88b18d913b64c430d",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1191,16 +1191,16 @@
         },
         {
             "name": "foxws/laravel-ddd",
-            "version": "0.0.4",
+            "version": "0.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-ddd.git",
-                "reference": "9c576b8d7f0c7be8f3132abf518c383f84755647"
+                "reference": "00d0d80b2d807f00d3d2913219a348e8a95ee851"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-ddd/zipball/9c576b8d7f0c7be8f3132abf518c383f84755647",
-                "reference": "9c576b8d7f0c7be8f3132abf518c383f84755647",
+                "url": "https://api.github.com/repos/foxws/laravel-ddd/zipball/00d0d80b2d807f00d3d2913219a348e8a95ee851",
+                "reference": "00d0d80b2d807f00d3d2913219a348e8a95ee851",
                 "shasum": ""
             },
             "require": {
@@ -1254,7 +1254,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-ddd/issues",
-                "source": "https://github.com/foxws/laravel-ddd/tree/0.0.4"
+                "source": "https://github.com/foxws/laravel-ddd/tree/0.0.5"
             },
             "funding": [
                 {
@@ -1262,20 +1262,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-15T14:41:19+00:00"
+            "time": "2026-09-16T18:57:42+00:00"
         },
         {
             "name": "foxws/laravel-docs",
-            "version": "v1.3.1",
+            "version": "v1.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-docs.git",
-                "reference": "7fe63d9a61a62e37ccdcbed1da1d872f2fad4136"
+                "reference": "72c6ccdda2db0377693b9cf67d55887800080ee1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/7fe63d9a61a62e37ccdcbed1da1d872f2fad4136",
-                "reference": "7fe63d9a61a62e37ccdcbed1da1d872f2fad4136",
+                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/72c6ccdda2db0377693b9cf67d55887800080ee1",
+                "reference": "72c6ccdda2db0377693b9cf67d55887800080ee1",
                 "shasum": ""
             },
             "require": {
@@ -1340,7 +1340,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-docs/issues",
-                "source": "https://github.com/foxws/laravel-docs/tree/v1.3.1"
+                "source": "https://github.com/foxws/laravel-docs/tree/v1.3.2"
             },
             "funding": [
                 {
@@ -1348,7 +1348,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-16T20:26:44+00:00"
+            "time": "2026-09-17T10:09:36+00:00"
         },
         {
             "name": "foxws/laravel-essentials",
@@ -13849,16 +13849,16 @@
         },
         {
             "name": "foxws/laravel-podman",
-            "version": "2.1.7",
+            "version": "2.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-podman.git",
-                "reference": "321145d2aaf1fed3a3179d294132a544cb12e4e2"
+                "reference": "8b27b0a67722bf8fd93eceb719985fb2a074976a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-podman/zipball/321145d2aaf1fed3a3179d294132a544cb12e4e2",
-                "reference": "321145d2aaf1fed3a3179d294132a544cb12e4e2",
+                "url": "https://api.github.com/repos/foxws/laravel-podman/zipball/8b27b0a67722bf8fd93eceb719985fb2a074976a",
+                "reference": "8b27b0a67722bf8fd93eceb719985fb2a074976a",
                 "shasum": ""
             },
             "require": {
@@ -13928,7 +13928,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-podman/issues",
-                "source": "https://github.com/foxws/laravel-podman/tree/2.1.7"
+                "source": "https://github.com/foxws/laravel-podman/tree/2.1.8"
             },
             "funding": [
                 {
@@ -13936,7 +13936,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-16T13:42:05+00:00"
+            "time": "2026-09-17T09:06:45+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -14305,16 +14305,16 @@
         },
         {
             "name": "laravel/boost",
-            "version": "v2.9.0",
+            "version": "v2.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/boost.git",
-                "reference": "ebe59d97cbc66b66f735e6ec7ff859233e7934e0"
+                "reference": "2da6cbfdc6399d69b49a2dfb1e4f4eaf6bb419f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/boost/zipball/ebe59d97cbc66b66f735e6ec7ff859233e7934e0",
-                "reference": "ebe59d97cbc66b66f735e6ec7ff859233e7934e0",
+                "url": "https://api.github.com/repos/laravel/boost/zipball/2da6cbfdc6399d69b49a2dfb1e4f4eaf6bb419f0",
+                "reference": "2da6cbfdc6399d69b49a2dfb1e4f4eaf6bb419f0",
                 "shasum": ""
             },
             "require": {
@@ -14367,7 +14367,7 @@
                 "issues": "https://github.com/laravel/boost/issues",
                 "source": "https://github.com/laravel/boost"
             },
-            "time": "2026-09-14T14:40:10+00:00"
+            "time": "2026-09-17T02:40:42+00:00"
         },
         {
             "name": "laravel/cloud-cli",
