@@ -31,7 +31,7 @@ const { app } = useAppearance()
 
     <span
       v-if="label"
-      class="font-mono text-[13px] text-neutral-50"
+      class="font-mono text-sm text-neutral-50"
     >
       {{ app }}
     </span>

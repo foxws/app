@@ -94,7 +94,7 @@ export default defineConfig(({ mode }) => {
           },
           pageHero: {
             slots: {
-              headline: 'font-mono text-[10px] font-normal tracking-[.18em] text-identity-500 uppercase',
+              headline: 'font-mono text-xs font-normal tracking-[.18em] text-identity-500 uppercase',
             },
           },
         },

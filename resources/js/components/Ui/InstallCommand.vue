@@ -16,7 +16,7 @@ const { copy, copied } = useClipboard({ source: computed(() => props.command), c
     </div>
     <button
       type="button"
-      class="shrink-0 border-l border-neutral-800 px-4 font-mono text-[11px] tracking-wider text-identity-400 uppercase"
+      class="shrink-0 border-l border-neutral-800 px-4 font-mono text-xs tracking-wider text-identity-400 uppercase"
       @click="copy()"
     >
       {{ copied ? 'Copied' : 'Copy' }}

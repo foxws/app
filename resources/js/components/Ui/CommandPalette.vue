@@ -92,8 +92,8 @@ watch(query, (term) => search(term))
         :placeholder="scope ? `Search ${scope}…` : 'Search…'"
         close
         :ui="{
-          itemDescription: 'truncate font-sans text-[11px] text-neutral-600 [&_mark]:bg-primary/15 [&_mark]:text-primary',
-          empty: 'font-sans text-[13px] text-neutral-500',
+          itemDescription: 'truncate font-sans text-xs text-neutral-600 [&_mark]:bg-primary/15 [&_mark]:text-primary',
+          empty: 'font-sans text-sm text-neutral-500',
         }"
         @close="open = false"
         @update:model-value="onSelect"
@@ -103,23 +103,25 @@ watch(query, (term) => search(term))
             <div class="flex min-w-0 flex-col gap-0.5">
               <span
                 v-if="item.labelHtml"
-                class="font-sans text-[13px] font-semibold text-neutral-50 [&_mark]:bg-primary/15 [&_mark]:text-primary"
+                class="font-sans text-sm font-semibold text-neutral-50 [&_mark]:bg-primary/15 [&_mark]:text-primary"
                 v-html="item.labelHtml"
               />
               <span
                 v-else
-                class="font-sans text-[13px] font-semibold text-neutral-50"
-              >{{ item.label }}</span>
+                class="font-sans text-sm font-semibold text-neutral-50"
+                >{{ item.label }}</span
+              >
 
               <span
                 v-if="item.suffixHtml"
-                class="font-sans text-[11px] text-neutral-500 [&_mark]:bg-primary/15 [&_mark]:text-primary"
+                class="font-sans text-xs text-neutral-500 [&_mark]:bg-primary/15 [&_mark]:text-primary"
                 v-html="item.suffixHtml"
               />
               <span
                 v-else-if="item.suffix"
-                class="font-sans text-[11px] text-neutral-500"
-              >{{ item.suffix }}</span>
+                class="font-sans text-xs text-neutral-500"
+                >{{ item.suffix }}</span
+              >
             </div>
           </div>
         </template>

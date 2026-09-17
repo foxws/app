@@ -29,7 +29,7 @@ defineProps<{
       icon="i-lucide-arrow-left"
       variant="link"
       color="neutral"
-      :ui="{ base: 'p-0 font-mono text-[11px] text-neutral-500 hover:text-neutral-300' }"
+      :ui="{ base: 'p-0 font-mono text-xs text-neutral-500 hover:text-neutral-300' }"
     >
       {{ document.project.name }}
     </UButton>

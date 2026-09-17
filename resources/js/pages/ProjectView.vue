@@ -55,7 +55,7 @@ defineProps<{
       :to="project.get_started"
       block
       size="lg"
-      class="rounded-lg bg-identity-500 py-3 font-sans text-[15px] font-semibold text-neutral-950 hover:bg-identity-400 lg:hidden"
+      class="rounded-lg bg-identity-500 py-3 font-sans text-base font-semibold text-neutral-950 hover:bg-identity-400 lg:hidden"
     >
       Get started
     </UButton>
