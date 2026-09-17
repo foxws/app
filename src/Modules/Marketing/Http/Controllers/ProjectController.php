@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Marketing\Http\Controllers;
 
-use Foxws\Docs\Models\Project;
+use Domain\Docs\Models\Project;
 use Inertia\Inertia;
 use Inertia\Response;
 use Modules\Marketing\Http\Props\ProjectDetailProp;

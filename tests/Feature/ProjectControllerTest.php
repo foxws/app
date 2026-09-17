@@ -228,6 +228,48 @@ test('rejects a non-string version query parameter', function () {
     $response->assertInvalid('version');
 });
 
+test('derives the source link from the github repository when metadata has no override', function () {
+    $project = ProjectFactory::new()->create([
+        'slug' => 'test-project',
+        'title' => 'Test Project',
+        'github_repository' => 'foxws/test-project',
+    ]);
+    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+
+    $response = $this->get('/test-project');
+
+    $response->assertOk();
+
+    expect($response->inertiaProps('project')['source'])->toBe('https://github.com/foxws/test-project');
+});
+
+test('prefers a metadata source override over the github repository', function () {
+    $project = ProjectFactory::new()->create([
+        'slug' => 'test-project',
+        'title' => 'Test Project',
+        'github_repository' => 'foxws/test-project',
+        'metadata' => ['source' => 'https://git.example.com/foxws/test-project'],
+    ]);
+    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+
+    $response = $this->get('/test-project');
+
+    $response->assertOk();
+
+    expect($response->inertiaProps('project')['source'])->toBe('https://git.example.com/foxws/test-project');
+});
+
+test('omits the source link for a local-driven project with no metadata override', function () {
+    $project = ProjectFactory::new()->local()->create(['slug' => 'test-project', 'title' => 'Test Project']);
+    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+
+    $response = $this->get('/test-project');
+
+    $response->assertOk();
+
+    expect($response->inertiaProps('project')['source'])->toBeNull();
+});
+
 test('omits the "used by" card when the index has no used_by metadata, or it is missing a name or href', function () {
     $project = ProjectFactory::new()->create([
         'slug' => 'test-project',

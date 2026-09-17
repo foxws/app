@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Marketing\Http\Props;
 
-use Foxws\Docs\Enums\ProjectDriver;
-use Foxws\Docs\Models\Project;
+use Domain\Docs\Models\Project;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
 use Modules\Marketing\Support\DocsNavigation;
@@ -70,7 +69,7 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'nav' => DocsNavigation::build($this->project, $documents, $versionParam),
             'versions' => $this->project->versions->map(fn ($v) => ['name' => $v->name, 'is_default' => $v->is_default])->all(),
             'version' => $version?->name,
-            'github' => $this->project->driver === ProjectDriver::Github ? $this->project->sourceLocation() : null,
+            'source' => $this->project->sourceUrl(),
             'package' => $package !== [] ? $package : null,
             'used_by' => isset($usedBy['name'], $usedBy['href']) ? $usedBy : null,
             'get_started' => $firstDocument ? DocsNavigation::pathFor($this->project, $firstDocument, $overview, $versionParam) : null,

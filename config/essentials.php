@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
+use Domain\Docs\Models\Project;
 use Domain\Media\Models\Media;
 use Domain\Tags\Models\Tag;
 use Domain\Users\Models\User;
 use Foxws\Docs\Models\Document;
-use Foxws\Docs\Models\Project;
 use Foxws\Docs\Models\Version;
 use Foxws\Essentials\Configurables\AggressivePrefetching;
 use Foxws\Essentials\Configurables\AutomaticallyEagerLoadRelationships;
