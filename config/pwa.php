@@ -78,13 +78,13 @@ return [
         'id' => env('PWA_ID', '/'),
         'name' => env('APP_NAME', 'Foxws'),
         'short_name' => env('PWA_SHORT_NAME', 'Foxws'),
-        'description' => env('PWA_DESCRIPTION', ''),
+        'description' => env('PWA_DESCRIPTION', 'Building with the Laravel ecosystem — PHP, Inertia.js, Livewire, and modern JS/TypeScript.'),
         'start_url' => env('PWA_START_URL', '/'),
         'scope' => env('PWA_SCOPE', '/'),
         'display_override' => ['standalone', 'minimal-ui'],
         'display' => env('PWA_DISPLAY', 'standalone'),
-        'background_color' => env('PWA_BACKGROUND_COLOR', '#18181B'),
-        'theme_color' => env('PWA_THEME_COLOR', '#18181B'),
+        'background_color' => env('PWA_BACKGROUND_COLOR', '#0A0A0A'),
+        'theme_color' => env('PWA_THEME_COLOR', '#0A0A0A'),
         'lang' => env('PWA_LANG', 'en'),
         'dir' => env('PWA_DIR', 'ltr'),
     ],
@@ -111,7 +111,7 @@ return [
         ],
         [
             'disk' => env('PWA_ICON_DISK', null),
-            'path' => env('PWA_ICON_DESKTOP_PATH', '/storage/images/icons/icon-512x512.png'),
+            'path' => env('PWA_ICON_DESKTOP_PATH', '/images/icons/icon-512x512.png'),
             'sizes' => env('PWA_ICON_DESKTOP_SIZES', '512x512'),
             'type' => env('PWA_ICON_DESKTOP_TYPE', 'image/png'),
         ],
@@ -120,7 +120,7 @@ return [
     /**
      * The Apple Touch Icon is used by iOS devices when a user adds the web application to their home screen.
      */
-    'apple_touch_icon' => (string) env('PWA_APPLE_TOUCH_ICON', '/storage/images/icons/apple-touch-icon.png'),
+    'apple_touch_icon' => (string) env('PWA_APPLE_TOUCH_ICON', '/images/icons/apple-touch-icon.png'),
 
     /*
     |--------------------------------------------------------------------------
