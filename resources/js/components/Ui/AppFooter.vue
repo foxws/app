@@ -8,7 +8,7 @@ const year = new Date().getFullYear()
       root: 'border-t border-neutral-900',
       container:
         'flex flex-col items-center justify-center gap-3 px-4 py-5 font-mono text-xs tracking-wider text-neutral-500 uppercase sm:flex-row sm:justify-between sm:px-7',
-      left: 'order-1',
+      left: 'order-1 mt-0',
       center: 'order-2 mt-0',
       right: 'order-3',
     }"
