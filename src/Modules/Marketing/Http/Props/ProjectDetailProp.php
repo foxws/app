@@ -65,6 +65,11 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
 
         $firstDocument = DocsNavigation::firstDocument($navDocuments);
 
+        // The overview reads as the first page in the project, so it only
+        // ever surrounds forward — into the first real document, same as
+        // "get started" — never back.
+        $next = $firstDocument ? ['title' => $firstDocument->title, 'path' => DocsNavigation::pathFor($this->project, $firstDocument, $overview, $versionParam)] : null;
+
         return [
             'key' => $this->project->slug,
             'name' => $this->project->title,
@@ -80,6 +85,7 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'package' => $package !== [] ? $package : null,
             'used_by' => isset($usedBy['name'], $usedBy['href']) ? $usedBy : null,
             'get_started' => $firstDocument ? DocsNavigation::pathFor($this->project, $firstDocument, $overview, $versionParam) : null,
+            'surround' => [null, $next],
         ];
     }
 }

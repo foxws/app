@@ -69,6 +69,7 @@ export type DocsProject = {
   package: DocsPackageInfo | null
   used_by: DocsUsedBy | null
   get_started: string | null
+  surround: (DocsSurroundLink | null)[]
 }
 
 export type DocsDocument = {

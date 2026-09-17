@@ -40,6 +40,35 @@ test('renders the project overview document as the page body while keeping it in
         ->and($project['get_started'])->toBe(route('document', ['test-project', 'installation'], absolute: false));
 });
 
+test('surrounds the overview with only a next link, into the first document', function () {
+    $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
+    $version = VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+
+    DocumentFactory::new()->create([
+        'version_id' => $version->id,
+        'slug' => 'index',
+        'title' => 'Introduction',
+        'body' => '# Test Project',
+    ]);
+    DocumentFactory::new()->create([
+        'version_id' => $version->id,
+        'slug' => 'installation',
+        'title' => 'Installation',
+        'order' => 1,
+        'body' => "# Installation\n\nRun the installer.\n",
+    ]);
+
+    $response = $this->get('/test-project');
+
+    $response->assertOk();
+
+    $project = $response->inertiaProps('project');
+
+    expect($project['surround'][0])->toBeNull()
+        ->and($project['surround'][1])
+        ->toBe(['title' => 'Installation', 'path' => route('document', ['test-project', 'installation'], absolute: false)]);
+});
+
 test('omits the "get started" link when the project has no other documents besides its overview', function () {
     $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
     $version = VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);

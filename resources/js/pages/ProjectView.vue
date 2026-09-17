@@ -8,6 +8,8 @@ import AppLayout from '@/layouts/AppLayout.vue'
 import DocsLayout from '@/layouts/DocsLayout.vue'
 import type { DocsProject } from '@/types'
 import { Head } from '@inertiajs/vue3'
+import type { ContentSurroundLink } from '@nuxt/ui/components/content/ContentSurround.vue'
+import UContentSurround from '@nuxt/ui/components/content/ContentSurround.vue'
 
 defineOptions({ layout: [AppLayout, DocsLayout] })
 
@@ -76,5 +78,7 @@ defineProps<{
       v-if="project.overview"
       :html="project.overview.html"
     />
+
+    <UContentSurround :surround="project.surround as unknown as ContentSurroundLink[]" />
   </div>
 </template>
