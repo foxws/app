@@ -16,6 +16,7 @@ const year = new Date().getFullYear()
     <template #left>
       <span>foxws.nl</span>
     </template>
+
     <UButton
       to="https://github.com/foxws"
       variant="ghost"
@@ -24,8 +25,16 @@ const year = new Date().getFullYear()
       icon="i-lucide-github"
       external
     />
+
     <template #right>
-      <span>MIT licence · {{ year }}</span>
+      <ULink
+        to="/terms"
+        active-class="text-inhertit"
+      >
+        Terms
+      </ULink>
+      ·
+      <span>© {{ year }}</span>
     </template>
   </UFooter>
 </template>
