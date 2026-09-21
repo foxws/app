@@ -1,7 +1,12 @@
 User-agent: *
-Disallow: /api/
+Disallow: /_boost/
 Disallow: /_inertia/
+Disallow: /api/
+Disallow: /broadcasting/
+Disallow: /horizon/
 Disallow: /livewire/
+Disallow: /storage/
+Disallow: /up/
 
 User-agent: ia_archiver
 Disallow: /
