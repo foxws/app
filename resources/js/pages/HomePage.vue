@@ -36,8 +36,6 @@ defineProps<{
     as="section"
     class="flex flex-col gap-3.5 px-4 py-6 sm:px-7"
   >
-    <span class="font-mono text-xs tracking-wider text-neutral-500 uppercase">Sorted by latest updated</span>
-
     <div
       id="packages"
       class="grid grid-cols-1 gap-3.5 sm:grid-cols-2"
