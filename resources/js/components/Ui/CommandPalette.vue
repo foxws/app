@@ -17,11 +17,18 @@ const query = defineModel<string>('searchTerm', { default: '' })
 
 interface SearchResult {
   label: string
+  labelHtml?: string
   suffix: string
+  suffixHtml?: string
   prefix: string
   description: string
+  descriptionHtml?: string
   to: string
 }
+
+// Kept in sync with the backend's own `query` => ['min:2', ...] rule
+// (SearchController) — below this, there's nothing to search yet.
+const minQueryLength = 2
 
 const results = ref<SearchResult[]>([])
 const loading = ref(false)
@@ -31,7 +38,7 @@ let controller: AbortController | undefined
 const search = useDebounceFn(async (term: string) => {
   controller?.abort()
 
-  if (term.trim().length < 2) {
+  if (term.trim().length < minQueryLength) {
     loading.value = false
     results.value = []
 
@@ -128,7 +135,10 @@ watch(query, (term) => search(term))
         </template>
 
         <template #empty="{ searchTerm }">
-          <span v-if="searchTerm">No results for "{{ searchTerm }}"</span>
+          <span v-if="searchTerm.trim().length > 0 && searchTerm.trim().length < minQueryLength">
+            Type at least {{ minQueryLength }} characters to search
+          </span>
+          <span v-else-if="searchTerm">No results for "{{ searchTerm }}"</span>
           <span v-else>Search for a project, package, or docs detail</span>
         </template>
       </UCommandPalette>

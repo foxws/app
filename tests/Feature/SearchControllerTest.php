@@ -30,12 +30,35 @@ test('searches documents by title', function () {
     expect($response->json())->toBe([
         [
             'label' => 'Installation Guide',
+            'labelHtml' => '<mark>Installation</mark> Guide',
             'suffix' => 'Test Project — Getting Started',
+            'suffixHtml' => null,
             'prefix' => 'TEST-PROJECT',
             'description' => 'Run the installer to get started quickly.',
+            'descriptionHtml' => null,
             'to' => route('document', ['test-project', 'installation'], absolute: false),
         ],
     ]);
+});
+
+test('highlights the query wherever it matches in the result', function () {
+    $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
+    $version = VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+
+    DocumentFactory::new()->create([
+        'version_id' => $version->id,
+        'title' => 'Deploying with Podman',
+        'section' => 'Podman',
+        'body' => 'Learn how podman handles rootless containers.',
+    ]);
+
+    $response = $this->getJson('/api/v1/search?query=podman');
+
+    $response->assertOk();
+
+    expect($response->json('0.labelHtml'))->toBe('Deploying with <mark>Podman</mark>')
+        ->and($response->json('0.suffixHtml'))->toBe('Test Project — <mark>Podman</mark>')
+        ->and($response->json('0.descriptionHtml'))->toBe('Learn how <mark>podman</mark> handles rootless containers.');
 });
 
 test('excludes documents marked as not searchable', function () {
