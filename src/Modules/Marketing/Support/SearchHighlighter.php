@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Marketing\Support;
 
+use Illuminate\Support\Str;
+
 /**
  * Wraps a search query's matches in <mark> for the command palette's
  * highlighted result text, rendered client-side via v-html.
@@ -17,9 +19,9 @@ final class SearchHighlighter
      */
     public static function highlight(string $text, ?string $query): ?string
     {
-        $query = trim((string) $query);
+        $query = (string) Str::of((string) $query)->stripTags()->squish();
 
-        if ($query === '' || $text === '') {
+        if (blank($query) || blank($text)) {
             return null;
         }
 
