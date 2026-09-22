@@ -18,7 +18,7 @@ final class HomeController
             'packages' => fn () => new ProjectSummaryProp(
                 Project::with('versions')
                     ->withMax('versions', 'last_synced_at')
-                    ->orderBy('name')
+                    ->orderBy('title')
                     ->get()
             ),
         ]);
