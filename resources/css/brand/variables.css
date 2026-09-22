@@ -17,13 +17,43 @@
   --font-mono: 'JetBrains Mono', monospace;
   --ui-header-height: --spacing(16);
   --ui-container: 90rem;
+  --ui-color-primary-50: var(--color-identity-50);
+  --ui-color-primary-100: var(--color-identity-100);
+  --ui-color-primary-200: var(--color-identity-200);
+  --ui-color-primary-300: var(--color-identity-300);
+  --ui-color-primary-400: var(--color-identity-400);
+  --ui-color-primary-500: var(--color-identity-500);
+  --ui-color-primary-600: var(--color-identity-600);
+  --ui-color-primary-700: var(--color-identity-700);
+  --ui-color-primary-800: var(--color-identity-800);
+  --ui-color-primary-900: var(--color-identity-900);
+  --ui-color-primary-950: var(--color-identity-950);
+  --ui-color-secondary-50: var(--color-zinc-50);
+  --ui-color-secondary-100: var(--color-zinc-100);
+  --ui-color-secondary-200: var(--color-zinc-200);
+  --ui-color-secondary-300: var(--color-zinc-300);
+  --ui-color-secondary-400: var(--color-zinc-400);
+  --ui-color-secondary-500: var(--color-zinc-500);
+  --ui-color-secondary-600: var(--color-zinc-600);
+  --ui-color-secondary-700: var(--color-zinc-700);
+  --ui-color-secondary-800: var(--color-zinc-800);
+  --ui-color-secondary-900: var(--color-zinc-900);
+  --ui-color-secondary-950: var(--color-zinc-950);
+  --ui-color-neutral-50: var(--color-zinc-50);
+  --ui-color-neutral-100: var(--color-zinc-100);
+  --ui-color-neutral-200: var(--color-zinc-200);
+  --ui-color-neutral-300: var(--color-zinc-300);
+  --ui-color-neutral-400: var(--color-zinc-400);
+  --ui-color-neutral-500: var(--color-zinc-500);
+  --ui-color-neutral-600: var(--color-zinc-600);
+  --ui-color-neutral-700: var(--color-zinc-700);
+  --ui-color-neutral-800: var(--color-zinc-800);
+  --ui-color-neutral-900: var(--color-zinc-900);
+  --ui-color-neutral-950: var(--color-zinc-950);
   --ui-bg: var(--ui-color-neutral-950);
   --ui-sidebar: var(--ui-color-neutral-950);
   --ui-primary: var(--ui-color-primary-500);
   --ui-secondary: var(--ui-color-secondary-400);
   --ui-border-accented: var(--ui-color-neutral-800);
-
-  /* Ink sitting directly on a solid --ui-primary fill (e.g. the accent hero,
-     the primary button) is always near-black, never white/alpha-faded. */
   --ui-primary-ink: var(--ui-color-neutral-950);
 }
