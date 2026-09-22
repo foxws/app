@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6241846597e32b8b14fad707943ccdaf",
+    "content-hash": "0e6ff5671522639e86dc4de47d7c8bf0",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.395.6",
+            "version": "3.395.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "f88c98a1d678c8b26dab0385af485eb7e2a22bf6"
+                "reference": "575425a1c7c1dabb808badc7995e67874cba102a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/f88c98a1d678c8b26dab0385af485eb7e2a22bf6",
-                "reference": "f88c98a1d678c8b26dab0385af485eb7e2a22bf6",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/575425a1c7c1dabb808badc7995e67874cba102a",
+                "reference": "575425a1c7c1dabb808badc7995e67874cba102a",
                 "shasum": ""
             },
             "require": {
@@ -153,9 +153,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.395.6"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.395.7"
             },
-            "time": "2026-09-18T18:54:36+00:00"
+            "time": "2026-09-21T18:22:34+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -1264,16 +1264,16 @@
         },
         {
             "name": "foxws/laravel-docs",
-            "version": "v1.3.2",
+            "version": "v1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-docs.git",
-                "reference": "72c6ccdda2db0377693b9cf67d55887800080ee1"
+                "reference": "75a85d631e96d7f56b4c83a74627f6fb67be4d0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/72c6ccdda2db0377693b9cf67d55887800080ee1",
-                "reference": "72c6ccdda2db0377693b9cf67d55887800080ee1",
+                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/75a85d631e96d7f56b4c83a74627f6fb67be4d0a",
+                "reference": "75a85d631e96d7f56b4c83a74627f6fb67be4d0a",
                 "shasum": ""
             },
             "require": {
@@ -1338,7 +1338,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-docs/issues",
-                "source": "https://github.com/foxws/laravel-docs/tree/v1.3.2"
+                "source": "https://github.com/foxws/laravel-docs/tree/v1.3.3"
             },
             "funding": [
                 {
@@ -1346,7 +1346,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-17T10:09:36+00:00"
+            "time": "2026-09-22T09:31:35+00:00"
         },
         {
             "name": "foxws/laravel-essentials",
