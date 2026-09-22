@@ -94,6 +94,7 @@ watch(query, (term) => search(term))
         :ui="{
           itemDescription: 'truncate font-sans text-xs text-neutral-600 [&_mark]:bg-primary/15 [&_mark]:text-primary',
           empty: 'font-sans text-sm text-neutral-500',
+          itemTrailing: 'hidden',
         }"
         @close="open = false"
         @update:model-value="onSelect"
