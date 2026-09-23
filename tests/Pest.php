@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
+use Spatie\ResponseCache\Facades\ResponseCache;
 use Tests\CreatesApplication;
 
 expect()
@@ -26,6 +27,13 @@ uses(TestCase::class, CreatesApplication::class, RefreshDatabase::class)
         Notification::fake();
         Queue::fake();
         Storage::fake();
+
+        // RefreshDatabase rolls back between tests, but the response cache
+        // store lives outside that transaction — without this, a route
+        // cached by one test (e.g. every ProjectControllerTest case hits
+        // the same /test-project URL) leaks its stale response into every
+        // later test against that same URL.
+        ResponseCache::clear();
 
         // Setup database
         $this->seed();

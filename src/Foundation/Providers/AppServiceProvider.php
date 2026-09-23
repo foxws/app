@@ -9,25 +9,18 @@ use Illuminate\Console\Events\CommandFinished;
 use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
-use Infrastructure\Filesystem\FilesystemManager;
 use Spatie\ResponseCache\Facades\ResponseCache;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->registerFilesystem();
         $this->registerTelescope();
     }
 
     public function boot(): void
     {
         $this->bootResponseCacheInvalidation();
-    }
-
-    protected function registerFilesystem(): void
-    {
-        $this->app->singleton('filesystem', fn ($app) => new FilesystemManager($app));
     }
 
     protected function registerTelescope(): void
