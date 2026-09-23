@@ -15,12 +15,12 @@ final class HomeController
     public function __invoke(Request $request): Response
     {
         return Inertia::render('HomePage', [
-            'packages' => fn () => new ProjectSummaryProp(
+            'packages' => Inertia::once(fn () => new ProjectSummaryProp(
                 Project::with('versions')
                     ->withMax('versions', 'last_synced_at')
                     ->orderBy('title')
                     ->get()
-            ),
+            )),
         ]);
     }
 }
