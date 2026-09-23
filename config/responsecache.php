@@ -1,9 +1,9 @@
 <?php
 
 use Spatie\ResponseCache\CacheProfiles\CacheAllSuccessfulGetRequests;
-use Spatie\ResponseCache\Hasher\DefaultHasher;
 use Spatie\ResponseCache\Replacers\CsrfTokenReplacer;
 use Spatie\ResponseCache\Serializers\JsonSerializer;
+use Support\ResponseCache\InertiaAwareHasher;
 
 return [
     /*
@@ -107,7 +107,7 @@ return [
      * This class is responsible for generating a hash for
      * a request. Used for looking up cached responses.
      */
-    'hasher' => DefaultHasher::class,
+    'hasher' => InertiaAwareHasher::class,
 
     /*
      * This class is responsible for serializing responses.
