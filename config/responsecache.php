@@ -1,9 +1,9 @@
 <?php
 
-use Spatie\ResponseCache\CacheProfiles\CacheAllSuccessfulGetRequests;
 use Spatie\ResponseCache\Hasher\DefaultHasher;
 use Spatie\ResponseCache\Replacers\CsrfTokenReplacer;
 use Spatie\ResponseCache\Serializers\JsonSerializer;
+use Support\ResponseCache\InertiaAwareCacheProfile;
 
 return [
     /*
@@ -101,7 +101,7 @@ return [
      * By default all successful GET-requests will be cached.
      * You can provide your own by using the CacheProfile.
      */
-    'cache_profile' => CacheAllSuccessfulGetRequests::class,
+    'cache_profile' => InertiaAwareCacheProfile::class,
 
     /*
      * This class is responsible for generating a hash for
