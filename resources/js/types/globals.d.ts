@@ -1,13 +1,6 @@
-import type { CollectionItem, EchoConfig, FlashData, OptionItem, User } from '@/types'
+import type { CollectionItem, FlashData, OptionItem, User } from '@/types'
 import type { Page } from '@inertiajs/vue3'
 import type { SelectMenuItem } from '@nuxt/ui'
-import type Pusher from 'pusher-js'
-
-declare global {
-  interface Window {
-    Pusher: typeof Pusher
-  }
-}
 
 declare module '@inertiajs/core' {
   export interface InertiaConfig {
@@ -23,7 +16,6 @@ declare module '@inertiajs/core' {
     readonly tags: OptionItem[] | undefined
     readonly search: string | null | undefined
     readonly auth: User | undefined
-    readonly echo: EchoConfig | undefined
     readonly collections: CollectionItem[] | undefined
     readonly unread: number
   }

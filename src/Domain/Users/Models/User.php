@@ -5,14 +5,11 @@ declare(strict_types=1);
 namespace Domain\Users\Models;
 
 use Database\Factories\UserFactory;
-use Domain\Media\Concerns\InteractsWithMedia;
 use Domain\Shared\Casts\AsDateTime;
 use Domain\Users\Collections\UserCollection;
 use Domain\Users\QueryBuilders\UserQueryBuilder;
 use Domain\Users\States\UserState;
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\BroadcastsEvents;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -21,24 +18,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
-use Laravel\Sanctum\HasApiTokens;
 use Laravel\Scout\Searchable;
-use Spatie\Image\Enums\Fit;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\ModelStates\HasStates;
 use Spatie\Permission\Traits\HasRoles;
-use Support\MediaLibrary\TemporaryUrls;
 
-class User extends Authenticatable implements HasMedia, MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use BroadcastsEvents;
-    use HasApiTokens;
     use HasFactory;
     use HasRoles;
     use HasStates;
     use HasUlids;
-    use InteractsWithMedia;
     use Notifiable;
     use Searchable;
     use SoftDeletes;
@@ -109,34 +98,6 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         return ['api', 'web'];
     }
 
-    public function registerMediaCollections(): void
-    {
-        $this
-            ->addMediaCollection('avatar')
-            ->useDisk('conversions')
-            ->storeConversionsOnDisk('conversions')
-            ->singleFile()
-            ->withResponsiveImages()
-            ->acceptsMimeTypes([
-                'image/avif',
-                'image/gif',
-                'image/jpeg',
-                'image/jpg',
-                'image/png',
-                'image/svg+xml',
-                'image/tiff',
-                'image/webp',
-            ]);
-    }
-
-    public function registerMediaConversions(?Media $media = null): void
-    {
-        $this
-            ->addMediaConversion('thumb')
-            ->fit(Fit::Stretch, 1280, 720)
-            ->sharpen(10);
-    }
-
     public static function findFromUlid(User|string $value): ?User
     {
         if ($value instanceof User) {
@@ -144,44 +105,6 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         }
 
         return User::query()->firstWhere('ulid', $value);
-    }
-
-    /**
-     * @return array<int, Channel>
-     */
-    public function broadcastOn(string $event): array
-    {
-        return [$this];
-    }
-
-    public function broadcastChannel(): string
-    {
-        return 'users.'.$this->getRouteKey();
-    }
-
-    public function broadcastAs(string $event): string
-    {
-        return "user.{$event}";
-    }
-
-    public function broadcastWith(string $event): array
-    {
-        return ['id' => $this->getRouteKey()];
-    }
-
-    public function broadcastAfterCommit(): bool
-    {
-        return true;
-    }
-
-    public function broadcastQueue(): string
-    {
-        return 'broadcasts';
-    }
-
-    public function receivesBroadcastNotificationsOn(): string
-    {
-        return $this->broadcastChannel();
     }
 
     public function toSearchableArray(): array
@@ -206,26 +129,6 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
     public function isSuperAdmin(): bool
     {
         return $this->hasRole('super-admin');
-    }
-
-    public function thumbnailUrl(): ?string
-    {
-        $media = $this->getFirstMedia('avatar');
-
-        if (! $media) {
-            return null;
-        }
-
-        $media->setRelation('model', $this);
-
-        return rescue(fn () => TemporaryUrls::make($media)->getUrl('thumb'));
-    }
-
-    protected function avatar(): Attribute
-    {
-        return Attribute::make(
-            get: fn (): ?string => $this->thumbnailUrl(),
-        )->shouldCache();
     }
 
     protected function assignedRoles(): Attribute

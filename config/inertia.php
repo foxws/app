@@ -156,7 +156,7 @@ return [
 
         'enabled' => env('INERTIA_DEVTOOLS_ENABLED'),
 
-        'except' => ['telescope*', 'horizon*', '_inertia/devtools*'],
+        'except' => ['telescope*', '_inertia/devtools*'],
 
         'storage' => [
 

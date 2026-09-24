@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Domain\Media\Models\Media;
 use Domain\Tags\Models\Tag;
 use Domain\Users\Models\User;
 use Foxws\Docs\Models\Document;
@@ -60,7 +59,6 @@ return [
 
     'morph_map' => env('ESSENTIALS_MORPH_MAP', [
         'document' => Document::class,
-        'media' => Media::class,
         'project' => Project::class,
         'tag' => Tag::class,
         'user' => User::class,

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use Domain\Users\Commands\CreateUserCommand;
 use Foundation\Http\Middlewares\AddCspHeaders;
-use Foundation\Http\Middlewares\AddHorizonCspNonce;
 use Foundation\Http\Middlewares\AddTelescopeCspNonce;
 use Foundation\Http\Middlewares\EnsureRequestHasPrivateSubnet;
 use Foundation\Http\Middlewares\SetCacheHeaders;
@@ -14,8 +13,6 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request;
-use Laravel\Sanctum\Http\Middleware\CheckAbilities;
-use Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Spatie\Permission\Middleware\RoleMiddleware;
 use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
@@ -27,7 +24,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
         api: __DIR__.'/../routes/api.php',
-        channels: __DIR__.'/../routes/channels.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
@@ -44,11 +40,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Global middleware aliases for convenient usage in routes and controllers
         $middleware->alias([
-            'abilities' => CheckAbilities::class,
-            'ability' => CheckForAnyAbility::class,
             'cache' => SetCacheHeaders::class,
             'cache.bypass' => DoNotCacheResponse::class,
-            'csp.horizon' => AddHorizonCspNonce::class,
             'csp.telescope' => AddTelescopeCspNonce::class,
             'private' => EnsureRequestHasPrivateSubnet::class,
             'precognitive' => HandlePrecognitiveRequests::class,
@@ -69,8 +62,6 @@ return Application::configure(basePath: dirname(__DIR__))
             CacheResponse::class,
         ]);
 
-        // Sanctum middleware for API authentication and rate limiting
-        $middleware->statefulApi();
         $middleware->throttleWithRedis();
         $middleware->redirectGuestsTo(fn () => route('login'));
     })

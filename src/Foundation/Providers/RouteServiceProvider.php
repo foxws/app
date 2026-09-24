@@ -15,7 +15,6 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureRateLimits();
-        $this->configureResourceParameters();
         $this->configureRoutePatterns();
     }
 
@@ -26,20 +25,6 @@ class RouteServiceProvider extends ServiceProvider
                 ? Limit::perMinute(120)->by($request->user()->getKey())
                 : Limit::perMinute(30)->by($request->ip());
         });
-
-        RateLimiter::for('vod', function (Request $request) {
-            return $request->user()
-                ? Limit::perMinute(240)->by($request->user()->getKey())
-                : Limit::perMinute(240)->by($request->ip());
-        });
-    }
-
-    protected function configureResourceParameters(): void
-    {
-        Route::resourceParameters([
-            'collections' => 'group',
-            'media' => 'media',
-        ]);
     }
 
     protected function configureRoutePatterns(): void
