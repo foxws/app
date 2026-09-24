@@ -54,5 +54,11 @@ it('does not serve a cached full-page document to an Inertia navigation for the 
         'X-Requested-With' => 'XMLHttpRequest',
     ]);
 
-    $response->assertOk()->assertHeaderMissing('X-Cache-Status')->assertInertia();
+    // assertInertia() reads view data via assertViewHas('page'), which only
+    // exists on the full-document response — not this JSON one — so assert
+    // directly on the JSON page object instead.
+    $response->assertOk()
+        ->assertHeaderMissing('X-Cache-Status')
+        ->assertHeader('X-Inertia', 'true')
+        ->assertJsonPath('component', 'HomePage');
 });
