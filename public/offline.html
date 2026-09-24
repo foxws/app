@@ -89,7 +89,7 @@
           const response = await fetch(location.href, { method: "HEAD", cache: "no-store" });
 
           if (response.ok) {
-            location.reload();
+            location.replace("/");
             return;
           }
         } catch {
@@ -111,7 +111,7 @@
         fetch(location.href, { method: "HEAD", cache: "no-store" })
           .then((response) => {
             if (response.ok) {
-              location.reload();
+              location.replace("/");
             } else {
               retryButton.disabled = false;
               scheduleNext();
