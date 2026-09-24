@@ -38,12 +38,6 @@ class HandleInertiaRequests extends Middleware
             'app' => fn (): string => Config::string('app.name', 'Laravel'),
             'locales' => fn (): Options => Options::forEnum(Locale::class),
             'languages' => fn (): Options => Options::forEnum(Language::class),
-            'echo' => fn (): array => [
-                'key' => Config::string('reverb.apps.apps.0.options.wsKey', ''),
-                'host' => Config::string('reverb.apps.apps.0.options.wsHost', 'localhost'),
-                'port' => Config::integer('reverb.apps.apps.0.options.wsPort', 6001),
-                'scheme' => Config::string('reverb.apps.apps.0.options.wsScheme', 'http'),
-            ],
         ]);
     }
 

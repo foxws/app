@@ -8,7 +8,6 @@
     "mcp": true,
     "nightwatch": false,
     "packages": [
-        "spatie/laravel-medialibrary",
         "spatie/laravel-permission",
         "spatie/laravel-responsecache",
         "spatie/guidelines-skills",
@@ -24,7 +23,6 @@
         "fortify-development",
         "laravel-best-practices",
         "testing-best-practices",
-        "configuring-horizon",
         "octane-development",
         "scout-development",
         "wayfinder-development",
@@ -36,7 +34,6 @@
         "laravel-ddd-development",
         "docs-development",
         "laravel-essentials-development",
-        "medialibrary-development",
         "laravel-permission-development",
         "responsecache-development",
         "podman-lpod",

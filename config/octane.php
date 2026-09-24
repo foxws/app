@@ -227,9 +227,9 @@ return [
     | Extra Caddy Sites
     |--------------------------------------------------------------------------
     |
-    | Sibling services (S3/rustfs, Reverb, ...) run on the same internal
-    | "foxws" network as this container, so FrankenPHP's embedded Caddy can
-    | reverse proxy them directly by hostname instead of each one opening
+    | Sibling services run on the same internal "foxws" network as this
+    | container, so FrankenPHP's embedded Caddy can reverse proxy them
+    | directly by hostname instead of each one opening
     | its own host port and needing its own reverse proxy entry upstream.
     | Add a service by extending the map below with its public hostname
     | and internal "host:port" upstream -- nothing else needs to change.
@@ -251,8 +251,6 @@ return [
             // Port must match the "--port" passed to "octane:frankenphp"
             // in APP_COMMAND (see the frankenphp-octane Containerfile).
             'CADDY_EXTRA_CONFIG' => PodmanCaddySites::render([
-                PodmanCaddySites::hostFromUrl((string) env('AWS_URL')) => PodmanCaddySites::hostPortFromUrl((string) env('AWS_ENDPOINT')),
-                (string) env('VITE_REVERB_HOST', env('REVERB_HOST')) => PodmanCaddySites::hostPort(env('REVERB_HOST'), env('REVERB_PORT', 6001)),
                 (string) env('MAILPIT_UI_HOST') => PodmanCaddySites::hostPort(env('MAIL_HOST'), 8025),
             ], (int) env('OCTANE_PORT', 8000)),
         ],

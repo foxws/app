@@ -1,4 +1,4 @@
-import type { AvatarProps, BadgeProps, SelectItem } from '@nuxt/ui'
+import type { BadgeProps, SelectItem } from '@nuxt/ui'
 
 export type DocsNavItem = {
   title: string
@@ -82,13 +82,6 @@ export type DocsDocument = {
   surround: (DocsSurroundLink | null)[]
 }
 
-export type EchoConfig = {
-  readonly key: string
-  readonly host: string
-  readonly port: number
-  readonly scheme: string
-}
-
 export type FlashType = 'success' | 'error' | 'warning' | 'info' | 'primary'
 
 export type FlashData = {
@@ -149,7 +142,6 @@ export type Paginator = {
 export type User = Model & {
   name: string
   email?: string
-  avatar?: AvatarProps['src'] | null
   roles?: string[] | null
   permissions?: string[] | null
   settings?: UserSettings

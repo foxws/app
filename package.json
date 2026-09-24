@@ -18,11 +18,8 @@
         "@iconify/vue": "^5.0.2",
         "@inertiajs/vue3": "^3.7.1",
         "@internationalized/date": "^3.12.4",
-        "@laravel/echo-vue": "^2.5.0",
         "@nuxt/ui": "^4.11.1",
         "@vueuse/core": "^15.0.0",
-        "laravel-echo": "^2.5.0",
-        "pusher-js": "^8.6.0",
         "tailwindcss": "^4.3.3",
         "vue": "^3.5.43"
     },
@@ -56,8 +53,5 @@
         "vite": "^8.3.0",
         "vitest": "^5.0.1",
         "vue-tsc": "^3.3.11"
-    },
-    "optionalDependencies": {
-        "@laravel/multiplex": "^0.4.3"
     }
 }
