@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Domain\Users\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 beforeEach(function () {
     config(['responsecache.debug.enabled' => true]);
@@ -49,6 +50,7 @@ it('does not serve a cached full-page document to an Inertia navigation for the 
     // response overlay.
     $response = $this->get('/', [
         'X-Inertia' => 'true',
+        'X-Inertia-Version' => Inertia::getVersion(),
         'X-Requested-With' => 'XMLHttpRequest',
     ]);
 
