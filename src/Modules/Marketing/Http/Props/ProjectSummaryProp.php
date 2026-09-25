@@ -11,10 +11,7 @@ use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
 
 /**
- * The homepage package grid — one summary card per registered project
- * whose metadata isn't flagged `kind` other than `package` (the default
- * when absent). Projects flagged `misc`, `personal`, or `other` are side
- * projects and belong in SideProjectSummaryProp instead.
+ * The homepage package grid — one summary card per package project.
  */
 final class ProjectSummaryProp implements ProvidesInertiaProperty
 {
@@ -25,11 +22,7 @@ final class ProjectSummaryProp implements ProvidesInertiaProperty
 
     public function toInertiaProperty(PropertyContext $context): mixed
     {
-        return $this->projects->reject(function (Project $project): bool {
-            $kind = $project->metadata?->getArrayCopy()['kind'] ?? 'package';
-
-            return $kind !== 'package';
-        })->map(function (Project $project): array {
+        return $this->projects->map(function (Project $project): array {
             $metadata = $project->metadata?->getArrayCopy() ?? [];
 
             return [
@@ -39,7 +32,6 @@ final class ProjectSummaryProp implements ProvidesInertiaProperty
                 'role' => $metadata['role'] ?? null,
                 'desc' => $metadata['desc'] ?? '',
                 'version' => $project->defaultVersion()?->name,
-                'flagship' => (bool) ($metadata['flagship'] ?? false),
             ];
         })->values()->all();
     }

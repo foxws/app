@@ -16,6 +16,8 @@ final class ProjectController
     {
         $project->load('versions');
 
+        abort_if($project->versions->isEmpty(), 404);
+
         return Inertia::render('ProjectView', [
             'project' => fn () => new ProjectDetailProp($project, $request->version()),
             'crumbs' => fn (): array => [['label' => $project->slug]],

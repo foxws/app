@@ -40,12 +40,4 @@ class HandleInertiaRequests extends Middleware
             'languages' => fn (): Options => Options::forEnum(Language::class),
         ]);
     }
-
-    /**
-     * @see https://inertiajs.com/asset-versioning
-     */
-    public function version(Request $request): ?string
-    {
-        return parent::version($request);
-    }
 }

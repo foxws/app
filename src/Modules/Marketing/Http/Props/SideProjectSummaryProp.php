@@ -12,11 +12,8 @@ use Inertia\ProvidesInertiaProperty;
 use Modules\Marketing\Support\ProjectSource;
 
 /**
- * The homepage "Side projects" list — registered projects whose metadata
- * flags `kind` as `misc`, `personal`, or `other`, listed as rows instead
- * of the main package grid ProjectSummaryProp builds. Some side projects
- * have their own synced docs (e.g. a personal app with a docs/ folder) —
- * those link to their own page; the rest link out to their source.
+ * The homepage "Side projects" list. Side projects with synced docs link
+ * to their own page; the rest link out to their source.
  */
 final class SideProjectSummaryProp implements ProvidesInertiaProperty
 {
@@ -27,25 +24,18 @@ final class SideProjectSummaryProp implements ProvidesInertiaProperty
 
     public function toInertiaProperty(PropertyContext $context): mixed
     {
-        return $this->projects->filter(function (Project $project): bool {
-            $kind = $project->metadata?->getArrayCopy()['kind'] ?? 'package';
-
-            return $kind !== 'package';
-        })->map(function (Project $project): array {
+        return $this->projects->map(function (Project $project): array {
             $metadata = $project->metadata?->getArrayCopy() ?? [];
-
-            $href = $project->versions->isNotEmpty()
-                ? '/'.Str::after($project->slug, '/')
-                : ProjectSource::url($project, $metadata);
 
             return [
                 'name' => $project->title,
                 'slug' => $project->slug,
-                'kind' => $metadata['kind'],
                 'type' => $metadata['type'] ?? null,
                 'desc' => $metadata['desc'] ?? '',
                 'status' => $metadata['status'] ?? null,
-                'href' => $href,
+                'href' => $project->versions->isNotEmpty()
+                    ? '/'.Str::after($project->slug, '/')
+                    : ProjectSource::url($project, $metadata),
             ];
         })->values()->all();
     }

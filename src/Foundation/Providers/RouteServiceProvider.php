@@ -7,7 +7,6 @@ namespace Foundation\Providers;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
@@ -15,7 +14,6 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureRateLimits();
-        $this->configureRoutePatterns();
     }
 
     protected function configureRateLimits(): void
@@ -25,10 +23,5 @@ class RouteServiceProvider extends ServiceProvider
                 ? Limit::perMinute(120)->by($request->user()->getKey())
                 : Limit::perMinute(30)->by($request->ip());
         });
-    }
-
-    protected function configureRoutePatterns(): void
-    {
-        Route::pattern('query', '.*');
     }
 }

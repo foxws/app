@@ -10,6 +10,8 @@ use Domain\Users\Collections\UserCollection;
 use Domain\Users\QueryBuilders\UserQueryBuilder;
 use Domain\Users\States\UserState;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Attributes\CollectedBy;
+use Illuminate\Database\Eloquent\Attributes\UseEloquentBuilder;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -22,6 +24,8 @@ use Laravel\Scout\Searchable;
 use Spatie\ModelStates\HasStates;
 use Spatie\Permission\Traits\HasRoles;
 
+#[CollectedBy(UserCollection::class)]
+#[UseEloquentBuilder(UserQueryBuilder::class)]
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory;
@@ -33,7 +37,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use SoftDeletes;
 
     /**
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'name',
@@ -45,7 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $hidden = [
         'password',
@@ -73,16 +77,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return UserFactory::new();
     }
 
-    public function newEloquentBuilder($query): UserQueryBuilder
-    {
-        return new UserQueryBuilder($query);
-    }
-
-    public function newCollection(array $models = []): UserCollection
-    {
-        return new UserCollection($models);
-    }
-
     public function uniqueIds(): array
     {
         return ['ulid'];
@@ -91,11 +85,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getRouteKeyName(): string
     {
         return 'ulid';
-    }
-
-    public function guardName(): array
-    {
-        return ['api', 'web'];
     }
 
     public static function findFromUlid(User|string $value): ?User

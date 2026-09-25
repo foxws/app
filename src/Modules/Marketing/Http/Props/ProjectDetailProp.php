@@ -10,6 +10,7 @@ use Inertia\ProvidesInertiaProperty;
 use Modules\Marketing\Support\DocsNavigation;
 use Modules\Marketing\Support\DocumentHeadings;
 use Modules\Marketing\Support\DocumentLinks;
+use Modules\Marketing\Support\ProjectKind;
 use Modules\Marketing\Support\ProjectSource;
 
 /**
@@ -72,7 +73,11 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'slug' => $metadata['slug'] ?? $this->project->sourceLocation(),
             'eyebrow' => $metadata['eyebrow'] ?? '',
             'lead' => $metadata['lead'] ?? $metadata['desc'] ?? '',
-            'install' => $metadata['install'] ?? "composer require {$this->project->sourceLocation()}",
+            // Only packages default to a composer command — a side project
+            // (an app, a Flatpak remote, ...) shows one only if it sets its own.
+            'install' => $metadata['install'] ?? (ProjectKind::isPackage($this->project)
+                ? "composer require {$this->project->sourceLocation()}"
+                : null),
             'overview' => $rendered ? ['html' => $rendered['html'], 'toc' => $rendered['toc']] : null,
             'nav' => DocsNavigation::build($this->project, $documents, $versionParam),
             'versions' => $this->project->versions->map(fn ($v) => ['name' => $v->name, 'is_default' => $v->is_default])->all(),

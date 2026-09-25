@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Foundation\Http\Middlewares;
 
 use Closure;
-use Illuminate\Http\Middleware\TrustProxies as Middleware;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\IpUtils;
 
-class EnsureRequestHasPrivateSubnet extends Middleware
+class EnsureRequestHasPrivateSubnet
 {
     public function handle(Request $request, Closure $next): mixed
     {

@@ -27,12 +27,15 @@ final class DocumentHeadings
 
         $dom = new DOMDocument;
 
-        libxml_use_internal_errors(true);
+        // Process-wide setting — restore it so it doesn't leak into later
+        // requests handled by the same Octane worker.
+        $previous = libxml_use_internal_errors(true);
         $dom->loadHTML(
             '<?xml encoding="utf-8" ?><div id="__docs_root__">'.$html.'</div>',
             LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
         );
         libxml_clear_errors();
+        libxml_use_internal_errors($previous);
 
         $root = $dom->getElementById('__docs_root__');
 

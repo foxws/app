@@ -1,6 +1,5 @@
-import type { CollectionItem, FlashData, OptionItem, User } from '@/types'
+import type { AuthUser, FlashData, OptionItem } from '@/types'
 import type { Page } from '@inertiajs/vue3'
-import type { SelectMenuItem } from '@nuxt/ui'
 
 declare module '@inertiajs/core' {
   export interface InertiaConfig {
@@ -13,11 +12,7 @@ declare module '@inertiajs/core' {
     readonly locale: string
     readonly locales: OptionItem[] | undefined
     readonly languages: OptionItem[] | undefined
-    readonly tags: OptionItem[] | undefined
-    readonly search: string | null | undefined
-    readonly auth: User | undefined
-    readonly collections: CollectionItem[] | undefined
-    readonly unread: number
+    readonly auth: AuthUser | null
   }
 }
 

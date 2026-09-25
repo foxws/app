@@ -4,46 +4,41 @@ declare(strict_types=1);
 
 namespace Domain\Users\Actions;
 
-use App\Api\Users\Requests\UserUpdateRequest;
 use Domain\Users\Models\User;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
+    /**
+     * @param  array<string, string>  $input
+     */
     public function update(User $user, array $input): void
     {
-        $request = new UserUpdateRequest;
-        $request->setRouteResolver(fn () => request()->route());
-        $request->merge(['user' => $user]);
+        $validated = Validator::make($input, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)->ignore($user)],
+        ])->validateWithBag('updateProfileInformation');
 
-        Validator::make($input, $request->rules())
-            ->validateWithBag('updateProfileInformation');
+        if ($validated['email'] !== $user->email) {
+            $this->updateVerifiedUser($user, $validated);
 
-        DB::transaction(function () use ($user, $input) {
-            if ($input['email'] !== $user->email && $user instanceof MustVerifyEmail) {
-                $this->updateVerifiedUser($user, $input);
+            return;
+        }
 
-                return;
-            }
-
-            // Update user attributes
-            $user->updateOrFail(
-                Arr::only($input, $user->getFillable()),
-            );
-        });
+        $user->forceFill($validated)->save();
     }
 
-    protected function updateVerifiedUser(User $user, array $input): void
+    /**
+     * @param  array{name: string, email: string}  $validated
+     */
+    protected function updateVerifiedUser(User $user, array $validated): void
     {
         $user->forceFill([
-            'name' => $input['name'],
-            'email' => $input['email'],
+            ...$validated,
             'email_verified_at' => null,
-        ])->saveOrFail();
+        ])->save();
 
         $user->sendEmailVerificationNotification();
     }

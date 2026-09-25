@@ -141,15 +141,30 @@ test('builds the package info box from index metadata and the default version', 
     ]);
 });
 
-test('omits the package info box when there is no version or relevant metadata', function () {
+test('returns not found for a project without any synced docs version', function () {
     ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
+
+    $this->get('/test-project')->assertNotFound();
+});
+
+test('defaults the install command to composer for packages only', function (array $metadata, ?string $install) {
+    $project = ProjectFactory::new()->create([
+        'slug' => 'test-project',
+        'github_repository' => 'foxws/test-project',
+        'metadata' => $metadata,
+    ]);
+    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
 
     $response = $this->get('/test-project');
 
     $response->assertOk();
 
-    expect($response->inertiaProps('project')['package'])->toBeNull();
-});
+    expect($response->inertiaProps('project')['install'])->toBe($install);
+})->with([
+    'package' => [[], 'composer require foxws/test-project'],
+    'side project' => [['kind' => 'personal'], null],
+    'side project with its own command' => [['kind' => 'personal', 'install' => 'flatpak install foo'], 'flatpak install foo'],
+]);
 
 test('builds the "used by" card from index metadata', function () {
     $project = ProjectFactory::new()->create([
