@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d3243e484ad8b0653d50628a96338b33",
+    "content-hash": "6eed5342b553db3cefd3f6081b0faf2b",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -12151,16 +12151,16 @@
         },
         {
             "name": "foxws/laravel-podman",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-podman.git",
-                "reference": "bc055388ad26fb557e1f3457fc0328d3f7fad6b8"
+                "reference": "d6f4be7c2c867a3296b658829e4e074702d76a33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-podman/zipball/bc055388ad26fb557e1f3457fc0328d3f7fad6b8",
-                "reference": "bc055388ad26fb557e1f3457fc0328d3f7fad6b8",
+                "url": "https://api.github.com/repos/foxws/laravel-podman/zipball/d6f4be7c2c867a3296b658829e4e074702d76a33",
+                "reference": "d6f4be7c2c867a3296b658829e4e074702d76a33",
                 "shasum": ""
             },
             "require": {
@@ -12230,7 +12230,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-podman/issues",
-                "source": "https://github.com/foxws/laravel-podman/tree/3.0.0"
+                "source": "https://github.com/foxws/laravel-podman/tree/3.0.1"
             },
             "funding": [
                 {
@@ -12238,7 +12238,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-25T10:01:16+00:00"
+            "time": "2026-09-25T10:30:01+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",

@@ -41,7 +41,7 @@
         "aws/aws-sdk-php": "^3.398.0",
         "barryvdh/laravel-ide-helper": "^3.7",
         "fakerphp/faker": "^1.24.1",
-        "foxws/laravel-podman": "^3.0",
+        "foxws/laravel-podman": "^3.0.1",
         "larastan/larastan": "^3.12.2",
         "laravel/boost": "^2.10.0",
         "laravel/cloud-cli": "^0.6.1",
