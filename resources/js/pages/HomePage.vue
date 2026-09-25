@@ -56,10 +56,9 @@ defineProps<{
 
     <UPageCard
       v-if="sideProjects.length"
-      variant="outline"
+      variant="naked"
       :ui="{
-        root: 'rounded-xl bg-neutral-900 ring-neutral-800',
-        container: 'p-5.5 sm:p-5.5',
+        container: 'px-0 py-8 sm:px-0 sm:py-8',
         wrapper: 'items-stretch gap-4',
         header: 'mb-0',
         footer: 'mt-0 pt-0',

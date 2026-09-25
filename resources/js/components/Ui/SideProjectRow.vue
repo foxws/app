@@ -46,15 +46,14 @@ const isExternal = computed(() => props.href?.startsWith('http') ?? false)
       />
     </div>
 
-    <div class="flex items-center justify-between gap-2.5">
-      <span class="font-sans text-sm text-neutral-400">{{ desc }}</span>
-      <span
-        v-if="status"
-        class="flex shrink-0 items-center gap-1.5 font-mono text-xs text-neutral-500"
-      >
-        <span :class="['size-1.5 rounded-full', statusColor[status] ?? 'bg-neutral-600']" />
-        {{ status }}
-      </span>
-    </div>
+    <span class="font-sans text-sm text-neutral-400">{{ desc }}</span>
+
+    <span
+      v-if="status"
+      class="flex items-center gap-1.5 font-mono text-xs text-neutral-500"
+    >
+      <span :class="['size-1.5 rounded-full', statusColor[status] ?? 'bg-neutral-600']" />
+      {{ status }}
+    </span>
   </ULink>
 </template>
