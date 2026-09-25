@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cdb25e16252e93e79d4d987923cbfc7a",
+    "content-hash": "5bf7d9da82a4a6f7f33a9573cdc28973",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -860,16 +860,16 @@
         },
         {
             "name": "foxws/laravel-docs",
-            "version": "v1.3.3",
+            "version": "v1.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-docs.git",
-                "reference": "75a85d631e96d7f56b4c83a74627f6fb67be4d0a"
+                "reference": "ae76d8babcb152ca3981289ea6ef7f8bad4429e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/75a85d631e96d7f56b4c83a74627f6fb67be4d0a",
-                "reference": "75a85d631e96d7f56b4c83a74627f6fb67be4d0a",
+                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/ae76d8babcb152ca3981289ea6ef7f8bad4429e2",
+                "reference": "ae76d8babcb152ca3981289ea6ef7f8bad4429e2",
                 "shasum": ""
             },
             "require": {
@@ -934,7 +934,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-docs/issues",
-                "source": "https://github.com/foxws/laravel-docs/tree/v1.3.3"
+                "source": "https://github.com/foxws/laravel-docs/tree/v1.3.4"
             },
             "funding": [
                 {
@@ -942,7 +942,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-22T09:31:35+00:00"
+            "time": "2026-09-25T09:35:59+00:00"
         },
         {
             "name": "foxws/laravel-essentials",
@@ -1868,16 +1868,16 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "v3.3.4",
+            "version": "v3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
-                "reference": "15fb5a7b2f984780ff968d9da3787aef6138326d"
+                "reference": "faf52ea98a33952731716451f98f6b7ad319fafc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/15fb5a7b2f984780ff968d9da3787aef6138326d",
-                "reference": "15fb5a7b2f984780ff968d9da3787aef6138326d",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/faf52ea98a33952731716451f98f6b7ad319fafc",
+                "reference": "faf52ea98a33952731716451f98f6b7ad319fafc",
                 "shasum": ""
             },
             "require": {
@@ -1934,9 +1934,9 @@
             ],
             "support": {
                 "issues": "https://github.com/inertiajs/inertia-laravel/issues",
-                "source": "https://github.com/inertiajs/inertia-laravel/tree/v3.3.4"
+                "source": "https://github.com/inertiajs/inertia-laravel/tree/v3.4.0"
             },
-            "time": "2026-09-11T13:57:53+00:00"
+            "time": "2026-09-25T09:33:29+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
@@ -11287,16 +11287,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.396.0",
+            "version": "3.398.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "0c289e1083c336efaf2ccd78a0520ed5c49af758"
+                "reference": "1b6f116bd571bd461126b7edff8bf7e173b36ea2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/0c289e1083c336efaf2ccd78a0520ed5c49af758",
-                "reference": "0c289e1083c336efaf2ccd78a0520ed5c49af758",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/1b6f116bd571bd461126b7edff8bf7e173b36ea2",
+                "reference": "1b6f116bd571bd461126b7edff8bf7e173b36ea2",
                 "shasum": ""
             },
             "require": {
@@ -11378,9 +11378,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.396.0"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.398.0"
             },
-            "time": "2026-09-22T18:06:28+00:00"
+            "time": "2026-09-24T18:07:06+00:00"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -11769,16 +11769,16 @@
         },
         {
             "name": "composer/semver",
-            "version": "3.4.4",
+            "version": "3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "198166618906cb2de69b95d7d47e5fa8aa1b2b95"
+                "reference": "f7a296f4c4cf8cb8bb83e35d6951a406bb11afa5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/198166618906cb2de69b95d7d47e5fa8aa1b2b95",
-                "reference": "198166618906cb2de69b95d7d47e5fa8aa1b2b95",
+                "url": "https://api.github.com/repos/composer/semver/zipball/f7a296f4c4cf8cb8bb83e35d6951a406bb11afa5",
+                "reference": "f7a296f4c4cf8cb8bb83e35d6951a406bb11afa5",
                 "shasum": ""
             },
             "require": {
@@ -11820,7 +11820,7 @@
                     "homepage": "http://robbast.nl"
                 }
             ],
-            "description": "Semver library that offers utilities, version constraint parsing and validation.",
+            "description": "Version comparison library that offers utilities, version constraint parsing and validation.",
             "keywords": [
                 "semantic",
                 "semver",
@@ -11830,7 +11830,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/semver/issues",
-                "source": "https://github.com/composer/semver/tree/3.4.4"
+                "source": "https://github.com/composer/semver/tree/3.5.0"
             },
             "funding": [
                 {
@@ -11842,7 +11842,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-20T19:15:30+00:00"
+            "time": "2026-09-24T14:38:51+00:00"
         },
         {
             "name": "composer/xdebug-handler",
@@ -12607,16 +12607,16 @@
         },
         {
             "name": "laravel/boost",
-            "version": "v2.9.1",
+            "version": "v2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/boost.git",
-                "reference": "2da6cbfdc6399d69b49a2dfb1e4f4eaf6bb419f0"
+                "reference": "76c236d4eb7d51698f882d149bc367c1ebc0d078"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/boost/zipball/2da6cbfdc6399d69b49a2dfb1e4f4eaf6bb419f0",
-                "reference": "2da6cbfdc6399d69b49a2dfb1e4f4eaf6bb419f0",
+                "url": "https://api.github.com/repos/laravel/boost/zipball/76c236d4eb7d51698f882d149bc367c1ebc0d078",
+                "reference": "76c236d4eb7d51698f882d149bc367c1ebc0d078",
                 "shasum": ""
             },
             "require": {
@@ -12669,7 +12669,7 @@
                 "issues": "https://github.com/laravel/boost/issues",
                 "source": "https://github.com/laravel/boost"
             },
-            "time": "2026-09-17T02:40:42+00:00"
+            "time": "2026-09-23T09:33:31+00:00"
         },
         {
             "name": "laravel/cloud-cli",
@@ -12880,16 +12880,16 @@
         },
         {
             "name": "laravel/mcp",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/mcp.git",
-                "reference": "cfa4f38f82873eeb6848527883545f98f871e229"
+                "reference": "92987a9d03847801299ff4abe909ba7686147dde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/mcp/zipball/cfa4f38f82873eeb6848527883545f98f871e229",
-                "reference": "cfa4f38f82873eeb6848527883545f98f871e229",
+                "url": "https://api.github.com/repos/laravel/mcp/zipball/92987a9d03847801299ff4abe909ba7686147dde",
+                "reference": "92987a9d03847801299ff4abe909ba7686147dde",
                 "shasum": ""
             },
             "require": {
@@ -12950,7 +12950,7 @@
                 "issues": "https://github.com/laravel/mcp/issues",
                 "source": "https://github.com/laravel/mcp"
             },
-            "time": "2026-09-14T14:35:19+00:00"
+            "time": "2026-09-24T10:45:09+00:00"
         },
         {
             "name": "laravel/pail",
@@ -14428,11 +14428,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.2.14",
+            "version": "2.2.16",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9c672e7a8e791dfc3d30e55f683e73fc0b63a3ac",
-                "reference": "9c672e7a8e791dfc3d30e55f683e73fc0b63a3ac",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/46a6d9060e5a7763adfcc21ebcb8b504ebdbcb92",
+                "reference": "46a6d9060e5a7763adfcc21ebcb8b504ebdbcb92",
                 "shasum": ""
             },
             "require": {
@@ -14488,7 +14488,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-12T21:39:33+00:00"
+            "time": "2026-09-25T09:31:51+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
