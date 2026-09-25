@@ -34,13 +34,11 @@ defineProps<{
     }"
   />
 
-  <UContainer
-    as="section"
-    class="flex flex-col gap-3.5 px-4 py-6 sm:px-7"
-  >
-    <div
+  <div class="divide-y divide-neutral-900">
+    <UContainer
       id="packages"
-      class="grid grid-cols-1 gap-3.5 sm:grid-cols-2"
+      as="section"
+      class="grid grid-cols-1 gap-3.5 px-4 py-8 sm:grid-cols-2 sm:px-7"
     >
       <PackageCard
         v-for="pkg in packages"
@@ -52,91 +50,101 @@ defineProps<{
         :version="pkg.version"
         :href="`/${pkg.path}`"
       />
-    </div>
+    </UContainer>
 
-    <UPageCard
+    <UContainer
       v-if="sideProjects.length"
-      variant="naked"
-      :ui="{
-        container: 'px-0 py-8 sm:px-0 sm:py-8',
-        wrapper: 'items-stretch gap-4',
-        header: 'mb-0',
-        footer: 'mt-0 pt-0',
-      }"
+      as="section"
+      class="px-4 py-8 sm:px-7"
     >
-      <template #header>
-        <div class="flex flex-col gap-3.5 sm:flex-row sm:items-start sm:justify-between">
-          <div class="flex flex-col gap-1.5">
-            <span class="font-sans text-xl font-semibold tracking-tight text-neutral-50">Side projects</span>
-            <span class="max-w-md font-sans text-sm text-neutral-400"
-              >Not part of the core. Experiments, templates and notes I keep around because they're useful.</span
-            >
+      <UPageCard
+        variant="naked"
+        :ui="{
+          container: 'p-0 sm:p-0',
+          wrapper: 'items-stretch gap-4',
+          header: 'mb-0',
+          footer: 'mt-0 pt-0',
+        }"
+      >
+        <template #header>
+          <div class="flex flex-col gap-3.5 sm:flex-row sm:items-start sm:justify-between">
+            <div class="flex flex-col gap-1.5">
+              <span class="font-sans text-xl font-semibold tracking-tight text-neutral-50">Side projects</span>
+              <span class="max-w-md font-sans text-sm text-neutral-400"
+                >Not part of the core. Experiments, templates and notes I keep around because they're useful.</span
+              >
+            </div>
+            <UButton
+              label="Personal profile"
+              to="https://github.com/francoism90"
+              target="_blank"
+              variant="link"
+              color="neutral"
+              trailing-icon="i-lucide-arrow-up-right"
+              class="hidden shrink-0 self-start px-0 sm:inline-flex"
+            />
           </div>
+        </template>
+
+        <template #body>
+          <UPageList divide>
+            <SideProjectRow
+              v-for="project in sideProjects"
+              :key="project.slug"
+              :name="project.name"
+              :type="project.type"
+              :desc="project.desc"
+              :status="project.status"
+              :href="project.href"
+            />
+          </UPageList>
+        </template>
+
+        <template #footer>
           <UButton
             label="Personal profile"
             to="https://github.com/francoism90"
             target="_blank"
-            variant="link"
+            block
+            variant="outline"
             color="neutral"
             trailing-icon="i-lucide-arrow-up-right"
-            class="hidden shrink-0 self-start px-0 sm:inline-flex"
+            class="justify-center rounded-lg sm:hidden"
           />
-        </div>
-      </template>
+        </template>
+      </UPageCard>
+    </UContainer>
 
-      <template #body>
-        <UPageList divide>
-          <SideProjectRow
-            v-for="project in sideProjects"
-            :key="project.slug"
-            :name="project.name"
-            :type="project.type"
-            :desc="project.desc"
-            :status="project.status"
-            :href="project.href"
-          />
-        </UPageList>
-      </template>
-
-      <template #footer>
-        <UButton
-          label="Personal profile"
-          to="https://github.com/francoism90"
-          target="_blank"
-          block
-          variant="outline"
-          color="neutral"
-          trailing-icon="i-lucide-arrow-up-right"
-          class="justify-center rounded-lg sm:hidden"
-        />
-      </template>
-    </UPageCard>
-
-    <UPageCard
-      variant="naked"
-      :ui="{
-        container: 'py-5.5 sm:py-5.5',
-        wrapper: 'items-stretch gap-2.75',
-        header: 'mb-0',
-        description: 'font-sans text-sm text-neutral-400',
-        footer: 'mt-0 pt-0',
-      }"
+    <UContainer
+      as="section"
+      class="px-4 py-8 sm:px-7"
     >
-      <template #header>
-        <span class="font-sans text-xl font-semibold tracking-tight text-neutral-50">Let's connect</span>
-      </template>
+      <UPageCard
+        variant="naked"
+        :ui="{
+          container: 'p-0 sm:p-0',
+          wrapper: 'items-stretch gap-2.75',
+          header: 'mb-0',
+          description: 'font-sans text-sm text-neutral-400',
+          footer: 'mt-0 pt-0',
+        }"
+      >
+        <template #header>
+          <span class="font-sans text-xl font-semibold tracking-tight text-neutral-50">Let's connect</span>
+        </template>
 
-      <template #description>I'm on LinkedIn — feel free to connect if you want to talk Laravel, Linux, or anything in between.</template>
+        <template #description>I'm on LinkedIn — feel free to connect if you want to talk Laravel, Linux, or anything in between.</template>
 
-      <template #footer>
-        <UButton
-          label="Connect on LinkedIn"
-          to="https://www.linkedin.com/in/francoismenning/"
-          trailing-icon="i-lucide-user-round-plus"
-          size="sm"
-          external
-        />
-      </template>
-    </UPageCard>
-  </UContainer>
+        <template #footer>
+          <UButton
+            label="Connect on LinkedIn"
+            to="https://www.linkedin.com/in/francoismenning/"
+            trailing-icon="i-lucide-user-round-plus"
+            size="sm"
+            external
+          />
+        </template>
+      </UPageCard>
+    </UContainer>
+  </div>
 </template>
