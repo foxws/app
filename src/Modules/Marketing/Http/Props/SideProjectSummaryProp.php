@@ -9,14 +9,16 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
+use Modules\Marketing\Support\ProjectSource;
 
 /**
- * The homepage package grid — one summary card per registered project
- * whose metadata isn't flagged `kind` other than `package` (the default
- * when absent). Projects flagged `misc`, `personal`, or `other` are side
- * projects and belong in SideProjectSummaryProp instead.
+ * The homepage "Side projects" list — registered projects whose metadata
+ * flags `kind` as `misc`, `personal`, or `other`, listed as rows instead
+ * of the main package grid ProjectSummaryProp builds. Some side projects
+ * have their own synced docs (e.g. a personal app with a docs/ folder) —
+ * those link to their own page; the rest link out to their source.
  */
-final class ProjectSummaryProp implements ProvidesInertiaProperty
+final class SideProjectSummaryProp implements ProvidesInertiaProperty
 {
     /**
      * @param  Collection<int, Project>  $projects
@@ -25,21 +27,25 @@ final class ProjectSummaryProp implements ProvidesInertiaProperty
 
     public function toInertiaProperty(PropertyContext $context): mixed
     {
-        return $this->projects->reject(function (Project $project): bool {
+        return $this->projects->filter(function (Project $project): bool {
             $kind = $project->metadata?->getArrayCopy()['kind'] ?? 'package';
 
             return $kind !== 'package';
         })->map(function (Project $project): array {
             $metadata = $project->metadata?->getArrayCopy() ?? [];
 
+            $href = $project->versions->isNotEmpty()
+                ? '/'.Str::after($project->slug, '/')
+                : ProjectSource::url($project, $metadata);
+
             return [
                 'name' => $project->title,
                 'slug' => $project->slug,
-                'path' => Str::after($project->slug, '/'),
-                'role' => $metadata['role'] ?? null,
+                'kind' => $metadata['kind'],
+                'type' => $metadata['type'] ?? null,
                 'desc' => $metadata['desc'] ?? '',
-                'version' => $project->defaultVersion()?->name,
-                'flagship' => (bool) ($metadata['flagship'] ?? false),
+                'status' => $metadata['status'] ?? null,
+                'href' => $href,
             ];
         })->values()->all();
     }

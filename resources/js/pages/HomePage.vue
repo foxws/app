@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import PackageCard from '@/components/Ui/PackageCard.vue'
-import type { DocsPackageSummary } from '@/types'
+import SideProjectRow from '@/components/Ui/SideProjectRow.vue'
+import type { DocsPackageSummary, DocsSideProjectSummary } from '@/types'
 import { Head } from '@inertiajs/vue3'
 
 defineProps<{
   packages: DocsPackageSummary[]
+  sideProjects: DocsSideProjectSummary[]
 }>()
 </script>
 
@@ -51,6 +53,65 @@ defineProps<{
         :href="`/${pkg.path}`"
       />
     </div>
+
+    <UPageCard
+      v-if="sideProjects.length"
+      variant="outline"
+      :ui="{
+        root: 'rounded-xl bg-neutral-900 ring-neutral-800',
+        container: 'p-5.5 sm:p-5.5',
+        wrapper: 'items-stretch gap-4',
+        header: 'mb-0',
+        footer: 'mt-0 pt-0',
+      }"
+    >
+      <template #header>
+        <div class="flex flex-col gap-3.5 sm:flex-row sm:items-start sm:justify-between">
+          <div class="flex flex-col gap-1.5">
+            <span class="font-sans text-xl font-semibold tracking-tight text-neutral-50">Side projects</span>
+            <span class="max-w-md font-sans text-sm text-neutral-400"
+              >Not part of the core. Experiments, templates and notes I keep around because they're useful.</span
+            >
+          </div>
+          <UButton
+            label="Personal profile"
+            to="https://github.com/francoism90"
+            target="_blank"
+            variant="link"
+            color="neutral"
+            trailing-icon="i-lucide-arrow-up-right"
+            class="hidden shrink-0 self-start px-0 sm:inline-flex"
+          />
+        </div>
+      </template>
+
+      <template #body>
+        <UPageList divide>
+          <SideProjectRow
+            v-for="project in sideProjects"
+            :key="project.slug"
+            :name="project.name"
+            :type="project.type"
+            :desc="project.desc"
+            :status="project.status"
+            :href="project.href"
+          />
+        </UPageList>
+      </template>
+
+      <template #footer>
+        <UButton
+          label="Personal profile"
+          to="https://github.com/francoism90"
+          target="_blank"
+          block
+          variant="outline"
+          color="neutral"
+          trailing-icon="i-lucide-arrow-up-right"
+          class="justify-center rounded-lg sm:hidden"
+        />
+      </template>
+    </UPageCard>
 
     <UPageCard
       variant="naked"

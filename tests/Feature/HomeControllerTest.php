@@ -42,3 +42,44 @@ test('sorts a project with no synced version after any that have one', function 
     expect(array_column($response->inertiaProps('packages'), 'slug'))
         ->toBe(['synced-project', 'unsynced-project']);
 });
+
+test('a project flagged as a side project is listed there instead of the package grid', function () {
+    ProjectFactory::new()->create([
+        'slug' => 'shaka-playground',
+        'title' => 'Shaka Playground',
+        'github_repository' => 'francoism90/shaka-playground',
+        'metadata' => [
+            'kind' => 'misc',
+            'type' => 'Experiment',
+            'desc' => 'Drop in a manifest, see how Shaka Player handles it.',
+            'status' => 'active',
+        ],
+    ]);
+
+    $response = $this->get('/');
+
+    $response->assertOk();
+
+    expect(array_column($response->inertiaProps('packages'), 'slug'))->not->toContain('shaka-playground');
+
+    expect($response->inertiaProps('sideProjects'))->toBe([[
+        'name' => 'Shaka Playground',
+        'slug' => 'shaka-playground',
+        'kind' => 'misc',
+        'type' => 'Experiment',
+        'desc' => 'Drop in a manifest, see how Shaka Player handles it.',
+        'status' => 'active',
+        'href' => 'https://github.com/francoism90/shaka-playground',
+    ]]);
+});
+
+test('a project with no kind metadata is listed as a package, not a side project', function () {
+    ProjectFactory::new()->create(['slug' => 'laravel-podman', 'title' => 'Laravel Podman']);
+
+    $response = $this->get('/');
+
+    $response->assertOk();
+
+    expect(array_column($response->inertiaProps('packages'), 'slug'))->toContain('laravel-podman');
+    expect($response->inertiaProps('sideProjects'))->toBe([]);
+});

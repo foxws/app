@@ -37,6 +37,18 @@ export type DocsPackageSummary = {
   flagship: boolean
 }
 
+export type DocsSideProjectKind = 'misc' | 'personal' | 'other'
+
+export type DocsSideProjectSummary = {
+  name: string
+  slug: string
+  kind: DocsSideProjectKind
+  type: string | null
+  desc: string
+  status: string | null
+  href: string | null
+}
+
 export type DocsUsedBy = {
   name: string
   desc?: string
@@ -167,26 +179,4 @@ export type GeneralSettings = {
   language: string
   date_format: string
   time_format: string
-}
-
-export type Media = Model & {
-  name: string
-  url?: string | null
-  file_name: string
-  mime_type: string
-  size: number
-  file_size: string
-  collection_name: string
-  disk: string
-  conversions_disk: string
-  codec?: string
-  resolution?: string
-  bitrate?: string
-  custom_properties?: MediaCustomProperties | null
-  generated_conversions?: Record<string, unknown> | null
-  responsive_images?: Record<string, unknown> | null
-}
-
-export type MediaCollection = Omit<Paginator, 'data'> & {
-  data: Media[] | undefined
 }

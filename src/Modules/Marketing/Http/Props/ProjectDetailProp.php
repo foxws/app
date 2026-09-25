@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Modules\Marketing\Http\Props;
 
-use Foxws\Docs\Enums\ProjectDriver;
 use Foxws\Docs\Models\Project;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
 use Modules\Marketing\Support\DocsNavigation;
 use Modules\Marketing\Support\DocumentHeadings;
 use Modules\Marketing\Support\DocumentLinks;
+use Modules\Marketing\Support\ProjectSource;
 
 /**
  * A project's full page: hero, install command, docs tree, and the
@@ -51,11 +51,7 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'licence' => $metadata['licence'] ?? null,
         ], fn ($value) => $value !== null);
 
-        $source = match (true) {
-            is_string($metadata['source'] ?? null) && $metadata['source'] !== '' => $metadata['source'],
-            $this->project->driver === ProjectDriver::Github => "https://github.com/{$this->project->sourceLocation()}",
-            default => null,
-        };
+        $source = ProjectSource::url($this->project, $metadata);
 
         $usedBy = is_array($metadata['used_by'] ?? null) ? array_filter([
             'name' => $metadata['used_by']['name'] ?? null,
