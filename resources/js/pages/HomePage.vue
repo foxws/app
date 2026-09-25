@@ -107,8 +107,8 @@ defineProps<{
             label="Personal profile"
             to="https://github.com/francoism90"
             target="_blank"
-            block
             variant="outline"
+            size="sm"
             color="neutral"
             trailing-icon="i-lucide-arrow-up-right"
             class="justify-center rounded-lg sm:hidden"
@@ -143,7 +143,6 @@ defineProps<{
             to="https://www.linkedin.com/in/francoismenning/"
             trailing-icon="i-lucide-user-round-plus"
             size="sm"
-            external
           />
         </template>
       </UPageCard>

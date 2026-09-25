@@ -23,7 +23,6 @@ const year = new Date().getFullYear()
       color="neutral"
       size="xs"
       icon="i-lucide-github"
-      external
     />
 
     <template #right>

@@ -72,7 +72,6 @@ const searchOpen = ref(false)
         variant="ghost"
         color="neutral"
         icon="i-lucide-github"
-        external
       />
     </template>
   </UHeader>
