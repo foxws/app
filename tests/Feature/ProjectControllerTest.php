@@ -126,7 +126,7 @@ test('builds the package info box from index metadata and the default version', 
             'licence' => 'MIT',
         ],
     ]);
-    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true, 'name' => 'v1.0.3']);
+    VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true, 'name' => 'v1.0.3']);
 
     $response = $this->get('/test-project');
 
@@ -141,8 +141,15 @@ test('builds the package info box from index metadata and the default version', 
     ]);
 });
 
-test('returns not found for a project without any synced docs version', function () {
+test('returns not found for a project without any version', function () {
     ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
+
+    $this->get('/test-project')->assertNotFound();
+});
+
+test('returns not found for a project whose version has no documents', function () {
+    $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
+    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
 
     $this->get('/test-project')->assertNotFound();
 });
@@ -153,7 +160,7 @@ test('defaults the install command to composer for packages only', function (arr
         'github_repository' => 'foxws/test-project',
         'metadata' => $metadata,
     ]);
-    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+    VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true]);
 
     $response = $this->get('/test-project');
 
@@ -178,7 +185,7 @@ test('builds the "used by" card from index metadata', function () {
             ],
         ],
     ]);
-    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+    VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true]);
 
     $response = $this->get('/test-project');
 
@@ -255,7 +262,7 @@ test('omits ?version= from generated links when the requested version is the def
 
 test('falls back to the default version when the requested version does not exist', function () {
     $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
-    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true, 'name' => '1.0.0']);
+    VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true, 'name' => '1.0.0']);
 
     $response = $this->get('/test-project?version=nonexistent');
 
@@ -278,7 +285,7 @@ test('derives the source link from the github repository when metadata has no ov
         'title' => 'Test Project',
         'github_repository' => 'foxws/test-project',
     ]);
-    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+    VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true]);
 
     $response = $this->get('/test-project');
 
@@ -294,7 +301,7 @@ test('prefers a metadata source override over the github repository', function (
         'github_repository' => 'foxws/test-project',
         'metadata' => ['source' => 'https://git.example.com/foxws/test-project'],
     ]);
-    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+    VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true]);
 
     $response = $this->get('/test-project');
 
@@ -305,7 +312,7 @@ test('prefers a metadata source override over the github repository', function (
 
 test('omits the source link for a local-driven project with no metadata override', function () {
     $project = ProjectFactory::new()->local()->create(['slug' => 'test-project', 'title' => 'Test Project']);
-    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+    VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true]);
 
     $response = $this->get('/test-project');
 
@@ -320,7 +327,7 @@ test('omits the "used by" card when the index has no used_by metadata, or it is 
         'title' => 'Test Project',
         'metadata' => ['used_by' => ['desc' => 'Missing name and href']],
     ]);
-    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+    VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true]);
 
     $response = $this->get('/test-project');
 

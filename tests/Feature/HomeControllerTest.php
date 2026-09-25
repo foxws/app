@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Foxws\Docs\Database\Factories\DocumentFactory;
 use Foxws\Docs\Database\Factories\ProjectFactory;
 use Foxws\Docs\Database\Factories\VersionFactory;
 
@@ -51,13 +52,28 @@ test('a project flagged as a side project is listed there instead of the package
 
 test('a side project with synced docs links to its own page instead of its source', function () {
     $project = ProjectFactory::new()->create(['slug' => 'stry', 'metadata' => ['kind' => 'personal']]);
-    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+    VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true]);
 
     $response = $this->get('/');
 
     $response->assertOk();
 
     expect($response->inertiaProps('sideProjects.0.href'))->toBe('/stry');
+});
+
+test('a side project whose version has no docs still links to its source', function () {
+    $project = ProjectFactory::new()->create([
+        'slug' => 'flatpaks',
+        'github_repository' => 'francoism90/flatpaks',
+        'metadata' => ['kind' => 'personal'],
+    ]);
+    VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+
+    $response = $this->get('/');
+
+    $response->assertOk();
+
+    expect($response->inertiaProps('sideProjects.0.href'))->toBe('https://github.com/francoism90/flatpaks');
 });
 
 test('a project with no kind metadata is listed as a package, not a side project', function () {

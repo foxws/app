@@ -16,7 +16,7 @@ final class ProjectController
     {
         $project->load('versions');
 
-        abort_if($project->versions->isEmpty(), 404);
+        abort_unless($project->documents()->exists(), 404);
 
         return Inertia::render('ProjectView', [
             'project' => fn () => new ProjectDetailProp($project, $request->version()),

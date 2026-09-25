@@ -13,12 +13,14 @@ use Modules\Marketing\Support\ProjectSource;
 
 /**
  * The homepage "Side projects" list. Side projects with synced docs link
- * to their own page; the rest link out to their source.
+ * to their own page; the rest link out to their source. A version alone
+ * isn't enough — auto-discovery registers one for any GitHub release,
+ * even when the repository has no docs folder to fill it.
  */
 final class SideProjectSummaryProp implements ProvidesInertiaProperty
 {
     /**
-     * @param  Collection<int, Project>  $projects
+     * @param  Collection<int, Project>  $projects  Loaded with `withExists('documents')`.
      */
     public function __construct(private readonly Collection $projects) {}
 
@@ -33,7 +35,7 @@ final class SideProjectSummaryProp implements ProvidesInertiaProperty
                 'type' => $metadata['type'] ?? null,
                 'desc' => $metadata['desc'] ?? '',
                 'status' => $metadata['status'] ?? null,
-                'href' => $project->versions->isNotEmpty()
+                'href' => $project->getAttribute('documents_exists')
                     ? '/'.Str::after($project->slug, '/')
                     : ProjectSource::url($project, $metadata),
             ];
