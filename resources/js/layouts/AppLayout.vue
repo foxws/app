@@ -27,7 +27,9 @@ useFlash()
     <div class="min-h-dvh overflow-x-clip bg-neutral-950 font-sans text-neutral-50">
       <AppHeader />
 
-      <slot />
+      <main>
+        <slot />
+      </main>
 
       <AppFooter />
     </div>

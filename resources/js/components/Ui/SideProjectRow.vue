@@ -33,7 +33,7 @@ const isExternal = computed(() => props.href?.startsWith('http') ?? false)
   >
     <div class="flex items-center justify-between gap-2.5">
       <div class="flex items-center gap-2.5">
-        <span class="font-mono text-sm font-semibold text-neutral-50">{{ name }}</span>
+        <h3 class="font-mono text-sm font-semibold text-neutral-50">{{ name }}</h3>
         <span
           v-if="type"
           class="rounded-full border border-neutral-800 px-2 py-0.5 font-mono text-[10px] tracking-wider text-neutral-400 uppercase"

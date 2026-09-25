@@ -40,6 +40,8 @@ defineProps<{
       as="section"
       class="grid grid-cols-1 gap-3.5 px-4 py-8 sm:grid-cols-2 sm:px-7"
     >
+      <h2 class="sr-only">Packages</h2>
+
       <PackageCard
         v-for="pkg in packages"
         :key="pkg.slug"
@@ -69,10 +71,10 @@ defineProps<{
         <template #header>
           <div class="flex flex-col gap-3.5 sm:flex-row sm:items-start sm:justify-between">
             <div class="flex flex-col gap-1.5">
-              <span class="font-sans text-xl font-semibold tracking-tight text-neutral-50">Side projects</span>
-              <span class="max-w-md font-sans text-sm text-neutral-400"
-                >Not part of the core. Experiments, templates and notes I keep around because they're useful.</span
-              >
+              <h2 class="font-sans text-xl font-semibold tracking-tight text-neutral-50">Side projects</h2>
+              <p class="max-w-md font-sans text-sm text-neutral-400">
+                Not part of the core. Experiments, templates and notes I keep around because they're useful.
+              </p>
             </div>
             <UButton
               label="Personal profile"
@@ -130,7 +132,7 @@ defineProps<{
         }"
       >
         <template #header>
-          <span class="font-sans text-xl font-semibold tracking-tight text-neutral-50">Let's connect</span>
+          <h2 class="font-sans text-xl font-semibold tracking-tight text-neutral-50">Let's connect</h2>
         </template>
 
         <template #description>I'm on LinkedIn — feel free to connect if you want to talk Laravel, Linux, or anything in between.</template>

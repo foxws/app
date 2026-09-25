@@ -23,10 +23,13 @@ const onSubmit = () =>
   <Head title="Log In" />
 
   <UPageCard
-    title="Login"
     description="Enter your credentials to access your account."
     class="sm:min-w-md"
   >
+    <template #title>
+      <h1>Login</h1>
+    </template>
+
     <UForm
       :state="form"
       @submit="onSubmit"
