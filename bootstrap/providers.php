@@ -7,7 +7,6 @@ use Foundation\Providers\AuthServiceProvider;
 use Foundation\Providers\FortifyServiceProvider;
 use Foundation\Providers\InertiaServiceProvider;
 use Foundation\Providers\RouteServiceProvider;
-use Foundation\Providers\ScoutServiceProvider;
 
 return [
     AppServiceProvider::class,
@@ -15,5 +14,4 @@ return [
     FortifyServiceProvider::class,
     InertiaServiceProvider::class,
     RouteServiceProvider::class,
-    ScoutServiceProvider::class,
 ];

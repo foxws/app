@@ -29,7 +29,9 @@ useFlash()
         <AppLogo />
       </div>
 
-      <slot />
+      <main>
+        <slot />
+      </main>
     </UContainer>
   </UApp>
 </template>

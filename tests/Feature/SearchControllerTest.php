@@ -61,6 +61,23 @@ test('highlights the query wherever it matches in the result', function () {
         ->and($response->json('0.descriptionHtml'))->toBe('Learn how <mark>podman</mark> handles rootless containers.');
 });
 
+test('shows HTML entities in the description as the characters they stand for', function () {
+    $version = VersionFactory::new()->create(['is_default' => true]);
+
+    DocumentFactory::new()->create([
+        'version_id' => $version->id,
+        'title' => 'Chaining',
+        'body' => 'Chain commands with `a && b`.',
+    ]);
+
+    $response = $this->getJson('/api/v1/search?query=chain');
+
+    $response->assertOk();
+
+    expect($response->json('0.description'))->toBe('Chain commands with a && b.')
+        ->and($response->json('0.descriptionHtml'))->toBe('<mark>Chain</mark> commands with a &amp;&amp; b.');
+});
+
 test('excludes documents marked as not searchable', function () {
     $version = VersionFactory::new()->create(['is_default' => true]);
 

@@ -65,3 +65,13 @@ it('rewrites cross-reference links found in the given map and leaves others unto
 it('returns empty output for empty markup', function () {
     expect(DocumentHeadings::extract(''))->toBe(['html' => '', 'toc' => []]);
 });
+
+it('leaves the libxml error setting as it found it', function () {
+    $previous = libxml_use_internal_errors(false);
+
+    DocumentHeadings::extract('<h2>Broken <b>markup</h2>');
+
+    expect(libxml_use_internal_errors())->toBeFalse();
+
+    libxml_use_internal_errors($previous);
+});

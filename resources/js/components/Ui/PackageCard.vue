@@ -24,7 +24,7 @@ defineProps<{
   >
     <template #header>
       <div class="flex items-center justify-between gap-2.5">
-        <span class="font-sans text-xl font-semibold tracking-tight text-neutral-50">{{ name }}</span>
+        <h3 class="font-sans text-xl font-semibold tracking-tight text-neutral-50">{{ name }}</h3>
         <span
           v-if="role"
           class="font-mono text-xs tracking-wider text-identity-500 uppercase"

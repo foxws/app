@@ -50,7 +50,10 @@ defineProps<{
       class="lg:hidden"
     />
 
-    <InstallCommand :command="project.install" />
+    <InstallCommand
+      v-if="project.install"
+      :command="project.install"
+    />
 
     <UButton
       v-if="project.get_started"

@@ -29,7 +29,7 @@ final class SearchResultResource extends JsonResource
 
         $label = $this->title;
         $suffix = $this->section ? "{$project->title} — {$this->section}" : $project->title;
-        $description = Str::of($body)->stripTags()->trim()->limit(100)->toString();
+        $description = Str::of(html_entity_decode(strip_tags($body), ENT_QUOTES | ENT_HTML5, 'UTF-8'))->trim()->limit(100)->toString();
 
         return [
             'label' => $label,

@@ -11,7 +11,7 @@ use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
 
 /**
- * The homepage package grid — one summary card per registered project.
+ * The homepage package grid — one summary card per package project.
  */
 final class ProjectSummaryProp implements ProvidesInertiaProperty
 {
@@ -32,7 +32,6 @@ final class ProjectSummaryProp implements ProvidesInertiaProperty
                 'role' => $metadata['role'] ?? null,
                 'desc' => $metadata['desc'] ?? '',
                 'version' => $project->defaultVersion()?->name,
-                'flagship' => (bool) ($metadata['flagship'] ?? false),
             ];
         })->values()->all();
     }

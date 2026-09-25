@@ -87,7 +87,7 @@ final class DocsNavigation
      */
     public static function flatten(Collection $documents): Collection
     {
-        return self::groups($documents)->flatten(1)->values();
+        return self::groups($documents)->flatMap(fn (Collection $group): Collection => $group)->values();
     }
 
     /**

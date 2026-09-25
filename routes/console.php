@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Foxws\Docs\Console\Commands\SyncDocsCommand;
 use Illuminate\Auth\Console\ClearResetsCommand;
 use Illuminate\Cache\Console\PruneStaleTagsCommand;
 use Illuminate\Support\Facades\Schedule;
@@ -12,4 +13,8 @@ Schedule::command(PruneStaleTagsCommand::class)
 
 Schedule::command(ClearResetsCommand::class)
     ->dailyAt('02:00')
+    ->runInBackground();
+
+Schedule::command(SyncDocsCommand::class)
+    ->dailyAt('03:00')
     ->runInBackground();

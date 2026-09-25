@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Domain\Users\Commands\CreateUserCommand;
 use Foundation\Http\Middlewares\AddCspHeaders;
 use Foundation\Http\Middlewares\AddTelescopeCspNonce;
-use Foundation\Http\Middlewares\EnsureRequestHasPrivateSubnet;
 use Foundation\Http\Middlewares\SetCacheHeaders;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -43,7 +42,6 @@ return Application::configure(basePath: dirname(__DIR__))
             'cache' => SetCacheHeaders::class,
             'cache.bypass' => DoNotCacheResponse::class,
             'csp.telescope' => AddTelescopeCspNonce::class,
-            'private' => EnsureRequestHasPrivateSubnet::class,
             'precognitive' => HandlePrecognitiveRequests::class,
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,

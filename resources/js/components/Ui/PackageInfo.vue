@@ -28,7 +28,7 @@ const rows = computed(() =>
     v-if="rows.length && variant === 'list'"
     class="flex flex-col gap-2"
   >
-    <span class="font-mono text-xs tracking-[.14em] text-neutral-500 uppercase">Package</span>
+    <h2 class="font-mono text-xs tracking-[.14em] text-neutral-500 uppercase">Package</h2>
 
     <UPageList
       divide

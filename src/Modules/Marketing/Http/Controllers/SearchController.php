@@ -32,7 +32,9 @@ final class SearchController
                     $query->whereIn('version_id', $versionIds);
                 }),
             )
-            ->query(fn ($query) => $query->where('searchable', true)->with('version.project'))
+            ->query(function ($query): void {
+                $query->where('searchable', true)->with('version.project');
+            })
             ->take(8)
             ->get();
 

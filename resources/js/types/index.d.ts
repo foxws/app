@@ -1,4 +1,4 @@
-import type { BadgeProps, SelectItem } from '@nuxt/ui'
+import type { SelectItem } from '@nuxt/ui'
 
 export type DocsNavItem = {
   title: string
@@ -27,14 +27,21 @@ export type DocsPackageInfo = {
 }
 
 export type DocsPackageSummary = {
-  key?: string
   name: string
   slug: string
   path: string
   role: string | null
   desc: string
   version?: string
-  flagship: boolean
+}
+
+export type DocsSideProjectSummary = {
+  name: string
+  slug: string
+  type: string | null
+  desc: string
+  status: string | null
+  href: string | null
 }
 
 export type DocsUsedBy = {
@@ -60,7 +67,7 @@ export type DocsProject = {
   slug: string
   eyebrow: string
   lead: string
-  install: string
+  install: string | null
   overview: { html: string; toc: DocsTocItem[] } | null
   nav: DocsNavItem[]
   versions: DocsVersion[]
@@ -96,97 +103,8 @@ export type OptionItem = SelectItem & {
   disabled?: boolean
 }
 
-export type QueryValue = string | number | boolean | null
-
-export type QueryFilter = Record<string, QueryValue>
-
-export type Model = {
-  id: string
-  created_at: string
-  updated_at: string
-}
-
-export type ModelResource = Model & {
-  subject?: string
-  name?: string
-  label?: string
-  slug?: string
-}
-
-export type ModelState = {
+export type AuthUser = {
+  id: number
   name: string
-  label: string
-  icon: string
-  color: BadgeProps['color']
-}
-
-export type Paginator = {
-  data: Model[] | undefined
-  links: {
-    first: string | undefined
-    last: string | undefined
-    prev: string | undefined
-    next: string | undefined
-  }
-  meta: {
-    current_page: number
-    current_page_url: string
-    from: number | undefined
-    path: string
-    per_page: number
-    to: number | undefined
-    total: number
-  }
-}
-
-export type User = Model & {
-  name: string
-  email?: string
-  roles?: string[] | null
-  permissions?: string[] | null
-  settings?: UserSettings
-  videos_count?: number
-  state?: ModelState
-  email_verified_at?: string | null
-  deleted_at?: string | null
-}
-
-export type UserCollection = Omit<Paginator, 'data'> & {
-  data: User[] | undefined
-}
-
-export type UserSettings = {
-  general: GeneralSettings
-  appearance: AppearanceSettings
-  player: PlayerSettings
-}
-
-export type GeneralSettings = {
-  timezone: string
-  locale: string
-  language: string
-  date_format: string
-  time_format: string
-}
-
-export type Media = Model & {
-  name: string
-  url?: string | null
-  file_name: string
-  mime_type: string
-  size: number
-  file_size: string
-  collection_name: string
-  disk: string
-  conversions_disk: string
-  codec?: string
-  resolution?: string
-  bitrate?: string
-  custom_properties?: MediaCustomProperties | null
-  generated_conversions?: Record<string, unknown> | null
-  responsive_images?: Record<string, unknown> | null
-}
-
-export type MediaCollection = Omit<Paginator, 'data'> & {
-  data: Media[] | undefined
+  email: string
 }

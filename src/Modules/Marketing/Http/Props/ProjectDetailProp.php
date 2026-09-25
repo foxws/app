@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\Marketing\Http\Props;
 
-use Foxws\Docs\Enums\ProjectDriver;
 use Foxws\Docs\Models\Project;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
 use Modules\Marketing\Support\DocsNavigation;
 use Modules\Marketing\Support\DocumentHeadings;
 use Modules\Marketing\Support\DocumentLinks;
+use Modules\Marketing\Support\ProjectKind;
+use Modules\Marketing\Support\ProjectSource;
 
 /**
  * A project's full page: hero, install command, docs tree, and the
@@ -51,11 +52,7 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'licence' => $metadata['licence'] ?? null,
         ], fn ($value) => $value !== null);
 
-        $source = match (true) {
-            is_string($metadata['source'] ?? null) && $metadata['source'] !== '' => $metadata['source'],
-            $this->project->driver === ProjectDriver::Github => "https://github.com/{$this->project->sourceLocation()}",
-            default => null,
-        };
+        $source = ProjectSource::url($this->project, $metadata);
 
         $usedBy = is_array($metadata['used_by'] ?? null) ? array_filter([
             'name' => $metadata['used_by']['name'] ?? null,
@@ -76,7 +73,11 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'slug' => $metadata['slug'] ?? $this->project->sourceLocation(),
             'eyebrow' => $metadata['eyebrow'] ?? '',
             'lead' => $metadata['lead'] ?? $metadata['desc'] ?? '',
-            'install' => $metadata['install'] ?? "composer require {$this->project->sourceLocation()}",
+            // Only packages default to a composer command — a side project
+            // (an app, a Flatpak remote, ...) shows one only if it sets its own.
+            'install' => $metadata['install'] ?? (ProjectKind::isPackage($this->project)
+                ? "composer require {$this->project->sourceLocation()}"
+                : null),
             'overview' => $rendered ? ['html' => $rendered['html'], 'toc' => $rendered['toc']] : null,
             'nav' => DocsNavigation::build($this->project, $documents, $versionParam),
             'versions' => $this->project->versions->map(fn ($v) => ['name' => $v->name, 'is_default' => $v->is_default])->all(),
