@@ -14,9 +14,6 @@ importers:
       '@inertiajs/vue3':
         specifier: ^3.7.1
         version: 3.7.1(vue@3.5.43(typescript@6.0.3))
-      '@internationalized/date':
-        specifier: ^3.12.4
-        version: 3.12.4
       '@nuxt/ui':
         specifier: ^4.11.1
         version: 4.11.1(d0c87355ca152cfc9250b6e20b676e5b)
