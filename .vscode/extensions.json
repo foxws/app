@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "bmewburn.vscode-intelephense-client",
+        "bradlc.vscode-tailwindcss",
+        "devsense.composer-php-vscode",
+        "EditorConfig.EditorConfig",
+        "laravel.vscode-laravel",
+        "VoidZero.vite-plus-extension-pack",
+        "Vue.volar"
+    ]
+}
