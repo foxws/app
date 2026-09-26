@@ -39,7 +39,9 @@ A project alone has nothing to sync — it needs at least one version. Each vers
 
 You don't have to run `docs:versions:add` at all: with `docs.sync.auto_discover_versions` enabled (the default), `docs:sync` checks each project's latest GitHub release and registers/updates it as the default version automatically. A project with no versions ever registered will pick up its first one this way.
 
-For the common case — a new project tracked from its default branch — pass `--sync` to `docs:projects:add` instead of the two-step `docs:versions:add`/`docs:sync` dance: it registers a `latest` version with `ref=main` (marked default) and syncs just that project immediately.
+For the common case — a new project tracked from its default branch — pass `--sync` to `docs:projects:add` instead of the two-step `docs:versions:add`/`docs:sync` dance: it syncs just that project immediately, first registering a `latest` version with `ref=main` (marked default) unless `docs.sync.requires_versions` is enabled (the default) for a GitHub project — then only released or explicitly registered versions are synced. Local projects always get `latest`.
+
+Remove a version or a whole project (with its documents, also removed from search) with `docs:versions:remove {project} {name}` and `docs:projects:remove {slug}`. Both ask for confirmation unless `--force` is passed.
 
 ### 3. Sync documentation
 

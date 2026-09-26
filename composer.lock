@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6eed5342b553db3cefd3f6081b0faf2b",
+    "content-hash": "f6b6421bdeaccfc7bbb52a1e29798ace",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -860,16 +860,16 @@
         },
         {
             "name": "foxws/laravel-docs",
-            "version": "v1.3.4",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-docs.git",
-                "reference": "ae76d8babcb152ca3981289ea6ef7f8bad4429e2"
+                "reference": "12076d3b961ce8a8375bd1f0bc49a68ccf6a73a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/ae76d8babcb152ca3981289ea6ef7f8bad4429e2",
-                "reference": "ae76d8babcb152ca3981289ea6ef7f8bad4429e2",
+                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/12076d3b961ce8a8375bd1f0bc49a68ccf6a73a5",
+                "reference": "12076d3b961ce8a8375bd1f0bc49a68ccf6a73a5",
                 "shasum": ""
             },
             "require": {
@@ -934,7 +934,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-docs/issues",
-                "source": "https://github.com/foxws/laravel-docs/tree/v1.3.4"
+                "source": "https://github.com/foxws/laravel-docs/tree/v1.4.0"
             },
             "funding": [
                 {
@@ -942,7 +942,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-25T09:35:59+00:00"
+            "time": "2026-09-26T13:49:47+00:00"
         },
         {
             "name": "foxws/laravel-essentials",
@@ -5796,16 +5796,16 @@
         },
         {
             "name": "spatie/laravel-responsecache",
-            "version": "8.4.3",
+            "version": "8.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-responsecache.git",
-                "reference": "20ae19e9197b9d7350c5de832c86349b799ec8a7"
+                "reference": "a2f6100d2f6e5233d74561f5c441d342397f29f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-responsecache/zipball/20ae19e9197b9d7350c5de832c86349b799ec8a7",
-                "reference": "20ae19e9197b9d7350c5de832c86349b799ec8a7",
+                "url": "https://api.github.com/repos/spatie/laravel-responsecache/zipball/a2f6100d2f6e5233d74561f5c441d342397f29f8",
+                "reference": "a2f6100d2f6e5233d74561f5c441d342397f29f8",
                 "shasum": ""
             },
             "require": {
@@ -5820,6 +5820,7 @@
                 "spatie/php-attribute-reader": "^1.0"
             },
             "require-dev": {
+                "jasonmccreary/double": "~0.6",
                 "larastan/larastan": "^3.9",
                 "laravel/framework": "^12.0|^13.0",
                 "laravel/pint": "^1.13.7",
@@ -5867,7 +5868,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-responsecache/issues",
-                "source": "https://github.com/spatie/laravel-responsecache/tree/8.4.3"
+                "source": "https://github.com/spatie/laravel-responsecache/tree/8.4.4"
             },
             "funding": [
                 {
@@ -5879,7 +5880,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-07T12:04:36+00:00"
+            "time": "2026-09-25T13:31:08+00:00"
         },
         {
             "name": "spatie/laravel-settings",
@@ -11287,16 +11288,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.398.0",
+            "version": "3.398.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "1b6f116bd571bd461126b7edff8bf7e173b36ea2"
+                "reference": "42abd470c300c143972e27778b3bbb0ce7402e41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/1b6f116bd571bd461126b7edff8bf7e173b36ea2",
-                "reference": "1b6f116bd571bd461126b7edff8bf7e173b36ea2",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/42abd470c300c143972e27778b3bbb0ce7402e41",
+                "reference": "42abd470c300c143972e27778b3bbb0ce7402e41",
                 "shasum": ""
             },
             "require": {
@@ -11378,9 +11379,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.398.0"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.398.1"
             },
-            "time": "2026-09-24T18:07:06+00:00"
+            "time": "2026-09-25T18:11:40+00:00"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -11624,16 +11625,16 @@
         },
         {
             "name": "composer/class-map-generator",
-            "version": "1.7.3",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/class-map-generator.git",
-                "reference": "86d8208fc3c649a3a999daf1a63c25201be2990f"
+                "reference": "c0efbeb2f3fd7e23c7f180a59765c0b48a31fbc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/class-map-generator/zipball/86d8208fc3c649a3a999daf1a63c25201be2990f",
-                "reference": "86d8208fc3c649a3a999daf1a63c25201be2990f",
+                "url": "https://api.github.com/repos/composer/class-map-generator/zipball/c0efbeb2f3fd7e23c7f180a59765c0b48a31fbc4",
+                "reference": "c0efbeb2f3fd7e23c7f180a59765c0b48a31fbc4",
                 "shasum": ""
             },
             "require": {
@@ -11677,7 +11678,7 @@
             ],
             "support": {
                 "issues": "https://github.com/composer/class-map-generator/issues",
-                "source": "https://github.com/composer/class-map-generator/tree/1.7.3"
+                "source": "https://github.com/composer/class-map-generator/tree/1.8.0"
             },
             "funding": [
                 {
@@ -11689,7 +11690,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-05T09:17:07+00:00"
+            "time": "2026-09-25T15:24:19+00:00"
         },
         {
             "name": "composer/pcre",

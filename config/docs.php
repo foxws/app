@@ -55,6 +55,15 @@ return [
         'auto_discover_versions' => env('DOCS_AUTO_DISCOVER_VERSIONS', true),
 
         /*
+         * When enabled, docs:projects:add --sync doesn't register a "latest"
+         * version tracking "main" for a GitHub project — only versions that
+         * are registered explicitly or auto-discovered from a GitHub release
+         * are synced. Local projects have no releases, so they always get
+         * a "latest" version.
+         */
+        'requires_versions' => env('DOCS_REQUIRES_VERSIONS', true),
+
+        /*
          * When a version is auto-discovered, this regex derives its display
          * name from the release tag — the first match wins (e.g. "v2.0.0"
          * or "version-2.0.0" both become "2.0.0"). Set to null to use the
