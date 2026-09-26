@@ -11,7 +11,9 @@ const props = defineProps<{
 }>()
 
 const items = computed(() => props.versions.map((v: DocsVersion) => v.name))
-const current = computed(() => props.current ?? props.versions.find((v: DocsVersion) => v.is_default)?.name ?? props.versions[0]?.name)
+const current = computed(
+  () => props.current ?? props.versions.find((v: DocsVersion) => v.is_default)?.name ?? props.versions[0]?.name,
+)
 
 function onSelect(name: string | number | undefined) {
   if (typeof name !== 'string' || name === current.value) {
@@ -20,7 +22,9 @@ function onSelect(name: string | number | undefined) {
 
   const target = props.versions.find((v: DocsVersion) => v.name === name)
 
-  router.visit(ProjectController.url({ project: props.project }, { query: target?.is_default ? {} : { version: name } }))
+  router.visit(
+    ProjectController.url({ project: props.project }, { query: target?.is_default ? {} : { version: name } }),
+  )
 }
 </script>
 

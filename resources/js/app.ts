@@ -11,7 +11,9 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel'
 
 // CSP nonce for Inertia's injected elements; undefined during SSR (no `document`).
 const cspNonce =
-  typeof document === 'undefined' ? undefined : (document.querySelector('meta[name="csp-nonce"]')?.getAttribute('content') ?? undefined)
+  typeof document === 'undefined'
+    ? undefined
+    : (document.querySelector('meta[name="csp-nonce"]')?.getAttribute('content') ?? undefined)
 
 void createInertiaApp({
   title: (title) => (title ? `${title} - ${appName}` : appName),
