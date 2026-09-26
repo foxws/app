@@ -1,5 +1,4 @@
 import type { AuthUser, FlashData, OptionItem } from '@/types'
-import type { Page } from '@inertiajs/vue3'
 
 declare module '@inertiajs/core' {
   export interface InertiaConfig {
@@ -14,8 +13,4 @@ declare module '@inertiajs/core' {
     readonly languages: OptionItem[] | undefined
     readonly auth: AuthUser | null
   }
-}
-
-declare module '@inertiajs/vue3' {
-  export declare function usePage<T>(): Page<T>
 }
