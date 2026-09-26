@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Domain\Tags\Models\Tag;
 use Domain\Users\Models\User;
 use Foxws\Docs\Models\Document;
 use Foxws\Docs\Models\Project;
@@ -60,7 +59,6 @@ return [
     'morph_map' => env('ESSENTIALS_MORPH_MAP', [
         'document' => Document::class,
         'project' => Project::class,
-        'tag' => Tag::class,
         'user' => User::class,
         'version' => Version::class,
     ]),

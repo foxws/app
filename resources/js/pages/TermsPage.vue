@@ -22,19 +22,23 @@ import { Head } from '@inertiajs/vue3'
     >
       <h2>Use at your own risk</h2>
       <p>
-        This website, and any projects or packages I publish, are provided "as is", without warranty of any kind. I put this work out
-        because I enjoy building it and hope it's useful to others — not as a guaranteed or supported product. Use of this site and anything
-        I build is entirely at your own risk, and I accept no liability for any damage, loss, or issues that may result from using them.
+        This website, and any projects or packages I publish, are provided "as is", without warranty of any kind. I put
+        this work out because I enjoy building it and hope it's useful to others — not as a guaranteed or supported
+        product. Use of this site and anything I build is entirely at your own risk, and I accept no liability for any
+        damage, loss, or issues that may result from using them.
       </p>
 
       <h2>No tracking</h2>
       <p>
-        I'm not interested in tracking visitors. This site does not place tracking cookies, analytics scripts, or any other third-party
-        trackers.
+        I'm not interested in tracking visitors. This site does not place tracking cookies, analytics scripts, or any
+        other third-party trackers.
       </p>
 
       <h2>Changes</h2>
-      <p>These terms may be updated from time to time. Continued use of this site after a change means you accept the update.</p>
+      <p>
+        These terms may be updated from time to time. Continued use of this site after a change means you accept the
+        update.
+      </p>
     </div>
   </UContainer>
 </template>

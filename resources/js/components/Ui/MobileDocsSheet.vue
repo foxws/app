@@ -20,7 +20,8 @@ const open = defineModel<boolean>('open', { default: false })
       icon: '',
       color: 'neutral',
       variant: 'soft',
-      class: 'rounded-full bg-neutral-800 px-2.5 py-1 font-mono text-xs text-neutral-300 uppercase hover:bg-neutral-700',
+      class:
+        'rounded-full bg-neutral-800 px-2.5 py-1 font-mono text-xs text-neutral-300 uppercase hover:bg-neutral-700',
     }"
     :ui="{
       content: 'max-h-[70vh] rounded-t-2xl border-t border-neutral-700 bg-neutral-900',

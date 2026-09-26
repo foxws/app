@@ -6,36 +6,14 @@ import vue from '@vitejs/plugin-vue'
 import laravel from 'laravel-vite-plugin'
 import { google } from 'laravel-vite-plugin/fonts'
 import { fileURLToPath, URL } from 'node:url'
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig, lazyPlugins, loadEnv } from 'vite-plus'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
 
   return {
-    server: {
-      host: '0.0.0.0',
-      port: 5173,
-      strictPort: true,
-      hmr: { host: env.VITE_HMR_HOST, clientPort: 443, protocol: 'wss' },
-      watch: {
-        ignored: ['**/.junie/**', '**/.cursor/**', '**/.claude/**', '**/storage/framework/views/**', '**/storage/logs/**'],
-      },
-    },
-    resolve: {
-      alias: {
-        '@': fileURLToPath(new URL('./resources/js', import.meta.url)),
-        '@images': fileURLToPath(new URL('./resources/images', import.meta.url)),
-        '~': fileURLToPath(new URL('./node_modules', import.meta.url)),
-        '!': fileURLToPath(new URL('./vendor', import.meta.url)),
-      },
-    },
-    ssr: {
-      // @nuxt/ui relies on Vite-only virtual modules (e.g. `#imports`) that
-      // only resolve while bundling, so it must never be externalized for SSR.
-      noExternal: ['@nuxt/ui'],
-    },
-    plugins: [
+    plugins: lazyPlugins(() => [
       laravel({
         input: ['resources/css/app.css', 'resources/js/app.ts'],
         refresh: true,
@@ -50,6 +28,7 @@ export default defineConfig(({ mode }) => {
           cluster: true,
         },
       }),
+      tailwindcss(),
       vue({
         template: {
           transformAssetUrls: {
@@ -58,7 +37,6 @@ export default defineConfig(({ mode }) => {
           },
         },
       }),
-      tailwindcss(),
       wayfinder({
         formVariants: true,
       }),
@@ -99,7 +77,85 @@ export default defineConfig(({ mode }) => {
           },
         },
       }),
-    ],
+    ]),
+    server: {
+      host: '0.0.0.0',
+      port: 5173,
+      strictPort: true,
+      hmr: { host: env.VITE_HMR_HOST, clientPort: 443, protocol: 'wss' },
+      watch: {
+        ignored: [
+          '**/.agents/**',
+          '**/.claude/**',
+          '**/vendor/**',
+          '**/storage/framework/views/**',
+          '**/storage/logs/**',
+        ],
+      },
+    },
+    lint: {
+      plugins: ['eslint', 'typescript', 'unicorn', 'oxc', 'vue', 'vitest'],
+      jsPlugins: [
+        {
+          name: 'vite-plus',
+          specifier: 'vite-plus/oxlint-plugin',
+        },
+      ],
+      rules: {
+        'vite-plus/prefer-vite-plus-imports': 'error',
+      },
+      overrides: [
+        {
+          files: ['resources/js/**/__tests__/**'],
+          rules: {
+            'typescript/unbound-method': 'off',
+          },
+        },
+      ],
+      options: {
+        denyWarnings: true,
+        typeAware: true,
+      },
+    },
+    fmt: {
+      semi: false,
+      singleQuote: true,
+      singleAttributePerLine: true,
+      printWidth: 120,
+      sortPackageJson: false,
+      sortTailwindcss: {
+        stylesheet: 'resources/css/app.css',
+        functions: ['cva', 'clsx', 'ui', ':ui'],
+        attributes: ['class', 'className', 'ui', ':ui'],
+      },
+      ignorePatterns: [
+        '.agents',
+        '.claude',
+        '.github',
+        '.mcp.json',
+        '/AGENTS.md',
+        '/CLAUDE.md',
+        'boost.json',
+        'skills-lock.json',
+        '/public',
+      ],
+    },
+    test: {
+      include: ['resources/js/**/*.{test,spec}.ts'],
+    },
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./resources/js', import.meta.url)),
+        '@images': fileURLToPath(new URL('./resources/images', import.meta.url)),
+        '~': fileURLToPath(new URL('./node_modules', import.meta.url)),
+        '!': fileURLToPath(new URL('./vendor', import.meta.url)),
+      },
+    },
+    ssr: {
+      // @nuxt/ui relies on Vite-only virtual modules (e.g. `#imports`) that
+      // only resolve while bundling, so it must never be externalized for SSR.
+      noExternal: ['@nuxt/ui'],
+    },
     build: {
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
@@ -109,9 +165,9 @@ export default defineConfig(({ mode }) => {
               packages.some((pkg) => id.includes(`node_modules/${pkg}`)) ? name : undefined
 
             return (
-              chunk('core', ['vue', '@inertiajs', '@vueuse']) ??
-              chunk('ui', ['@nuxt/ui', '@nuxt/icon', 'reka-ui', '@internationalized']) ??
               chunk('icons', ['@iconify']) ??
+              chunk('ui', ['@nuxt/ui', '@nuxt/icon', 'reka-ui', '@internationalized']) ??
+              chunk('core', ['vue', '@inertiajs', '@vueuse']) ??
               chunk('broadcasting', ['pusher-js', 'laravel-echo'])
             )
           },

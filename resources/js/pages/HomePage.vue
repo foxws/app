@@ -135,7 +135,9 @@ defineProps<{
           <h2 class="font-sans text-xl font-semibold tracking-tight text-neutral-50">Let's connect</h2>
         </template>
 
-        <template #description>I'm on LinkedIn — feel free to connect if you want to talk Laravel, Linux, or anything in between.</template>
+        <template #description
+          >I'm on LinkedIn — feel free to connect if you want to talk Laravel, Linux, or anything in between.</template
+        >
 
         <template #footer>
           <UButton

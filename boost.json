@@ -1,6 +1,5 @@
 {
     "agents": [
-        "copilot",
         "claude_code"
     ],
     "cloud": true,
