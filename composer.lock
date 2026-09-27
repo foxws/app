@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94f3e73e4c671ceb0f323ebf2511867d",
+    "content-hash": "ee7da732600a6d2bf5f04f7e3194ad1b",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -12152,16 +12152,16 @@
         },
         {
             "name": "foxws/laravel-podman",
-            "version": "3.0.1",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-podman.git",
-                "reference": "d6f4be7c2c867a3296b658829e4e074702d76a33"
+                "reference": "8da36a216ce7195f9129727f28b4b98acdb94113"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-podman/zipball/d6f4be7c2c867a3296b658829e4e074702d76a33",
-                "reference": "d6f4be7c2c867a3296b658829e4e074702d76a33",
+                "url": "https://api.github.com/repos/foxws/laravel-podman/zipball/8da36a216ce7195f9129727f28b4b98acdb94113",
+                "reference": "8da36a216ce7195f9129727f28b4b98acdb94113",
                 "shasum": ""
             },
             "require": {
@@ -12194,9 +12194,6 @@
             "type": "library",
             "extra": {
                 "laravel": {
-                    "aliases": {
-                        "Podman": "Foxws\\Podman\\Facades\\Podman"
-                    },
                     "providers": [
                         "Foxws\\Podman\\PodmanServiceProvider"
                     ]
@@ -12231,7 +12228,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-podman/issues",
-                "source": "https://github.com/foxws/laravel-podman/tree/3.0.1"
+                "source": "https://github.com/foxws/laravel-podman/tree/4.0.2"
             },
             "funding": [
                 {
@@ -12239,7 +12236,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-25T10:30:01+00:00"
+            "time": "2026-09-27T13:35:44+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
