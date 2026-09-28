@@ -36,6 +36,7 @@
         "podman-lpod",
         "podman-presets",
         "podman-s3",
+        "podman-upgrade",
         "spatie-javascript",
         "spatie-laravel-php",
         "spatie-security",
