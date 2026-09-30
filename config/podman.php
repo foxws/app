@@ -1,5 +1,9 @@
 <?php
 
+use Foxws\Podman\Support\Idle\Checks\DatabaseCheck;
+use Foxws\Podman\Support\Idle\Checks\QueueCheck;
+use Foxws\Podman\Support\Idle\Checks\ScoutCheck;
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -30,9 +34,9 @@ return [
     */
 
     'presets' => env('PODMAN_DEFAULT_PRESETS', [
-        // 'development',
-        // 'devcontainer',
-        'frankenphp-octane',
+        'devcontainer',
+        'development',
+        'ondemand',
         's3',
     ]),
 
@@ -50,14 +54,14 @@ return [
     */
 
     's3_buckets' => env('PODMAN_S3_BUCKETS', [
-        'local',
-        'conversions',
-        'media',
+        // 'local',
+        // 'conversions',
+        // 'media',
     ]),
 
     's3_cors_buckets' => env('PODMAN_S3_CORS_BUCKETS', [
-        'conversions',
-        'media',
+        // 'conversions',
+        // 'media',
     ]),
 
     /*
@@ -70,7 +74,10 @@ return [
     |
     */
 
-    'quadlet_prefix' => env('PODMAN_QUADLET_PREFIX', env('APP_NAME', 'laravel')),
+    'quadlet_prefix' => env(
+        'PODMAN_QUADLET_PREFIX',
+        env('APP_NAME', 'laravel'),
+    ),
 
     'proxy_prefix' => env('PODMAN_PROXY_PREFIX', 'proxy'),
 
@@ -108,6 +115,37 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Config Path
+    |--------------------------------------------------------------------------
+    |
+    | The host path baked into the "{{configPath}}" placeholder, for services
+    | that read their configuration from a host directory outside the project
+    | itself (for example a proxy Containerfile mounting "{{configPath}}/
+    | {{application}}" as "/etc/caddy"). Defaults to "working_path".
+    |
+    */
+
+    'config_path' => env('PODMAN_CONFIG_PATH'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Substitutions
+    |--------------------------------------------------------------------------
+    |
+    | Extra "{{placeholder}}" => value pairs merged into every rendered
+    | template, on top of the built-in ones (see the "Customizing" docs). A
+    | substitution here overrides a built-in placeholder of the same name.
+    | Values are plain PHP, so "env(...)" works like anywhere else in this
+    | file, e.g. '{{apiEndpoint}}' => env('API_ENDPOINT').
+    |
+    */
+
+    'substitutions' => [
+        // '{{apiEndpoint}}' => env('API_ENDPOINT'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Service UID and GID
     |--------------------------------------------------------------------------
     |
@@ -120,20 +158,6 @@ return [
     'quadlet_uid' => env('PODMAN_QUADLET_UID'),
 
     'quadlet_gid' => env('PODMAN_QUADLET_GID'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Substitutions
-    |--------------------------------------------------------------------------
-    |
-    | Extra "{{placeholder}}" => value pairs merged into every rendered
-    | template, on top of the built-in ones.
-    |
-    */
-
-    'substitutions' => [
-        '{{image}}' => env('PODMAN_IMAGE_REGISTRY', 'ghcr.io/foxws/foxws:latest'),
-    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -175,6 +199,10 @@ return [
     | proxy (the "proxy" preset, or an external one such as a NAS) at the
     | "listen" address.
     |
+    | The database, cache and other services sleep too, once the app is
+    | idle and no jobs are left. A sleeping stack skips scheduled tasks, and
+    | the first request after idling waits for every service to start.
+    |
     */
 
     'ondemand' => [
@@ -185,5 +213,27 @@ return [
         'port' => env('PODMAN_ONDEMAND_PORT', 18000),
 
         'idle_timeout' => env('PODMAN_ONDEMAND_IDLE_TIMEOUT', '10min'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Idle Checks
+    |--------------------------------------------------------------------------
+    |
+    | While the app sleeps, the idle check stops its queue workers once
+    | "podman:idle" finds no work in progress. It runs every check below
+    | for something the app uses, going by its config (QUEUE_CONNECTION,
+    | DB_CONNECTION, SCOUT_DRIVER). Add or remove checks here.
+    | To configure a check, register the checks from a service provider
+    | with "app(PodmanIdle::class)->checks([...])", which replaces this list.
+    |
+    */
+
+    'idle' => [
+        'checks' => [
+            QueueCheck::class,
+            DatabaseCheck::class,
+            ScoutCheck::class,
+        ],
     ],
 ];

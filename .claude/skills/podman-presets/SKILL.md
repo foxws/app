@@ -10,17 +10,17 @@ description: Customize foxws/laravel-podman presets and Quadlet templates, such 
 ## How it fits together
 
 - A preset is a folder with `quadlets/` (`*.quadlets` files) and `runtimes/` (`Containerfile`, `entrypoint.sh`, PHP ini, Caddy files).
-- Presets: `development` (working copy mounted), `frankenphp-octane` (code baked into the image), `proxy` (Caddy), `devcontainer`, `s3`.
+- Presets: `development` (working copy mounted), `production` (code baked into the image), `proxy` (Caddy), `devcontainer`, `s3`.
 - Your own presets live in `stubs_path` (default `containers/stubs/{preset}`). If one exists there, it replaces the bundled preset completely; files are not merged.
 - Rendered output goes to `publish_path` (default `podman/`). **Never edit or commit `podman/`**: it's overwritten on every generate. Edit `containers/stubs/` instead.
 
 ## Workflow
 
 ```bash
-php artisan podman:publish frankenphp-octane    # copy templates to containers/stubs/ (once)
-# edit containers/stubs/frankenphp-octane/...
-php artisan podman:generate frankenphp-octane   # render to podman/
-lpod install frankenphp-octane/app.quadlets --replace
+php artisan podman:publish production    # copy templates to containers/stubs/ (once)
+# edit containers/stubs/production/...
+php artisan podman:generate production   # render to podman/
+lpod install production/app.quadlets --replace
 lpod my-app restart
 ```
 
@@ -60,8 +60,9 @@ VolumeName=systemd-{{application}}-valkey
 | `{{workingPath}}` | `working_path` (project path on the host) |
 | `{{configPath}}` | `config_path` (defaults to `working_path`) |
 | `{{runtimePath}}` | The preset's rendered `runtimes/` folder |
+| `{{systemctl}}` | `systemctl --user`, or `systemctl` when `quadlet_uid` is `0` (root) |
 | `{{appUpstream}}` | Where the proxy sends app traffic: `systemd-{app}:8000`, or the on-demand socket |
-| `{{ondemand}}` | `yes` when `ondemand.enabled`, otherwise `no` |
+| `{{ondemand}}` | `yes` when `ondemand.enabled`, otherwise `no`. Used for `StopWhenUnneeded=` on the app and services |
 | `{{ondemandListen}}`, `{{ondemandPort}}`, `{{ondemandIdleTimeout}}` | `ondemand.listen`, `ondemand.port`, `ondemand.idle_timeout` |
 
 Add your own in `config/podman.php`. They also override built-in placeholders:
@@ -88,11 +89,22 @@ After={{application}}-mysql.container {{application}}-redis.container
 
 Then regenerate, install the new service and `app.quadlets` with `--replace`, and update `.env` (`DB_CONNECTION`, `DB_HOST`, `REDIS_HOST`, ...). Quadlet names containers `systemd-{unit}`, so the host is e.g. `systemd-my-app-mysql`.
 
-Dependency directives: `Requires=` (hard), `Wants=` (soft), `After=` (order only), `PartOf=` (stop/restart with target). Don't use `BindsTo=` on the app: it keeps an on-demand app from stopping. In `development`, `queue`/`horizon` are `PartOf=` the app and stop when it goes idle; to keep one running, replace its app `After=`/`PartOf=` with `Requires=`/`After=` on the database and cache, as in `frankenphp-octane`.
+Dependency directives:
+
+- `Requires=`: hard dependency. `Wants=`: soft dependency. `After=`: start order only. `PartOf=`: stop or restart with the target.
+- Don't use `BindsTo=` on the app. It counts as needing the app, so an on-demand app never stops.
+- In `development`, `queue`/`horizon` are `PartOf=` the app and stop when it goes idle. To keep one running, replace its app `After=`/`PartOf=` with `Requires=`/`After=` on the database and cache, as in `production`.
 
 ### Add a service
 
-Create `containers/stubs/{preset}/quadlets/my-service.quadlets` in the format above, then `podman:generate` and `lpod install {preset}/my-service.quadlets`.
+Create `containers/stubs/{preset}/quadlets/my-service.quadlets` in the format above, then run `podman:generate` and `lpod install {preset}/my-service.quadlets`.
+
+To let it sleep with the app:
+
+- Add `StopWhenUnneeded={{ondemand}}` under `[Unit]`, and add the service to the app's `Wants=` line. Without `Wants=`, it stops right after starting.
+- If the first request after waking needs it (storage, search), also add it to the app's `After=` line. `Wants=` alone doesn't make the app wait.
+- If queue workers keep running while the app sleeps (always in `production`) and their jobs use it, add it to the workers' `Wants=` and `After=` too.
+- If it can have work in progress while the app sleeps, write an `IdleCheck` for it (`name()`, `isEnabled()`, `run()`) and add it to the `idle.checks` config list or `app(PodmanIdle::class)->checks([...])`. `podman:idle` then runs it; `podman:idle --services=its-name` runs it alone.
 
 ### Memory limit
 
@@ -104,7 +116,17 @@ Publish `proxy`, then edit `containers/stubs/proxy/runtimes/Caddyfile` and `site
 
 ### On-demand (scale-to-zero)
 
-A preset can hold plain systemd units next to `quadlets/`, because Quadlet has no unit type for sockets or timers. Everything in `systemd/*` renders as `{application}-{file}`: the on-demand socket and its `systemd-socket-proxyd` service, and `schedule.timer` in `frankenphp-octane`. On-demand is the default; `PODMAN_ONDEMAND_ENABLED=false` renders `StopWhenUnneeded=no` and points the proxy at the container. Install them with `lpod install {preset}/{application}-ondemand.socket --replace`. The app quadlet stays on-demand ready either way: keep `StopWhenUnneeded={{ondemand}}`, `Notify=healthy` with the `/up` health check, and the `127.0.0.1:{{ondemandPort}}` publish when editing it.
+On by default. `PODMAN_ONDEMAND_ENABLED=false` renders `StopWhenUnneeded=no` everywhere and points the proxy straight at the container.
+
+- **Socket:** the `ondemand` preset (shared by `development` and `production`) holds the socket and its `systemd-socket-proxyd` service. Files in a preset's `systemd/` folder are plain systemd units, rendered as `{application}-{file}`; `production` also has `systemd/schedule.timer`.
+- **Idle check:** part of `lpod`. While the app sleeps, it runs `podman:idle` in the running queue worker or Horizon, and once nothing is in progress, stops the workers and the scheduler timer. Add another worker with `Environment=LPOD_IDLE_WORKERS=imports` in a drop-in on `lpod-idle@{application}.service`. The preset's `idle.timer`/`idle.service` are deprecated, for older `lpod` only.
+- **Sleeping services:** a service with `StopWhenUnneeded={{ondemand}}` stops once no running unit needs it, so it must be in the app's `Requires=` or `Wants=`, or it stops right after starting.
+- **App quadlet:** when editing it, keep `StopWhenUnneeded={{ondemand}}`, `Notify=healthy` with the `/up` health check, and the `127.0.0.1:{{ondemandPort}}` publish.
+
+```bash
+lpod install ondemand/{application}-ondemand.socket --replace
+lpod idle enable {application}
+```
 
 ### Extra PHP extensions or packages
 
