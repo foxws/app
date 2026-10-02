@@ -6,12 +6,6 @@
     <meta name="color-scheme" content="dark" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="csp-nonce" content="{{ Vite::cspNonce() }}" />
-    <meta
-        data-inertia="description"
-        name="description"
-        content="Laravel packages, Linux tooling and AI-assisted development for video streaming, documentation, domain-driven design and Podman deployments."
-    />
-    <meta data-inertia="robots" name="robots" content="index, follow" />
     <link rel="preconnect" href="{{ config('filesystems.disks.s3.url') }}" crossorigin="anonymous" />
     @pwaHead
     @fonts
@@ -19,7 +13,14 @@
         'resources/css/app.css',
         'resources/js/app.ts',
     ])
-    <x-inertia::head />
+    <x-inertia::head>
+        <meta
+            data-inertia="description"
+            name="description"
+            content="Laravel packages, Linux tooling and AI-assisted development for video streaming, documentation, domain-driven design and Podman deployments."
+        />
+        <meta data-inertia="robots" name="robots" content="index, follow" />
+    </x-inertia::head>
 </head>
 
 <body class="antialiased">
