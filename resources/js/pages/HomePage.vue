@@ -55,7 +55,7 @@ defineProps<{
           {{ group.name ?? 'More' }}
         </h3>
 
-        <div class="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+        <UPageGrid class="gap-3.5 lg:grid-cols-2">
           <PackageCard
             v-for="pkg in group.packages"
             :key="pkg.slug"
@@ -67,7 +67,7 @@ defineProps<{
             :href="`/${pkg.path}`"
             :downloads="pkg.downloads"
           />
-        </div>
+        </UPageGrid>
       </div>
     </UContainer>
 
@@ -93,6 +93,7 @@ defineProps<{
                 Things I maintain outside the core: Flatpaks, lists and experiments.
               </p>
             </div>
+
             <UButton
               label="Personal profile"
               to="https://github.com/francoism90"
@@ -106,7 +107,9 @@ defineProps<{
         </template>
 
         <template #body>
-          <UPageList divide>
+          <UPageGrid
+            class="gap-x-8 gap-y-0 *:border-default *:not-last:border-b lg:grid-cols-2 sm:[&>*:nth-last-child(2):nth-child(odd)]:border-b-0"
+          >
             <SideProjectRow
               v-for="project in sideProjects"
               :key="project.slug"
@@ -116,7 +119,7 @@ defineProps<{
               :status="project.status"
               :href="project.href"
             />
-          </UPageList>
+          </UPageGrid>
         </template>
 
         <template #footer>
@@ -152,9 +155,9 @@ defineProps<{
           <h2 class="font-sans text-xl font-semibold tracking-tight text-neutral-50">Let's connect</h2>
         </template>
 
-        <template #description
-          >I'm on LinkedIn — feel free to connect if you want to talk Laravel, Linux, or anything in between.</template
-        >
+        <template #description>
+          I'm on LinkedIn — feel free to connect if you want to talk Laravel, Linux, or anything in between.
+        </template>
 
         <template #footer>
           <UButton
