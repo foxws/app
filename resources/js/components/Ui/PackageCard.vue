@@ -1,12 +1,22 @@
 <script setup lang="ts">
-defineProps<{
+import { computed } from 'vue'
+
+const props = defineProps<{
   name: string
   slug: string
   role?: string | null
   desc: string
   version?: string
   href: string
+  downloads?: number
+  downloadsLoading?: boolean
 }>()
+
+const monthlyDownloads = computed(() =>
+  props.downloads === undefined
+    ? null
+    : new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 }).format(props.downloads),
+)
 </script>
 
 <template>
@@ -38,11 +48,28 @@ defineProps<{
     <template #footer>
       <div class="flex items-center justify-between">
         <span class="font-mono text-xs text-neutral-500">{{ slug }}</span>
-        <span
-          v-if="version"
-          class="font-mono text-xs text-neutral-400"
-          >{{ version }}</span
-        >
+        <div class="flex items-center gap-3">
+          <span
+            v-if="downloadsLoading"
+            class="h-3 w-16 animate-pulse rounded bg-neutral-800"
+          />
+          <span
+            v-else-if="monthlyDownloads"
+            class="inline-flex items-center gap-1 font-mono text-xs text-neutral-500"
+            :title="`${downloads?.toLocaleString('en')} installs in the last 30 days`"
+          >
+            <UIcon
+              name="i-lucide-download"
+              class="size-3"
+            />
+            {{ monthlyDownloads }}/mo
+          </span>
+          <span
+            v-if="version"
+            class="font-mono text-xs text-neutral-400"
+            >{{ version }}</span
+          >
+        </div>
       </div>
     </template>
   </UPageCard>

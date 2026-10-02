@@ -7,6 +7,7 @@ import { Head } from '@inertiajs/vue3'
 defineProps<{
   packages: DocsPackageSummary[]
   sideProjects: DocsSideProjectSummary[]
+  downloads?: Record<string, number>
 }>()
 </script>
 
@@ -51,6 +52,8 @@ defineProps<{
         :desc="pkg.desc"
         :version="pkg.version"
         :href="`/${pkg.path}`"
+        :downloads="downloads?.[pkg.slug]"
+        :downloads-loading="downloads === undefined"
       />
     </UContainer>
 

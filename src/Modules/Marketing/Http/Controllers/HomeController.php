@@ -11,6 +11,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Modules\Marketing\Http\Props\ProjectSummaryProp;
 use Modules\Marketing\Http\Props\SideProjectSummaryProp;
+use Modules\Marketing\Support\PackagistDownloads;
 use Modules\Marketing\Support\ProjectKind;
 
 final class HomeController
@@ -20,7 +21,22 @@ final class HomeController
         return Inertia::render('HomePage', [
             'packages' => Inertia::once(fn () => new ProjectSummaryProp($this->projectsByKind()->get('packages', collect()))),
             'sideProjects' => Inertia::once(fn () => new SideProjectSummaryProp($this->projectsByKind()->get('sideProjects', collect()))),
+            'downloads' => Inertia::defer(fn () => $this->monthlyDownloads()),
         ]);
+    }
+
+    /**
+     * Deferred, so a cold Packagist lookup never holds up the page itself.
+     *
+     * @return array<string, int>
+     */
+    private function monthlyDownloads(): array
+    {
+        return $this->projectsByKind()
+            ->get('packages', collect())
+            ->mapWithKeys(fn (Project $project): array => [$project->slug => PackagistDownloads::monthly($project)])
+            ->filter(fn (?int $downloads): bool => $downloads !== null)
+            ->all();
     }
 
     /**
