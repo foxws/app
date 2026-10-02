@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { useNumberFormat } from '@/composables/number'
 
-const props = defineProps<{
+defineProps<{
   name: string
   slug: string
   role?: string | null
@@ -11,11 +11,7 @@ const props = defineProps<{
   downloads?: number | null
 }>()
 
-const monthlyDownloads = computed(() =>
-  props.downloads == null
-    ? null
-    : new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 }).format(props.downloads),
-)
+const { formatCompact, formatFull } = useNumberFormat()
 </script>
 
 <template>
@@ -49,15 +45,15 @@ const monthlyDownloads = computed(() =>
         <span class="font-mono text-xs text-neutral-500">{{ slug }}</span>
         <div class="flex items-center gap-3">
           <span
-            v-if="monthlyDownloads"
+            v-if="downloads != null"
             class="inline-flex items-center gap-1 font-mono text-xs text-neutral-500"
-            :title="`${downloads?.toLocaleString('en')} installs in the last 30 days`"
+            :title="`${formatFull(downloads)} installs in the last 30 days`"
           >
             <UIcon
               name="i-lucide-download"
               class="size-3"
             />
-            {{ monthlyDownloads }}/mo
+            {{ formatCompact(downloads) }}/mo
           </span>
           <span
             v-if="version"
