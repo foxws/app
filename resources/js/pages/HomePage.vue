@@ -51,6 +51,7 @@ defineProps<{
         :desc="pkg.desc"
         :version="pkg.version"
         :href="`/${pkg.path}`"
+        :downloads="pkg.downloads"
       />
     </UContainer>
 

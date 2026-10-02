@@ -33,6 +33,7 @@ export type DocsPackageSummary = {
   role: string | null
   desc: string
   version?: string
+  downloads: number | null
 }
 
 export type DocsSideProjectSummary = {

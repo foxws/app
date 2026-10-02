@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useNumberFormat } from '@/composables/number'
+
 defineProps<{
   name: string
   slug: string
@@ -6,7 +8,10 @@ defineProps<{
   desc: string
   version?: string
   href: string
+  downloads?: number | null
 }>()
+
+const { formatCompact, formatFull } = useNumberFormat()
 </script>
 
 <template>
@@ -38,11 +43,24 @@ defineProps<{
     <template #footer>
       <div class="flex items-center justify-between">
         <span class="font-mono text-xs text-neutral-500">{{ slug }}</span>
-        <span
-          v-if="version"
-          class="font-mono text-xs text-neutral-400"
-          >{{ version }}</span
-        >
+        <div class="flex items-center gap-3">
+          <span
+            v-if="downloads != null"
+            class="inline-flex items-center gap-1 font-mono text-xs text-neutral-500"
+            :title="`${formatFull(downloads)} installs in the last 30 days`"
+          >
+            <UIcon
+              name="i-lucide-download"
+              class="size-3"
+            />
+            {{ formatCompact(downloads) }}/mo
+          </span>
+          <span
+            v-if="version"
+            class="font-mono text-xs text-neutral-400"
+            >{{ version }}</span
+          >
+        </div>
       </div>
     </template>
   </UPageCard>
