@@ -37,7 +37,6 @@ return [
         'devcontainer',
         'development',
         'ondemand',
-        's3',
     ]),
 
     /*
