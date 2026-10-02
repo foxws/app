@@ -12,6 +12,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request;
+use Modules\Marketing\Commands\SyncPackagistDownloadsCommand;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Spatie\Permission\Middleware\RoleMiddleware;
 use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
@@ -73,5 +74,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ])
     ->withCommands([
         CreateUserCommand::class,
+        SyncPackagistDownloadsCommand::class,
     ])
     ->create();

@@ -8,12 +8,11 @@ const props = defineProps<{
   desc: string
   version?: string
   href: string
-  downloads?: number
-  downloadsLoading?: boolean
+  downloads?: number | null
 }>()
 
 const monthlyDownloads = computed(() =>
-  props.downloads === undefined
+  props.downloads == null
     ? null
     : new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 }).format(props.downloads),
 )
@@ -50,11 +49,7 @@ const monthlyDownloads = computed(() =>
         <span class="font-mono text-xs text-neutral-500">{{ slug }}</span>
         <div class="flex items-center gap-3">
           <span
-            v-if="downloadsLoading"
-            class="h-3 w-16 animate-pulse rounded bg-neutral-800"
-          />
-          <span
-            v-else-if="monthlyDownloads"
+            v-if="monthlyDownloads"
             class="inline-flex items-center gap-1 font-mono text-xs text-neutral-500"
             :title="`${downloads?.toLocaleString('en')} installs in the last 30 days`"
           >

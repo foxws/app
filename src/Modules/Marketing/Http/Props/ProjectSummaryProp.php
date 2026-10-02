@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
+use Modules\Marketing\Support\PackagistDownloads;
 
 /**
  * The homepage package grid — one summary card per package project.
@@ -32,6 +33,7 @@ final class ProjectSummaryProp implements ProvidesInertiaProperty
                 'role' => $metadata['role'] ?? null,
                 'desc' => $metadata['desc'] ?? '',
                 'version' => $project->defaultVersion()?->name,
+                'downloads' => PackagistDownloads::monthly($project),
             ];
         })->values()->all();
     }
