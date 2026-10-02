@@ -1,19 +1,12 @@
 <script setup lang="ts">
+import { useUrlFormat } from '@/composables/url'
 import type { DocsUsedBy } from '@/types'
 
 defineProps<{
   projects: DocsUsedBy[]
 }>()
 
-const destination = (href: string): string => {
-  try {
-    const url = new URL(href)
-
-    return `${url.host}${url.pathname}`.replace(/\/$/, '')
-  } catch {
-    return href
-  }
-}
+const { formatDestination } = useUrlFormat()
 </script>
 
 <template>
@@ -50,7 +43,7 @@ const destination = (href: string): string => {
             class="font-sans text-sm text-neutral-400"
             >{{ project.desc }}</span
           >
-          <span class="truncate font-mono text-xs text-neutral-500">{{ destination(project.href) }}</span>
+          <span class="truncate font-mono text-xs text-neutral-500">{{ formatDestination(project.href) }}</span>
         </template>
       </UPageCard>
     </UPageList>
