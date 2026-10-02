@@ -54,12 +54,6 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
 
         $source = ProjectSource::url($this->project, $metadata);
 
-        $usedBy = is_array($metadata['used_by'] ?? null) ? array_filter([
-            'name' => $metadata['used_by']['name'] ?? null,
-            'desc' => $metadata['used_by']['desc'] ?? null,
-            'href' => $metadata['used_by']['href'] ?? null,
-        ], fn ($value) => $value !== null) : [];
-
         $firstDocument = DocsNavigation::firstDocument($navDocuments);
 
         // The overview reads as the first page in the project, so it only
@@ -84,9 +78,36 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'version' => $version?->name,
             'source' => $source,
             'package' => $package !== [] ? $package : null,
-            'used_by' => isset($usedBy['name'], $usedBy['href']) ? $usedBy : null,
+            'used_by' => $this->usedBy($metadata),
             'get_started' => $firstDocument ? DocsNavigation::pathFor($this->project, $firstDocument, $overview, $versionParam) : null,
             'surround' => [null, $next],
         ];
+    }
+
+    /**
+     * `used_by` is a list of projects, or a single project in front matter
+     * written before lists were supported (still in published releases).
+     * Entries without a name and href are skipped.
+     *
+     * @param  array<string, mixed>  $metadata
+     * @return array<int, array{name: string, href: string, desc?: string}>
+     */
+    private function usedBy(array $metadata): array
+    {
+        $usedBy = $metadata['used_by'] ?? null;
+
+        if (! is_array($usedBy)) {
+            return [];
+        }
+
+        return collect(array_is_list($usedBy) ? $usedBy : [$usedBy])
+            ->filter(fn (mixed $entry): bool => is_array($entry) && is_string($entry['name'] ?? null) && is_string($entry['href'] ?? null))
+            ->map(fn (array $entry): array => array_filter([
+                'name' => $entry['name'],
+                'desc' => is_string($entry['desc'] ?? null) ? $entry['desc'] : null,
+                'href' => $entry['href'],
+            ], fn (?string $value): bool => $value !== null))
+            ->values()
+            ->all();
     }
 }

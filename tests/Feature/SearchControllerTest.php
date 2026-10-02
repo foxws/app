@@ -8,7 +8,7 @@ use Foxws\Docs\Database\Factories\VersionFactory;
 
 test('searches documents by title', function () {
     $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
-    $version = VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+    $version = VersionFactory::new()->create(['project_id' => $project->id, 'name' => 'v2', 'is_default' => true]);
 
     DocumentFactory::new()->create([
         'version_id' => $version->id,
@@ -34,6 +34,7 @@ test('searches documents by title', function () {
             'suffix' => 'Test Project — Getting Started',
             'suffixHtml' => null,
             'prefix' => 'TEST-PROJECT',
+            'version' => 'v2',
             'description' => 'Run the installer to get started quickly.',
             'descriptionHtml' => null,
             'to' => route('document', ['test-project', 'installation'], absolute: false),
@@ -76,6 +77,25 @@ test('shows HTML entities in the description as the characters they stand for', 
 
     expect($response->json('0.description'))->toBe('Chain commands with a && b.')
         ->and($response->json('0.descriptionHtml'))->toBe('<mark>Chain</mark> commands with a &amp;&amp; b.');
+});
+
+test('links results from a non-default version to that version', function () {
+    $project = ProjectFactory::new()->create(['slug' => 'test-project']);
+    VersionFactory::new()->create(['project_id' => $project->id, 'name' => 'v2', 'is_default' => true]);
+    $legacy = VersionFactory::new()->create(['project_id' => $project->id, 'name' => 'v1', 'is_default' => false]);
+
+    DocumentFactory::new()->create([
+        'version_id' => $legacy->id,
+        'slug' => 'usage',
+        'title' => 'Usage',
+    ]);
+
+    $response = $this->getJson('/api/v1/search?query=Usage');
+
+    $response->assertOk();
+
+    expect($response->json('0.version'))->toBe('v1')
+        ->and($response->json('0.to'))->toBe(route('document', ['test-project', 'usage', 'version' => 'v1'], absolute: false));
 });
 
 test('excludes documents marked as not searchable', function () {

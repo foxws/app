@@ -23,7 +23,8 @@ final class SearchResultResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $project = $this->version->project;
+        $version = $this->version;
+        $project = $version->project;
         $body = DocumentHeadings::extract($this->toHtml(), $this->title)['html'];
         $query = $request->query('query');
 
@@ -37,9 +38,14 @@ final class SearchResultResource extends JsonResource
             'suffix' => $suffix,
             'suffixHtml' => SearchHighlighter::highlight($suffix, $query),
             'prefix' => Str::upper($project->slug),
+            'version' => $version->name,
             'description' => $description,
             'descriptionHtml' => SearchHighlighter::highlight($description, $query),
-            'to' => route('document', [$project->slug, $this->slug], absolute: false),
+            'to' => route('document', array_filter([
+                'project' => $project->slug,
+                'document' => $this->slug,
+                'version' => $version->is_default ? null : $version->name,
+            ]), absolute: false),
         ];
     }
 }
