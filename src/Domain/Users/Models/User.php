@@ -28,7 +28,9 @@ use Spatie\Permission\Traits\HasRoles;
 #[UseEloquentBuilder(UserQueryBuilder::class)]
 class User extends Authenticatable implements MustVerifyEmail
 {
+    /** @use HasFactory<UserFactory> */
     use HasFactory;
+
     use HasRoles;
     use HasStates;
     use HasUlids;
@@ -77,6 +79,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return UserFactory::new();
     }
 
+    /**
+     * @return list<string>
+     */
     public function uniqueIds(): array
     {
         return ['ulid'];
@@ -96,6 +101,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return User::query()->firstWhere('ulid', $value);
     }
 
+    /**
+     * @return array<string, string|int>
+     */
     public function toSearchableArray(): array
     {
         return [
@@ -120,6 +128,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasRole('super-admin');
     }
 
+    /**
+     * @return Attribute<Collection<int, string>, never>
+     */
     protected function assignedRoles(): Attribute
     {
         return Attribute::make(
@@ -127,6 +138,9 @@ class User extends Authenticatable implements MustVerifyEmail
         )->shouldCache();
     }
 
+    /**
+     * @return Attribute<Collection<int, string>, never>
+     */
     protected function assignedPermissions(): Attribute
     {
         return Attribute::make(

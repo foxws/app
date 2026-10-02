@@ -31,7 +31,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     }
 
     /**
-     * @param  array{name: string, email: string}  $validated
+     * @param  array<string, mixed>  $validated
      */
     protected function updateVerifiedUser(User $user, array $validated): void
     {
