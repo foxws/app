@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Foxws\Docs\Database\Factories\ProjectFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 test('the synced monthly install count replaces the cached homepage', function () {
@@ -41,4 +42,12 @@ test('a package never synced, or not on GitHub, has no install count', function 
     ProjectFactory::new()->local()->create(['slug' => 'laravel-local']);
 
     expect(array_column($this->get('/')->inertiaProps('packages'), 'downloads'))->toBe([null, null]);
+});
+
+test('a count read back as a string, as Redis returns numbers, is still an integer', function () {
+    ProjectFactory::new()->create(['slug' => 'laravel-podman', 'github_repository' => 'foxws/laravel-podman']);
+
+    Cache::forever('packagist-downloads:foxws/laravel-podman', '1689');
+
+    expect($this->get('/')->inertiaProps('packages.0.downloads'))->toBe(1689);
 });
