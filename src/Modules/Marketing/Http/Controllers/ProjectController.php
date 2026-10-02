@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Modules\Marketing\Http\Props\ProjectDetailProp;
 use Modules\Marketing\Http\Requests\ViewDocsRequest;
+use Modules\Marketing\Support\StructuredData;
 
 final class ProjectController
 {
@@ -22,6 +23,6 @@ final class ProjectController
             'project' => fn () => new ProjectDetailProp($project, $request->version()),
             'crumbs' => fn (): array => [['label' => $project->slug]],
             'scope' => fn (): string => $project->title,
-        ]);
+        ])->withViewData('structuredData', StructuredData::project($project, $project->versionOrDefault($request->version())));
     }
 }

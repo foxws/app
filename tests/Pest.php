@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Testing\TestResponse;
 use Spatie\ResponseCache\Facades\ResponseCache;
 use Tests\CreatesApplication;
 
@@ -39,3 +40,15 @@ uses(TestCase::class, CreatesApplication::class, RefreshDatabase::class)
         $this->seed();
     })
     ->in(__DIR__);
+
+/**
+ * The JSON-LD script app.blade.php prints into a full page response, decoded.
+ *
+ * @return array<string, mixed>
+ */
+function structuredData(TestResponse $response): array
+{
+    preg_match('#<script type="application/ld\+json">(.*?)</script>#s', $response->getContent(), $matches);
+
+    return json_decode($matches[1] ?? 'null', true, flags: JSON_THROW_ON_ERROR) ?? [];
+}

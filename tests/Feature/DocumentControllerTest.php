@@ -228,3 +228,19 @@ test('falls back to the default version when a document is requested under an un
     expect($response->inertiaProps('document')['project']['href'])
         ->toBe(route('project', 'test-project', absolute: false));
 });
+
+test('gives a document JSON-LD breadcrumbs back through its project to the homepage', function () {
+    config(['app.name' => 'Foxws']);
+
+    $project = ProjectFactory::new()->create(['slug' => 'laravel-podman', 'title' => 'Laravel Podman']);
+    $version = VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+    DocumentFactory::new()->create(['version_id' => $version->id, 'slug' => 'installation', 'title' => 'Installation']);
+
+    $response = $this->get('/laravel-podman/installation');
+
+    expect(structuredData($response)['itemListElement'])->toBe([
+        ['@type' => 'ListItem', 'position' => 1, 'name' => 'Foxws', 'item' => url('/')],
+        ['@type' => 'ListItem', 'position' => 2, 'name' => 'Laravel Podman', 'item' => url('/laravel-podman')],
+        ['@type' => 'ListItem', 'position' => 3, 'name' => 'Installation', 'item' => url('/laravel-podman/installation')],
+    ]);
+});

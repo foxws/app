@@ -21,6 +21,7 @@
         />
         <meta data-inertia="robots" name="robots" content="index, follow" />
     </x-inertia::head>
+    {!! $structuredData ?? '' !!}
 </head>
 
 <body class="antialiased">

@@ -359,3 +359,47 @@ test('has no "used by" projects when the single entry is missing a name or href'
 
     expect($response->inertiaProps('project')['used_by'])->toBe([]);
 });
+
+test('describes a package as PHP source code with its repository, version and breadcrumbs', function () {
+    config(['app.name' => 'Foxws']);
+
+    $project = ProjectFactory::new()->create([
+        'slug' => 'laravel-podman',
+        'title' => 'Laravel Podman',
+        'github_repository' => 'foxws/laravel-podman',
+        'metadata' => ['desc' => 'Run Laravel in Podman.', 'licence' => 'MIT'],
+    ]);
+    $version = VersionFactory::new()->create(['project_id' => $project->id, 'name' => 'v5.3.0', 'is_default' => true]);
+    DocumentFactory::new()->create(['version_id' => $version->id, 'slug' => 'index']);
+
+    $response = $this->get('/laravel-podman');
+
+    [$code, $breadcrumbs] = structuredData($response)['@graph'];
+
+    expect($code)
+        ->toMatchArray([
+            '@type' => 'SoftwareSourceCode',
+            'name' => 'Laravel Podman',
+            'url' => url('/laravel-podman'),
+            'description' => 'Run Laravel in Podman.',
+            'codeRepository' => 'https://github.com/foxws/laravel-podman',
+            'programmingLanguage' => 'PHP',
+            'version' => 'v5.3.0',
+            'license' => 'MIT',
+        ]);
+
+    expect($breadcrumbs['itemListElement'])->toBe([
+        ['@type' => 'ListItem', 'position' => 1, 'name' => 'Foxws', 'item' => url('/')],
+        ['@type' => 'ListItem', 'position' => 2, 'name' => 'Laravel Podman', 'item' => url('/laravel-podman')],
+    ]);
+});
+
+test('does not claim a side project is written in PHP', function () {
+    $project = ProjectFactory::new()->create(['slug' => 'awesome-kde', 'metadata' => ['kind' => 'personal']]);
+    $version = VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+    DocumentFactory::new()->create(['version_id' => $version->id, 'slug' => 'index']);
+
+    $response = $this->get('/awesome-kde');
+
+    expect(structuredData($response)['@graph'][0])->not->toHaveKey('programmingLanguage');
+});

@@ -101,3 +101,29 @@ test('groups packages in PackageGroup order, with unknown or missing groups last
         [null, ['laravel-misc', 'laravel-tooling']],
     ]);
 });
+
+test('describes the site and its author as JSON-LD, linking the author\'s profiles', function () {
+    config(['app.name' => 'Foxws']);
+
+    $response = $this->get('/');
+
+    expect(structuredData($response)['@graph'])->toBe([
+        [
+            '@type' => 'WebSite',
+            'name' => 'Foxws',
+            'url' => url('/'),
+            'author' => [
+                '@type' => 'Person',
+                'name' => 'François Menning',
+                'url' => url('/'),
+                'sameAs' => ['https://github.com/francoism90', 'https://www.linkedin.com/in/francoismenning/'],
+            ],
+        ],
+        [
+            '@type' => 'Person',
+            'name' => 'François Menning',
+            'url' => url('/'),
+            'sameAs' => ['https://github.com/francoism90', 'https://www.linkedin.com/in/francoismenning/'],
+        ],
+    ]);
+});
