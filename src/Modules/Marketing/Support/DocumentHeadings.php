@@ -61,7 +61,7 @@ final class DocumentHeadings
 
             $parent = self::precedingH2Index($heading, $toc);
 
-            if ($parent !== null) {
+            if ($parent !== null && isset($toc[$parent])) {
                 $toc[$parent]['children'][] = ['id' => $id, 'text' => $text];
             }
         }
@@ -139,7 +139,7 @@ final class DocumentHeadings
      * Finds the most recent h2 (by document position) that precedes this h3,
      * so the h3 nests under the right parent in the flat $toc array.
      *
-     * @param  array<int, array{id: string, text: string, children: array}>  $toc
+     * @param  array<int, array{id: string, text: string, children: array<int, array{id: string, text: string}>}>  $toc
      */
     private static function precedingH2Index(DOMElement $h3, array $toc): ?int
     {
