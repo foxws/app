@@ -112,8 +112,8 @@ class User extends Authenticatable implements MustVerifyEmail
             'email' => (string) $this->email,
             'state' => (string) $this->state,
             'email_verified_at' => (int) $this->email_verified_at?->getTimestamp(),
-            'created_at' => (int) $this->created_at->getTimestamp(),
-            'updated_at' => (int) $this->updated_at->getTimestamp(),
+            'created_at' => (int) $this->created_at?->getTimestamp(),
+            'updated_at' => (int) $this->updated_at?->getTimestamp(),
             'deleted_at' => (int) $this->deleted_at?->getTimestamp(),
         ];
     }
