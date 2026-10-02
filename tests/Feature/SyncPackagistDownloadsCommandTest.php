@@ -51,3 +51,13 @@ test('a count read back as a string, as Redis returns numbers, is still an integ
 
     expect($this->get('/')->inertiaProps('packageGroups.0.packages.0.downloads'))->toBe(1689);
 });
+
+test('clearing the response cache keeps the synced install counts', function () {
+    config(['responsecache.cache.store' => config('cache.default')]);
+
+    Cache::forever('packagist-downloads:foxws/laravel-podman', 1689);
+
+    $this->artisan('responsecache:clear')->assertSuccessful();
+
+    expect(Cache::get('packagist-downloads:foxws/laravel-podman'))->toBe(1689);
+});
