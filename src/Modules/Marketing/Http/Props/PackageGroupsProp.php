@@ -32,7 +32,7 @@ final class PackageGroupsProp implements ProvidesInertiaProperty
             ->filter(fn (?PackageGroup $group): bool => $byGroup->has($group->value ?? ''))
             ->map(fn (?PackageGroup $group): array => [
                 'name' => $group?->label(),
-                'packages' => $byGroup->get($group->value ?? '')
+                'packages' => $byGroup->get($group->value ?? '', collect())
                     ->map(fn (Project $project): array => $this->summarize($project))
                     ->values()
                     ->all(),
