@@ -93,7 +93,7 @@ defineProps<{
               container: 'gap-x-8 gap-y-3.5 sm:grid sm:grid-cols-[1fr_auto]',
               body: 'flex flex-col gap-1.5',
               title: 'font-sans text-xl font-semibold tracking-tight text-neutral-50',
-              description: 'max-w-md font-sans text-sm text-neutral-400',
+              description: 'max-w-lg font-sans text-sm text-neutral-400',
             }"
           >
             <template #title>
