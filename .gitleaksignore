@@ -1,0 +1,4 @@
+# Laravel Boost's best-practices skill uses a made-up Stripe key as a "don't do this" example.
+d082733d85d14ba71ffef3ed307f9905e5641b87:.agents/skills/laravel-best-practices/rules/config.md:generic-api-key:30
+d082733d85d14ba71ffef3ed307f9905e5641b87:.claude/skills/laravel-best-practices/rules/config.md:generic-api-key:33
+d082733d85d14ba71ffef3ed307f9905e5641b87:.github/skills/laravel-best-practices/rules/config.md:generic-api-key:33

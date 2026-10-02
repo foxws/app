@@ -55,3 +55,4 @@ npm-debug.log
 Thumbs.db
 yarn-error.log
 .vitest/
+gitleaks.json
