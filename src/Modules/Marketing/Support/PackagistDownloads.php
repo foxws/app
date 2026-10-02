@@ -27,10 +27,8 @@ final class PackagistDownloads
             return null;
         }
 
-        // Redis stores numbers unserialized, so they come back as strings.
-        $monthly = Cache::get(self::cacheKey($name));
-
-        return is_numeric($monthly) ? (int) $monthly : null;
+        // A count of zero isn't worth showing either, so it reads as "none".
+        return Cache::integer(self::cacheKey($name), 0) ?: null;
     }
 
     /**
