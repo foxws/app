@@ -3,7 +3,7 @@ import DocsToc from '@/components/Ui/DocsToc.vue'
 import DocsTree from '@/components/Ui/DocsTree.vue'
 import MobileDocsSheet from '@/components/Ui/MobileDocsSheet.vue'
 import PackageInfo from '@/components/Ui/PackageInfo.vue'
-import UsedByCard from '@/components/Ui/UsedByCard.vue'
+import UsedByList from '@/components/Ui/UsedByList.vue'
 import VersionSwitcher from '@/components/Ui/VersionSwitcher.vue'
 import type { DocsDocument, DocsProject } from '@/types'
 import { computed, ref } from 'vue'
@@ -92,11 +92,9 @@ const docsSheetOpen = ref(false)
             }"
           />
 
-          <UsedByCard
-            v-if="project.used_by"
-            :name="project.used_by.name"
-            :desc="project.used_by.desc"
-            :href="project.used_by.href"
+          <UsedByList
+            v-if="project.used_by.length"
+            :projects="project.used_by"
           />
         </div>
 

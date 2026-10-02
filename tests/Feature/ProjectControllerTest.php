@@ -173,7 +173,7 @@ test('defaults the install command to composer for packages only', function (arr
     'side project with its own command' => [['kind' => 'personal', 'install' => 'flatpak install foo'], 'flatpak install foo'],
 ]);
 
-test('builds the "used by" card from index metadata', function () {
+test('reads a single "used by" project, as written before lists were supported', function () {
     $project = ProjectFactory::new()->create([
         'slug' => 'test-project',
         'title' => 'Test Project',
@@ -191,10 +191,34 @@ test('builds the "used by" card from index metadata', function () {
 
     $response->assertOk();
 
-    expect($response->inertiaProps('project')['used_by'])->toBe([
+    expect($response->inertiaProps('project')['used_by'])->toBe([[
         'name' => 'Stry',
         'desc' => 'See it running in production',
         'href' => '/stry',
+    ]]);
+});
+
+test('lists every "used by" project, skipping ones without a name or href', function () {
+    $project = ProjectFactory::new()->create([
+        'slug' => 'test-project',
+        'title' => 'Test Project',
+        'metadata' => [
+            'used_by' => [
+                ['name' => 'Stry', 'desc' => 'A self-hosted video streaming app.', 'href' => 'https://github.com/francoism90/stry'],
+                ['name' => 'Missing href'],
+                ['name' => 'foxws.nl', 'href' => 'https://foxws.nl'],
+            ],
+        ],
+    ]);
+    VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true]);
+
+    $response = $this->get('/test-project');
+
+    $response->assertOk();
+
+    expect($response->inertiaProps('project')['used_by'])->toBe([
+        ['name' => 'Stry', 'desc' => 'A self-hosted video streaming app.', 'href' => 'https://github.com/francoism90/stry'],
+        ['name' => 'foxws.nl', 'href' => 'https://foxws.nl'],
     ]);
 });
 
@@ -321,7 +345,7 @@ test('omits the source link for a local-driven project with no metadata override
     expect($response->inertiaProps('project')['source'])->toBeNull();
 });
 
-test('omits the "used by" card when the index has no used_by metadata, or it is missing a name or href', function () {
+test('has no "used by" projects when the single entry is missing a name or href', function () {
     $project = ProjectFactory::new()->create([
         'slug' => 'test-project',
         'title' => 'Test Project',
@@ -333,5 +357,5 @@ test('omits the "used by" card when the index has no used_by metadata, or it is 
 
     $response->assertOk();
 
-    expect($response->inertiaProps('project')['used_by'])->toBeNull();
+    expect($response->inertiaProps('project')['used_by'])->toBe([]);
 });
