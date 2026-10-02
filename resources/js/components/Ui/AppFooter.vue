@@ -18,7 +18,8 @@ const year = new Date().getFullYear()
     </template>
 
     <UButton
-      to="https://github.com/foxws"
+      to="https://github.com/foxws/app"
+      aria-label="Source on GitHub"
       variant="ghost"
       color="neutral"
       size="xs"

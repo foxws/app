@@ -61,4 +61,6 @@ composer run lint:check
 
 ## License
 
-The MIT License (MIT). See [LICENSE](LICENSE).
+The source code is released under the MIT License. See [LICENSE](LICENSE).
+
+The Foxws name, logo and icons, and the site's written content, aren't covered by that license: all rights reserved. If you reuse the code, replace them with your own.

@@ -69,6 +69,7 @@ const searchOpen = ref(false)
 
       <UButton
         to="https://github.com/foxws"
+        aria-label="Foxws on GitHub"
         variant="ghost"
         color="neutral"
         icon="i-lucide-github"
