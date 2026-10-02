@@ -252,6 +252,8 @@ return [
             // in APP_COMMAND (see the frankenphp-octane Containerfile).
             'CADDY_EXTRA_CONFIG' => PodmanCaddySites::render([
                 (string) env('MAILPIT_UI_HOST') => PodmanCaddySites::hostPort(env('MAIL_HOST'), 8025),
+                // Port must match "server.port" in vite.config.ts.
+                (string) env('VITE_HMR_HOST') => PodmanCaddySites::hostPort(env('VITE_SERVER_HOST'), 5173),
             ], (int) env('OCTANE_PORT', 8000)),
         ],
     ],
