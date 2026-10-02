@@ -26,7 +26,7 @@ final class PackageGroupsProp implements ProvidesInertiaProperty
 
     public function toInertiaProperty(PropertyContext $context): mixed
     {
-        $byGroup = $this->projects->groupBy(fn (Project $project): string => $this->groupOf($project)?->value ?? '');
+        $byGroup = $this->projects->groupBy(fn (Project $project): string => $this->groupOf($project)->value ?? '');
 
         return collect([...PackageGroup::cases(), null])
             ->filter(fn (?PackageGroup $group): bool => $byGroup->has($group->value ?? ''))
