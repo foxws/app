@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Marketing\Http\Controllers;
 
+use Domain\Projects\Models\Project;
 use Foxws\Docs\Models\Document;
-use Foxws\Docs\Models\Project;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -32,9 +32,7 @@ final class DocumentController
 
         $overview = $project->indexDocument($documents);
 
-        // Only stamp generated links with ?version= when browsing something
-        // other than the default — keeps the common case's URLs clean.
-        $versionParam = $version && ! $version->is_default ? $version->name : null;
+        $versionParam = DocsNavigation::versionParam($version);
 
         // The overview already lives at /{project} — its own /{project}/index
         // (or /about) is never linked to, but redirect a direct visit anyway

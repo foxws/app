@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Marketing\Http\Controllers;
 
+use Domain\Projects\Models\Project;
 use Foxws\Docs\Models\Document;
-use Foxws\Docs\Models\Project;
 use Foxws\ScoutBuilder\AllowedFilter;
 use Foxws\ScoutBuilder\ScoutBuilder;
 use Illuminate\Http\Request;
@@ -33,7 +33,7 @@ final class SearchController
                 }),
             )
             ->query(function ($query): void {
-                $query->where('searchable', true)->with('version.project');
+                $query->where('searchable', true)->with(['version.project', 'version.documents:id,version_id,slug']);
             })
             ->take(8)
             ->get();

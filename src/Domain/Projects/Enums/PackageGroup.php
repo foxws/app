@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Marketing\Enums;
+namespace Domain\Projects\Enums;
 
 use Domain\Shared\Contracts\Enumerable;
 

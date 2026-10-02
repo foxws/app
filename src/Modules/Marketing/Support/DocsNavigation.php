@@ -6,6 +6,7 @@ namespace Modules\Marketing\Support;
 
 use Foxws\Docs\Models\Document;
 use Foxws\Docs\Models\Project;
+use Foxws\Docs\Models\Version;
 use Illuminate\Support\Collection;
 
 /**
@@ -38,6 +39,15 @@ final class DocsNavigation
             ])
             ->values()
             ->all();
+    }
+
+    /**
+     * The `?version=` value for links within $version: only set when it
+     * isn't the project's default, which keeps the common case's URLs clean.
+     */
+    public static function versionParam(?Version $version): ?string
+    {
+        return $version && ! $version->is_default ? $version->name : null;
     }
 
     /**

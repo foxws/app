@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Modules\Marketing\Http\Props;
 
-use Foxws\Docs\Models\Project;
+use Domain\Projects\Models\Project;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
 use Modules\Marketing\Support\DocsNavigation;
 use Modules\Marketing\Support\DocumentHeadings;
 use Modules\Marketing\Support\DocumentLinks;
-use Modules\Marketing\Support\ProjectKind;
-use Modules\Marketing\Support\ProjectSource;
 
 /**
  * A project's full page: hero, install command, docs tree, and the
@@ -29,16 +27,13 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
 
     public function toInertiaProperty(PropertyContext $context): mixed
     {
-        $metadata = $this->project->metadata?->getArrayCopy() ?? [];
         $version = $this->project->versionOrDefault($this->requestedVersion);
         $documents = $version?->orderedDocuments() ?? collect();
 
         $overview = $this->project->indexDocument($documents);
         $navDocuments = $overview ? $documents->reject(fn ($d) => $d->is($overview)) : $documents;
 
-        // Only stamp generated links with ?version= when browsing something
-        // other than the default — keeps the common case's URLs clean.
-        $versionParam = $version && ! $version->is_default ? $version->name : null;
+        $versionParam = DocsNavigation::versionParam($version);
 
         $rendered = $overview
             ? DocumentHeadings::extract($overview->toHtml(), $this->project->title, DocumentLinks::build($this->project, $documents, $versionParam))
@@ -46,13 +41,11 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
 
         $package = array_filter([
             'version' => $version?->name,
-            'requires' => $metadata['requires'] ?? null,
-            'laravel' => $metadata['laravel'] ?? null,
-            'runtime' => $metadata['runtime'] ?? null,
-            'licence' => $metadata['licence'] ?? null,
+            'requires' => $this->project->metadataValue('requires'),
+            'laravel' => $this->project->metadataValue('laravel'),
+            'runtime' => $this->project->metadataValue('runtime'),
+            'licence' => $this->project->metadataValue('licence'),
         ], fn ($value) => $value !== null);
-
-        $source = ProjectSource::url($this->project, $metadata);
 
         $firstDocument = DocsNavigation::firstDocument($navDocuments);
 
@@ -64,21 +57,21 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
         return [
             'key' => $this->project->slug,
             'name' => $this->project->title,
-            'slug' => $metadata['slug'] ?? $this->project->sourceLocation(),
-            'eyebrow' => $metadata['eyebrow'] ?? '',
-            'lead' => $metadata['lead'] ?? $metadata['desc'] ?? '',
+            'slug' => $this->project->metadataValue('slug') ?? $this->project->sourceLocation(),
+            'eyebrow' => $this->project->metadataValue('eyebrow') ?? '',
+            'lead' => $this->project->metadataValue('lead') ?? $this->project->metadataValue('desc') ?? '',
             // Only packages default to a composer command — a side project
             // (an app, a Flatpak remote, ...) shows one only if it sets its own.
-            'install' => $metadata['install'] ?? (ProjectKind::isPackage($this->project)
+            'install' => $this->project->metadataValue('install') ?? ($this->project->isPackage()
                 ? "composer require {$this->project->sourceLocation()}"
                 : null),
             'overview' => $rendered ? ['html' => $rendered['html'], 'toc' => $rendered['toc']] : null,
             'nav' => DocsNavigation::build($this->project, $documents, $versionParam),
             'versions' => $this->project->versions->map(fn ($v) => ['name' => $v->name, 'is_default' => $v->is_default])->all(),
             'version' => $version?->name,
-            'source' => $source,
+            'source' => $this->project->sourceUrl(),
             'package' => $package !== [] ? $package : null,
-            'used_by' => $this->usedBy($metadata),
+            'used_by' => $this->usedBy(),
             'get_started' => $firstDocument ? DocsNavigation::pathFor($this->project, $firstDocument, $overview, $versionParam) : null,
             'surround' => [null, $next],
         ];
@@ -89,12 +82,11 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
      * written before lists were supported (still in published releases).
      * Entries without a name and href are skipped.
      *
-     * @param  array<string, mixed>  $metadata
      * @return array<int, array{name: string, href: string, desc?: string}>
      */
-    private function usedBy(array $metadata): array
+    private function usedBy(): array
     {
-        $usedBy = $metadata['used_by'] ?? null;
+        $usedBy = $this->project->metadataValue('used_by');
 
         if (! is_array($usedBy)) {
             return [];

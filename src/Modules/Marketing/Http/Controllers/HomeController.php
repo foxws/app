@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Modules\Marketing\Http\Controllers;
 
-use Foxws\Docs\Models\Project;
+use Domain\Projects\Models\Project;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use Inertia\Response;
 use Modules\Marketing\Http\Props\PackageGroupsProp;
 use Modules\Marketing\Http\Props\SideProjectSummaryProp;
-use Modules\Marketing\Support\ProjectKind;
 
 final class HomeController
 {
@@ -35,6 +34,6 @@ final class HomeController
             ->withExists('documents')
             ->orderBy('title')
             ->get()
-            ->groupBy(fn (Project $project): string => ProjectKind::isPackage($project) ? 'packages' : 'sideProjects'));
+            ->groupBy(fn (Project $project): string => $project->isPackage() ? 'packages' : 'sideProjects'));
     }
 }

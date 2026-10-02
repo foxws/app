@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
+use Domain\Projects\Models\Project;
 use Domain\Users\Models\User;
 use Foxws\Docs\Models\Document;
-use Foxws\Docs\Models\Project;
 use Foxws\Docs\Models\Version;
 use Foxws\Essentials\Configurables\AggressivePrefetching;
 use Foxws\Essentials\Configurables\AutomaticallyEagerLoadRelationships;

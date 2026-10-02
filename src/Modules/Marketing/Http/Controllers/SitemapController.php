@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Marketing\Http\Controllers;
 
+use Domain\Projects\Models\Project;
 use Foxws\Docs\Models\Document;
-use Foxws\Docs\Models\Project;
 use Modules\Marketing\Support\DocsNavigation;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;

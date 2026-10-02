@@ -64,7 +64,7 @@ defineProps<{
             :role="pkg.role"
             :desc="pkg.desc"
             :version="pkg.version"
-            :href="`/${pkg.path}`"
+            :href="pkg.href"
             :downloads="pkg.downloads"
           />
         </UPageGrid>
