@@ -7,7 +7,6 @@ const props = defineProps<{
   href: string
 }>()
 
-/** Where the link goes, e.g. "github.com/francoism90/stry", so it's clear before clicking. */
 const destination = computed(() => {
   try {
     const url = new URL(props.href)

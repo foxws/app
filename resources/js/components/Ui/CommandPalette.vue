@@ -122,11 +122,14 @@ watch(query, (term) => search(term))
                   >{{ item.label }}</span
                 >
 
-                <span
+                <UBadge
                   v-if="item.version"
-                  class="shrink-0 rounded px-1.5 py-0.5 font-mono text-[10px] text-neutral-400 ring-1 ring-neutral-700"
-                  >{{ item.version }}</span
-                >
+                  :label="item.version"
+                  color="neutral"
+                  variant="outline"
+                  size="sm"
+                  class="shrink-0 font-mono"
+                />
               </div>
 
               <span
