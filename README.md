@@ -13,14 +13,14 @@ It's shared as a working example of those packages running together in a real ap
 
 ## Foxws packages in use
 
-| Package | Where to look |
-| --- | --- |
-| [foxws/laravel-docs](https://github.com/foxws/laravel-docs) | Pulls each package's `docs/` folder from GitHub into the database. Rendered by `src/Modules/Marketing` (controllers, `Http/Props`, `Support/DocsNavigation.php`). |
-| [foxws/laravel-podman](https://github.com/foxws/laravel-podman) | Local development containers, rendered from `containers/stubs` |
-| [foxws/laravel-ddd](https://github.com/foxws/laravel-ddd) | The `src/Domain`, `src/Modules`, `src/Foundation` and `src/Support` layout |
-| [foxws/laravel-essentials](https://github.com/foxws/laravel-essentials) | Application defaults, configured in `config/essentials.php` |
-| [foxws/laravel-pwa](https://github.com/foxws/laravel-pwa) | Web app manifest and service worker (`@pwaHead`/`@pwaSw` in `resources/views/app.blade.php`) |
-| [foxws/laravel-scout-builder](https://github.com/foxws/laravel-scout-builder) | Docs search in `SearchController` |
+| Package                                                                       | Where to look                                                                                                                                                     |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [foxws/laravel-docs](https://github.com/foxws/laravel-docs)                   | Pulls each package's `docs/` folder from GitHub into the database. Rendered by `src/Modules/Marketing` (controllers, `Http/Props`, `Support/DocsNavigation.php`). |
+| [foxws/laravel-podman](https://github.com/foxws/laravel-podman)               | Local development containers, rendered from `containers/stubs`                                                                                                    |
+| [foxws/laravel-ddd](https://github.com/foxws/laravel-ddd)                     | The `src/Domain`, `src/Modules`, `src/Foundation` and `src/Support` layout                                                                                        |
+| [foxws/laravel-essentials](https://github.com/foxws/laravel-essentials)       | Application defaults, configured in `config/essentials.php`                                                                                                       |
+| [foxws/laravel-pwa](https://github.com/foxws/laravel-pwa)                     | Web app manifest and service worker (`@pwaHead`/`@pwaSw` in `resources/views/app.blade.php`)                                                                      |
+| [foxws/laravel-scout-builder](https://github.com/foxws/laravel-scout-builder) | Docs search in `SearchController`                                                                                                                                 |
 
 ## Layout
 
