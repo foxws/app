@@ -11,3 +11,5 @@ Disallow: /offline.html
 
 User-agent: ia_archiver
 Disallow: /
+
+Sitemap: https://foxws.nl/sitemap.xml
