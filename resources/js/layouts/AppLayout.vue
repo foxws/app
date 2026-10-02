@@ -14,7 +14,7 @@ useFlash()
     <meta
       head-key="description"
       name="description"
-      content="Building with the Laravel ecosystem — PHP, Inertia.js, Livewire, and modern JS/TypeScript."
+      content="Laravel packages, Linux tooling and AI-assisted development for video streaming, documentation, domain-driven design and Podman deployments."
     />
     <meta
       head-key="robots"
