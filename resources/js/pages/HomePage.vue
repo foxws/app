@@ -86,13 +86,19 @@ defineProps<{
         }"
       >
         <template #header>
-          <div class="flex flex-col gap-3.5 sm:flex-row sm:items-start sm:justify-between">
-            <div class="flex flex-col gap-1.5">
-              <h2 class="font-sans text-xl font-semibold tracking-tight text-neutral-50">Personal</h2>
-              <p class="max-w-md font-sans text-sm text-neutral-400">
-                Things I maintain outside the core: Flatpaks, lists and experiments.
-              </p>
-            </div>
+          <UPageCard
+            variant="naked"
+            description="Things I maintain outside the core: Flatpaks, lists and experiments."
+            :ui="{
+              container: 'gap-x-8 gap-y-3.5 sm:grid sm:grid-cols-[1fr_auto]',
+              body: 'flex flex-col gap-1.5',
+              title: 'font-sans text-xl font-semibold tracking-tight text-neutral-50',
+              description: 'max-w-md font-sans text-sm text-neutral-400',
+            }"
+          >
+            <template #title>
+              <h2>Personal</h2>
+            </template>
 
             <UButton
               label="Personal profile"
@@ -101,9 +107,9 @@ defineProps<{
               variant="link"
               color="neutral"
               trailing-icon="i-lucide-arrow-up-right"
-              class="hidden shrink-0 self-start px-0 sm:inline-flex"
+              class="hidden self-start px-0 sm:inline-flex"
             />
-          </div>
+          </UPageCard>
         </template>
 
         <template #body>
