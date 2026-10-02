@@ -21,6 +21,7 @@ interface SearchResult {
   suffix: string
   suffixHtml?: string
   prefix: string
+  version: string
   description: string
   descriptionHtml?: string
   to: string
@@ -109,16 +110,24 @@ watch(query, (term) => search(term))
         <template #item-label="{ item }">
           <div class="flex w-full items-center gap-3">
             <div class="flex min-w-0 flex-col gap-0.5">
-              <span
-                v-if="item.labelHtml"
-                class="font-sans text-sm font-semibold text-neutral-50 [&_mark]:bg-primary/15 [&_mark]:text-primary"
-                v-html="item.labelHtml"
-              />
-              <span
-                v-else
-                class="font-sans text-sm font-semibold text-neutral-50"
-                >{{ item.label }}</span
-              >
+              <div class="flex min-w-0 items-center gap-2">
+                <span
+                  v-if="item.labelHtml"
+                  class="font-sans text-sm font-semibold text-neutral-50 [&_mark]:bg-primary/15 [&_mark]:text-primary"
+                  v-html="item.labelHtml"
+                />
+                <span
+                  v-else
+                  class="font-sans text-sm font-semibold text-neutral-50"
+                  >{{ item.label }}</span
+                >
+
+                <span
+                  v-if="item.version"
+                  class="shrink-0 rounded px-1.5 py-0.5 font-mono text-[10px] text-neutral-400 ring-1 ring-neutral-700"
+                  >{{ item.version }}</span
+                >
+              </div>
 
               <span
                 v-if="item.suffixHtml"
