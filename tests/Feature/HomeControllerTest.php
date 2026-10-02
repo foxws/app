@@ -87,11 +87,10 @@ test('a project with no kind metadata is listed as a package, not a side project
     expect($response->inertiaProps('sideProjects'))->toBe([]);
 });
 
-test('groups packages in the preferred order, then other groups alphabetically, then ungrouped ones', function () {
-    ProjectFactory::new()->create(['slug' => 'laravel-ddd', 'title' => 'Laravel DDD', 'metadata' => ['group' => 'Foundations']]);
-    ProjectFactory::new()->create(['slug' => 'laravel-podman', 'title' => 'Laravel Podman', 'metadata' => ['group' => 'Deploy & run']]);
-    ProjectFactory::new()->create(['slug' => 'laravel-tooling', 'title' => 'Laravel Tooling', 'metadata' => ['group' => 'Tooling']]);
-    ProjectFactory::new()->create(['slug' => 'laravel-auth', 'title' => 'Laravel Auth', 'metadata' => ['group' => 'Auth']]);
+test('groups packages in PackageGroup order, with unknown or missing groups last', function () {
+    ProjectFactory::new()->create(['slug' => 'laravel-ddd', 'title' => 'Laravel DDD', 'metadata' => ['group' => 'foundations']]);
+    ProjectFactory::new()->create(['slug' => 'laravel-podman', 'title' => 'Laravel Podman', 'metadata' => ['group' => 'deploy']]);
+    ProjectFactory::new()->create(['slug' => 'laravel-tooling', 'title' => 'Laravel Tooling', 'metadata' => ['group' => 'tooling']]);
     ProjectFactory::new()->create(['slug' => 'laravel-misc', 'title' => 'Laravel Misc']);
 
     $groups = $this->get('/')->inertiaProps('packageGroups');
@@ -99,8 +98,6 @@ test('groups packages in the preferred order, then other groups alphabetically, 
     expect(array_map(fn (array $group): array => [$group['name'], array_column($group['packages'], 'slug')], $groups))->toBe([
         ['Deploy & run', ['laravel-podman']],
         ['Foundations', ['laravel-ddd']],
-        ['Auth', ['laravel-auth']],
-        ['Tooling', ['laravel-tooling']],
-        [null, ['laravel-misc']],
+        [null, ['laravel-misc', 'laravel-tooling']],
     ]);
 });

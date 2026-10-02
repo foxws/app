@@ -9,17 +9,16 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
+use Modules\Marketing\Enums\PackageGroup;
 use Modules\Marketing\Support\PackagistDownloads;
 
 /**
  * The homepage package grid, split into sections by each package's `group`
- * metadata. Known groups come first in GROUP_ORDER, any other group follows
- * alphabetically, and packages without a group close the list unnamed.
+ * metadata, in PackageGroup's case order. Packages without a group, or with
+ * one PackageGroup doesn't know, close the list unnamed.
  */
 final class PackageGroupsProp implements ProvidesInertiaProperty
 {
-    public const array GROUP_ORDER = ['Deploy & run', 'Search', 'Media', 'Foundations'];
-
     /**
      * @param  Collection<int, Project>  $projects  Already ordered by title.
      */
@@ -27,33 +26,26 @@ final class PackageGroupsProp implements ProvidesInertiaProperty
 
     public function toInertiaProperty(PropertyContext $context): mixed
     {
-        return $this->projects
-            ->groupBy(fn (Project $project): string => $this->groupOf($project))
-            ->sortKeysUsing(fn (string $a, string $b): int => [$this->rankOf($a), $a] <=> [$this->rankOf($b), $b])
-            ->map(fn (Collection $projects, string $group): array => [
-                'name' => $group !== '' ? $group : null,
-                'packages' => $projects->map(fn (Project $project): array => $this->summarize($project))->values()->all(),
+        $byGroup = $this->projects->groupBy(fn (Project $project): string => $this->groupOf($project)?->value ?? '');
+
+        return collect([...PackageGroup::cases(), null])
+            ->filter(fn (?PackageGroup $group): bool => $byGroup->has($group->value ?? ''))
+            ->map(fn (?PackageGroup $group): array => [
+                'name' => $group?->label(),
+                'packages' => $byGroup->get($group->value ?? '')
+                    ->map(fn (Project $project): array => $this->summarize($project))
+                    ->values()
+                    ->all(),
             ])
             ->values()
             ->all();
     }
 
-    private function groupOf(Project $project): string
+    private function groupOf(Project $project): ?PackageGroup
     {
         $group = $project->metadata['group'] ?? null;
 
-        return is_string($group) ? trim($group) : '';
-    }
-
-    private function rankOf(string $group): int
-    {
-        if ($group === '') {
-            return PHP_INT_MAX;
-        }
-
-        $rank = array_search($group, self::GROUP_ORDER, true);
-
-        return $rank === false ? count(self::GROUP_ORDER) : $rank;
+        return is_string($group) ? PackageGroup::tryFrom($group) : null;
     }
 
     /**
