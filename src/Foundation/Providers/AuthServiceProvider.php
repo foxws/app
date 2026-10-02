@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Foundation\Providers;
 
-use Domain\Users\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -14,7 +13,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configurePolicyAutoDiscovery();
-        $this->configureGates();
     }
 
     protected function configurePolicyAutoDiscovery(): void
@@ -30,10 +28,5 @@ class AuthServiceProvider extends ServiceProvider
                 ->prepend("Domain\\{$namespace}\\Policies\\")
                 ->value();
         });
-    }
-
-    protected function configureGates(): void
-    {
-        Gate::define('manage-application-settings', fn (User $user): bool => $user->isAdmin());
     }
 }
