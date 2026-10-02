@@ -14,11 +14,11 @@ test('the synced monthly install count replaces the cached homepage', function (
 
     ProjectFactory::new()->create(['slug' => 'laravel-podman', 'github_repository' => 'foxws/laravel-podman']);
 
-    expect($this->get('/')->inertiaProps('packages.0.downloads'))->toBeNull();
+    expect($this->get('/')->inertiaProps('packageGroups.0.packages.0.downloads'))->toBeNull();
 
     $this->artisan('packagist:sync')->assertSuccessful();
 
-    expect($this->get('/')->inertiaProps('packages.0.downloads'))->toBe(1689);
+    expect($this->get('/')->inertiaProps('packageGroups.0.packages.0.downloads'))->toBe(1689);
 });
 
 test('a failed fetch keeps the last synced count', function () {
@@ -32,7 +32,7 @@ test('a failed fetch keeps the last synced count', function () {
     $this->artisan('packagist:sync')->assertSuccessful();
     $this->artisan('packagist:sync')->assertSuccessful();
 
-    expect($this->get('/')->inertiaProps('packages.0.downloads'))->toBe(1689);
+    expect($this->get('/')->inertiaProps('packageGroups.0.packages.0.downloads'))->toBe(1689);
 });
 
 test('a package never synced, or not on GitHub, has no install count', function () {
@@ -41,7 +41,7 @@ test('a package never synced, or not on GitHub, has no install count', function 
     ProjectFactory::new()->create(['slug' => 'laravel-podman', 'github_repository' => 'foxws/laravel-podman']);
     ProjectFactory::new()->local()->create(['slug' => 'laravel-local']);
 
-    expect(array_column($this->get('/')->inertiaProps('packages'), 'downloads'))->toBe([null, null]);
+    expect(array_column($this->get('/')->inertiaProps('packageGroups.0.packages'), 'downloads'))->toBe([null, null]);
 });
 
 test('a count read back as a string, as Redis returns numbers, is still an integer', function () {
@@ -49,5 +49,5 @@ test('a count read back as a string, as Redis returns numbers, is still an integ
 
     Cache::forever('packagist-downloads:foxws/laravel-podman', '1689');
 
-    expect($this->get('/')->inertiaProps('packages.0.downloads'))->toBe(1689);
+    expect($this->get('/')->inertiaProps('packageGroups.0.packages.0.downloads'))->toBe(1689);
 });

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import PackageCard from '@/components/Ui/PackageCard.vue'
 import SideProjectRow from '@/components/Ui/SideProjectRow.vue'
-import type { DocsPackageSummary, DocsSideProjectSummary } from '@/types'
+import type { DocsPackageGroup, DocsSideProjectSummary } from '@/types'
 import { Head } from '@inertiajs/vue3'
 
 defineProps<{
-  packages: DocsPackageSummary[]
+  packageGroups: DocsPackageGroup[]
   sideProjects: DocsSideProjectSummary[]
 }>()
 </script>
@@ -38,21 +38,37 @@ defineProps<{
     <UContainer
       id="packages"
       as="section"
-      class="grid grid-cols-1 gap-3.5 px-4 py-8 sm:grid-cols-2 sm:px-7"
+      class="flex flex-col gap-8 px-4 py-8 sm:px-7"
     >
       <h2 class="sr-only">Packages</h2>
 
-      <PackageCard
-        v-for="pkg in packages"
-        :key="pkg.slug"
-        :name="pkg.name"
-        :slug="pkg.slug"
-        :role="pkg.role"
-        :desc="pkg.desc"
-        :version="pkg.version"
-        :href="`/${pkg.path}`"
-        :downloads="pkg.downloads"
-      />
+      <div
+        v-for="group in packageGroups"
+        :key="group.name ?? 'ungrouped'"
+        class="flex flex-col gap-3.5"
+      >
+        <!-- Ungrouped packages only get a label when there are groups to set them apart from. -->
+        <h3
+          v-if="group.name || packageGroups.length > 1"
+          class="font-mono text-xs tracking-wider text-neutral-500 uppercase"
+        >
+          {{ group.name ?? 'More' }}
+        </h3>
+
+        <div class="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+          <PackageCard
+            v-for="pkg in group.packages"
+            :key="pkg.slug"
+            :name="pkg.name"
+            :slug="pkg.slug"
+            :role="pkg.role"
+            :desc="pkg.desc"
+            :version="pkg.version"
+            :href="`/${pkg.path}`"
+            :downloads="pkg.downloads"
+          />
+        </div>
+      </div>
     </UContainer>
 
     <UContainer

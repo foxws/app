@@ -36,6 +36,11 @@ export type DocsPackageSummary = {
   downloads: number | null
 }
 
+export type DocsPackageGroup = {
+  name: string | null
+  packages: DocsPackageSummary[]
+}
+
 export type DocsSideProjectSummary = {
   name: string
   slug: string

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use Inertia\Response;
-use Modules\Marketing\Http\Props\ProjectSummaryProp;
+use Modules\Marketing\Http\Props\PackageGroupsProp;
 use Modules\Marketing\Http\Props\SideProjectSummaryProp;
 use Modules\Marketing\Support\ProjectKind;
 
@@ -18,7 +18,7 @@ final class HomeController
     public function __invoke(): Response
     {
         return Inertia::render('HomePage', [
-            'packages' => Inertia::once(fn () => new ProjectSummaryProp($this->projectsByKind()->get('packages', collect()))),
+            'packageGroups' => Inertia::once(fn () => new PackageGroupsProp($this->projectsByKind()->get('packages', collect()))),
             'sideProjects' => Inertia::once(fn () => new SideProjectSummaryProp($this->projectsByKind()->get('sideProjects', collect()))),
         ]);
     }
