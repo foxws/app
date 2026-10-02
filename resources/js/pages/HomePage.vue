@@ -88,9 +88,9 @@ defineProps<{
         <template #header>
           <div class="flex flex-col gap-3.5 sm:flex-row sm:items-start sm:justify-between">
             <div class="flex flex-col gap-1.5">
-              <h2 class="font-sans text-xl font-semibold tracking-tight text-neutral-50">Side projects</h2>
+              <h2 class="font-sans text-xl font-semibold tracking-tight text-neutral-50">Personal</h2>
               <p class="max-w-md font-sans text-sm text-neutral-400">
-                Not part of the core. Experiments, templates and notes I keep around because they're useful.
+                Things I maintain outside the core: Flatpaks, lists and experiments.
               </p>
             </div>
             <UButton
