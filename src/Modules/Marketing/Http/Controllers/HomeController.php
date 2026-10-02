@@ -12,6 +12,7 @@ use Inertia\Response;
 use Modules\Marketing\Http\Props\PackageGroupsProp;
 use Modules\Marketing\Http\Props\SideProjectSummaryProp;
 use Modules\Marketing\Support\ProjectKind;
+use Modules\Marketing\Support\StructuredData;
 
 final class HomeController
 {
@@ -20,7 +21,7 @@ final class HomeController
         return Inertia::render('HomePage', [
             'packageGroups' => Inertia::once(fn () => new PackageGroupsProp($this->projectsByKind()->get('packages', collect()))),
             'sideProjects' => Inertia::once(fn () => new SideProjectSummaryProp($this->projectsByKind()->get('sideProjects', collect()))),
-        ]);
+        ])->withViewData('structuredData', StructuredData::home());
     }
 
     /**

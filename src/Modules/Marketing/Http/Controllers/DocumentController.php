@@ -12,6 +12,7 @@ use Inertia\Response;
 use Modules\Marketing\Http\Props\DocumentDetailProp;
 use Modules\Marketing\Http\Requests\ViewDocsRequest;
 use Modules\Marketing\Support\DocsNavigation;
+use Modules\Marketing\Support\StructuredData;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class DocumentController
@@ -50,6 +51,6 @@ final class DocumentController
                 ['label' => $current->slug],
             ],
             'scope' => fn (): string => $project->title,
-        ]);
+        ])->withViewData('structuredData', StructuredData::document($project, $current));
     }
 }
