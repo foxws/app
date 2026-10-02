@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Modules\Marketing\Http\Props;
 
-use Foxws\Docs\Models\Project;
+use Domain\Projects\Models\Project;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
-use Modules\Marketing\Support\ProjectSource;
+use Modules\Marketing\Support\DocsNavigation;
 
 /**
  * The homepage "Side projects" list. Side projects with synced docs link
@@ -26,19 +25,15 @@ final class SideProjectSummaryProp implements ProvidesInertiaProperty
 
     public function toInertiaProperty(PropertyContext $context): mixed
     {
-        return $this->projects->map(function (Project $project): array {
-            $metadata = $project->metadata?->getArrayCopy() ?? [];
-
-            return [
-                'name' => $project->title,
-                'slug' => $project->slug,
-                'type' => $metadata['type'] ?? null,
-                'desc' => $metadata['desc'] ?? '',
-                'status' => $metadata['status'] ?? null,
-                'href' => $project->getAttribute('documents_exists')
-                    ? '/'.Str::after($project->slug, '/')
-                    : ProjectSource::url($project, $metadata),
-            ];
-        })->values()->all();
+        return $this->projects->map(fn (Project $project): array => [
+            'name' => $project->title,
+            'slug' => $project->slug,
+            'type' => $project->metadataValue('type'),
+            'desc' => $project->description(),
+            'status' => $project->metadataValue('status'),
+            'href' => $project->getAttribute('documents_exists')
+                ? DocsNavigation::projectPath($project)
+                : $project->sourceUrl(),
+        ])->values()->all();
     }
 }

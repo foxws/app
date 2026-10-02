@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Modules\Marketing\Http\Props;
 
-use Foxws\Docs\Models\Project;
+use Domain\Projects\Enums\PackageGroup;
+use Domain\Projects\Models\Project;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
-use Modules\Marketing\Enums\PackageGroup;
-use Modules\Marketing\Support\PackagistDownloads;
+use Integrations\Packagist\PackagistDownloads;
+use Modules\Marketing\Support\DocsNavigation;
 
 /**
  * The homepage package grid, split into sections by each package's `group`
@@ -26,7 +26,7 @@ final class PackageGroupsProp implements ProvidesInertiaProperty
 
     public function toInertiaProperty(PropertyContext $context): mixed
     {
-        $byGroup = $this->projects->groupBy(fn (Project $project): string => $this->groupOf($project)->value ?? '');
+        $byGroup = $this->projects->groupBy(fn (Project $project): string => $project->packageGroup()->value ?? '');
 
         return collect([...PackageGroup::cases(), null])
             ->filter(fn (?PackageGroup $group): bool => $byGroup->has($group->value ?? ''))
@@ -41,28 +41,21 @@ final class PackageGroupsProp implements ProvidesInertiaProperty
             ->all();
     }
 
-    private function groupOf(Project $project): ?PackageGroup
-    {
-        $group = $project->metadata['group'] ?? null;
-
-        return is_string($group) ? PackageGroup::tryFrom($group) : null;
-    }
-
     /**
      * @return array<string, mixed>
      */
     private function summarize(Project $project): array
     {
-        $metadata = $project->metadata?->getArrayCopy() ?? [];
+        $package = $project->packagistName();
 
         return [
             'name' => $project->title,
             'slug' => $project->slug,
-            'path' => Str::after($project->slug, '/'),
-            'role' => $metadata['role'] ?? null,
-            'desc' => $metadata['desc'] ?? '',
+            'href' => DocsNavigation::projectPath($project),
+            'role' => $project->metadataValue('role'),
+            'desc' => $project->description(),
             'version' => $project->defaultVersion()?->name,
-            'downloads' => PackagistDownloads::monthly($project),
+            'downloads' => $package !== null ? PackagistDownloads::monthly($package) : null,
         ];
     }
 }

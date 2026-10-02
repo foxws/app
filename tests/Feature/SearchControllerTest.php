@@ -142,3 +142,18 @@ test('requires a query of at least two characters', function () {
 
     $response->assertUnprocessable();
 });
+
+test('links a hit on the project overview to the project page, not its redirecting document url', function () {
+    $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
+    $version = VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
+
+    DocumentFactory::new()->create([
+        'version_id' => $version->id,
+        'slug' => 'index',
+        'title' => 'Introduction',
+    ]);
+
+    $response = $this->getJson('/api/v1/search?query=Introduction');
+
+    expect($response->json('0.to'))->toBe(route('project', 'test-project', absolute: false));
+});

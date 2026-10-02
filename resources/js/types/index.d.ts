@@ -29,7 +29,7 @@ export type DocsPackageInfo = {
 export type DocsPackageSummary = {
   name: string
   slug: string
-  path: string
+  href: string
   role: string | null
   desc: string
   version?: string

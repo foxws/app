@@ -8,6 +8,7 @@ use Foxws\Docs\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
+use Modules\Marketing\Support\DocsNavigation;
 use Modules\Marketing\Support\DocumentHeadings;
 use Modules\Marketing\Support\SearchHighlighter;
 
@@ -41,11 +42,12 @@ final class SearchResultResource extends JsonResource
             'version' => $version->name,
             'description' => $description,
             'descriptionHtml' => SearchHighlighter::highlight($description, $query),
-            'to' => route('document', array_filter([
-                'project' => $project->slug,
-                'document' => $this->slug,
-                'version' => $version->is_default ? null : $version->name,
-            ]), absolute: false),
+            'to' => DocsNavigation::pathFor(
+                $project,
+                $this->resource,
+                $project->indexDocument($version->documents),
+                DocsNavigation::versionParam($version),
+            ),
         ];
     }
 }

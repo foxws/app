@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Modules\Marketing\Commands;
 
-use Foxws\Docs\Models\Project;
+use Domain\Projects\Models\Project;
 use Illuminate\Console\Command;
-use Modules\Marketing\Support\PackagistDownloads;
-use Modules\Marketing\Support\ProjectKind;
+use Integrations\Packagist\PackagistDownloads;
 use Spatie\ResponseCache\Facades\ResponseCache;
 
 class SyncPackagistDownloadsCommand extends Command
@@ -26,9 +25,11 @@ class SyncPackagistDownloadsCommand extends Command
     {
         $packages = Project::query()
             ->get()
-            ->filter(fn (Project $project): bool => ProjectKind::isPackage($project));
+            ->filter(fn (Project $project): bool => $project->isPackage())
+            ->map(fn (Project $project): ?string => $project->packagistName())
+            ->filter();
 
-        $refreshed = $packages->filter(fn (Project $project): bool => PackagistDownloads::refresh($project));
+        $refreshed = $packages->filter(fn (string $package): bool => PackagistDownloads::refresh($package));
 
         // The homepage is response-cached, so it would otherwise keep
         // showing the previous counts until the next docs:sync.
