@@ -17,7 +17,7 @@ test('orders packages by title, regardless of when they were created or last syn
 
     $response->assertOk();
 
-    expect(array_column($response->inertiaProps('packages'), 'slug'))
+    expect(array_column($response->inertiaProps('packageGroups.0.packages'), 'slug'))
         ->toBe(['alpha-project', 'zeta-project']);
 });
 
@@ -38,7 +38,7 @@ test('a project flagged as a side project is listed there instead of the package
 
     $response->assertOk();
 
-    expect(array_column($response->inertiaProps('packages'), 'slug'))->not->toContain('shaka-playground');
+    expect($response->inertiaProps('packageGroups'))->toBe([]);
 
     expect($response->inertiaProps('sideProjects'))->toBe([[
         'name' => 'Shaka Playground',
@@ -83,6 +83,21 @@ test('a project with no kind metadata is listed as a package, not a side project
 
     $response->assertOk();
 
-    expect(array_column($response->inertiaProps('packages'), 'slug'))->toContain('laravel-podman');
+    expect(array_column($response->inertiaProps('packageGroups.0.packages'), 'slug'))->toContain('laravel-podman');
     expect($response->inertiaProps('sideProjects'))->toBe([]);
+});
+
+test('groups packages in PackageGroup order, with unknown or missing groups last', function () {
+    ProjectFactory::new()->create(['slug' => 'laravel-ddd', 'title' => 'Laravel DDD', 'metadata' => ['group' => 'foundations']]);
+    ProjectFactory::new()->create(['slug' => 'laravel-podman', 'title' => 'Laravel Podman', 'metadata' => ['group' => 'deploy']]);
+    ProjectFactory::new()->create(['slug' => 'laravel-tooling', 'title' => 'Laravel Tooling', 'metadata' => ['group' => 'tooling']]);
+    ProjectFactory::new()->create(['slug' => 'laravel-misc', 'title' => 'Laravel Misc']);
+
+    $groups = $this->get('/')->inertiaProps('packageGroups');
+
+    expect(array_map(fn (array $group): array => [$group['name'], array_column($group['packages'], 'slug')], $groups))->toBe([
+        ['Deploy & run', ['laravel-podman']],
+        ['Foundations', ['laravel-ddd']],
+        [null, ['laravel-misc', 'laravel-tooling']],
+    ]);
 });
