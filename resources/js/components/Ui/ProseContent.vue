@@ -15,7 +15,15 @@ const proseClass =
   '[&_blockquote]:border-l [&_blockquote]:border-neutral-800 [&_blockquote]:pl-4 [&_blockquote]:text-neutral-500 ' +
   '[&_table]:block [&_table]:w-full [&_table]:max-w-full [&_table]:overflow-x-auto [&_table]:border [&_table]:border-collapse [&_table]:border-neutral-800 ' +
   '[&_th]:border [&_th]:border-neutral-800 [&_th]:bg-neutral-900 [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold [&_th]:text-neutral-50 ' +
-  '[&_td]:border [&_td]:border-neutral-800 [&_td]:px-3 [&_td]:py-2'
+  '[&_td]:border [&_td]:border-neutral-800 [&_td]:px-3 [&_td]:py-2 ' +
+  '[&_.callout]:flex [&_.callout]:flex-col [&_.callout]:gap-3 [&_.callout]:rounded-lg [&_.callout]:border [&_.callout]:border-l-2 [&_.callout]:border-neutral-800 [&_.callout]:bg-neutral-900/50 [&_.callout]:px-4 [&_.callout]:py-3 ' +
+  '[&_.callout]:before:text-xs [&_.callout]:before:font-semibold [&_.callout]:before:tracking-wide [&_.callout]:before:uppercase [&_.callout:has(>.callout-title)]:before:hidden ' +
+  '[&_.callout-title]:font-semibold [&_.callout-title]:text-neutral-50 ' +
+  "[&_.callout-note]:border-l-sky-500 [&_.callout-note]:before:text-sky-400 [&_.callout-note]:before:content-['Note'] " +
+  "[&_.callout-info]:border-l-sky-500 [&_.callout-info]:before:text-sky-400 [&_.callout-info]:before:content-['Info'] " +
+  "[&_.callout-tip]:border-l-emerald-500 [&_.callout-tip]:before:text-emerald-400 [&_.callout-tip]:before:content-['Tip'] " +
+  "[&_.callout-warning]:border-l-amber-500 [&_.callout-warning]:before:text-amber-400 [&_.callout-warning]:before:content-['Warning'] " +
+  "[&_.callout-danger]:border-l-red-500 [&_.callout-danger]:before:text-red-400 [&_.callout-danger]:before:content-['Danger']"
 </script>
 
 <template>
