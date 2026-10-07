@@ -23,7 +23,11 @@ const proseClass =
   "[&_.callout-info]:border-l-sky-500 [&_.callout-info]:before:text-sky-400 [&_.callout-info]:before:content-['Info'] " +
   "[&_.callout-tip]:border-l-emerald-500 [&_.callout-tip]:before:text-emerald-400 [&_.callout-tip]:before:content-['Tip'] " +
   "[&_.callout-warning]:border-l-amber-500 [&_.callout-warning]:before:text-amber-400 [&_.callout-warning]:before:content-['Warning'] " +
-  "[&_.callout-danger]:border-l-red-500 [&_.callout-danger]:before:text-red-400 [&_.callout-danger]:before:content-['Danger']"
+  "[&_.callout-caution]:border-l-orange-500 [&_.callout-caution]:before:text-orange-400 [&_.callout-caution]:before:content-['Caution'] " +
+  "[&_.callout-danger]:border-l-red-500 [&_.callout-danger]:before:text-red-400 [&_.callout-danger]:before:content-['Danger'] " +
+  "[&_.callout-error]:border-l-red-500 [&_.callout-error]:before:text-red-400 [&_.callout-error]:before:content-['Error'] " +
+  "[&_.callout-important]:border-l-violet-500 [&_.callout-important]:before:text-violet-400 [&_.callout-important]:before:content-['Important'] " +
+  "[&_.callout-success]:border-l-emerald-500 [&_.callout-success]:before:text-emerald-400 [&_.callout-success]:before:content-['Success']"
 </script>
 
 <template>
