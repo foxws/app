@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "be9d9e6d4bea4421bf4fd420915feafd",
+    "content-hash": "5953fcbd09492deb0e9a89953a8c1053",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -794,16 +794,16 @@
         },
         {
             "name": "foxws/laravel-docs",
-            "version": "v1.5.1",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-docs.git",
-                "reference": "3c47e24d8eb437e5e54ac2f70f8a12d97ecea68c"
+                "reference": "9b1178d61ca0a20099e814ed7d7b070609eacdf4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/3c47e24d8eb437e5e54ac2f70f8a12d97ecea68c",
-                "reference": "3c47e24d8eb437e5e54ac2f70f8a12d97ecea68c",
+                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/9b1178d61ca0a20099e814ed7d7b070609eacdf4",
+                "reference": "9b1178d61ca0a20099e814ed7d7b070609eacdf4",
                 "shasum": ""
             },
             "require": {
@@ -868,7 +868,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-docs/issues",
-                "source": "https://github.com/foxws/laravel-docs/tree/v1.5.1"
+                "source": "https://github.com/foxws/laravel-docs/tree/v1.6.0"
             },
             "funding": [
                 {
@@ -876,7 +876,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-02T11:44:08+00:00"
+            "time": "2026-10-07T10:11:07+00:00"
         },
         {
             "name": "foxws/laravel-essentials",

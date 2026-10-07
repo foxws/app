@@ -68,7 +68,7 @@ $document = $version->documents()->where('slug', $slug ?? 'index')->firstOrFail(
 $document->resolveSeoTitle();
 ```
 
-`Document::body` is already-rendered HTML (from markdown). Reach the owning project via `$document->version->project` — there's no direct `project` relation on `Document`. `Document` uses Scout's `Searchable` trait; indexing is gated by `config('docs.search.enabled')` and each document's `searchable` flag (set via front matter) — it stays fully inert with no configured Scout driver when search is disabled.
+`Document::body` is raw markdown; `$document->toHtml()` renders (and caches) it. Callout blocks (`:::note`, `:::tip`, `:::warning`, any `:::type`, closed by `:::`) render as unstyled `<div class="callout callout-{type}" data-callout="{type}">`, with an optional `<p class="callout-title">` from `:::type Title` — style them in the app. Reach the owning project via `$document->version->project` — there's no direct `project` relation on `Document`. `Document` uses Scout's `Searchable` trait; indexing is gated by `config('docs.search.enabled')` and each document's `searchable` flag (set via front matter) — it stays fully inert with no configured Scout driver when search is disabled.
 
 ### 5. Customize the models (optional)
 
