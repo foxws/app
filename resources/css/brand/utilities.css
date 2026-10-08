@@ -88,3 +88,59 @@
     ),
     var(--color-neutral-900);
 }
+
+@property --scroll-fade-start {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --scroll-fade-end {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes scroll-fade-x {
+  from {
+    --scroll-fade-start: 0px;
+    --scroll-fade-end: 3rem;
+  }
+
+  10% {
+    --scroll-fade-start: 3rem;
+  }
+
+  90% {
+    --scroll-fade-end: 3rem;
+  }
+
+  to {
+    --scroll-fade-start: 3rem;
+    --scroll-fade-end: 0px;
+  }
+}
+
+/*
+ * A horizontal scroll box that shows there is more to see: a thin
+ * scrollbar that stays visible, and the content fading out at whichever
+ * edge still has more to scroll to. A box that fits has no scroll
+ * timeline, so it never fades.
+ */
+@utility scroll-x-hint {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-neutral-700) transparent;
+
+  @supports (animation-timeline: scroll()) {
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 var(--scroll-fade-start),
+      #000 calc(100% - var(--scroll-fade-end)),
+      transparent
+    );
+    animation: scroll-fade-x linear both;
+    animation-timeline: scroll(self inline);
+  }
+}

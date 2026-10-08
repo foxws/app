@@ -44,6 +44,22 @@ test('renders a document with relative nav, surround, and breadcrumb links', fun
         ->and($document['nav'][0]['children'][0]['path'])->not->toContain('http');
 });
 
+test('shares the project versions and the one being read, for the version switcher', function () {
+    $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
+    VersionFactory::new()->has(DocumentFactory::new(['slug' => 'installation']), 'documents')->create(['project_id' => $project->id, 'is_default' => true, 'name' => '2.0.0']);
+    VersionFactory::new()->has(DocumentFactory::new(['slug' => 'installation']), 'documents')->create(['project_id' => $project->id, 'is_default' => false, 'name' => '1.0.0']);
+
+    $response = $this->get('/test-project/installation?version=1.0.0');
+
+    $response->assertOk();
+
+    expect($response->inertiaProps('document.project.versions'))->toEqualCanonicalizing([
+        ['name' => '2.0.0', 'is_default' => true],
+        ['name' => '1.0.0', 'is_default' => false],
+    ])
+        ->and($response->inertiaProps('document.project.version'))->toBe('1.0.0');
+});
+
 test('surrounds a document with its neighbors in the same section, not raw database order', function () {
     $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
     $version = VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);

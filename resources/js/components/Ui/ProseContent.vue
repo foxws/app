@@ -21,14 +21,14 @@ const proseClass =
   '[&_p]:text-pretty ' +
   '[&_a]:text-identity-500 [&_a]:underline [&_a]:decoration-1 [&_a]:underline-offset-3 [&_a:hover]:text-identity-400 [&_a:hover]:decoration-2 ' +
   '[&_code]:rounded [&_code]:bg-neutral-900 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-sm [&_code]:text-neutral-200 ' +
-  '[&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:bg-neutral-900 [&_pre]:px-4.5 [&_pre]:py-3.5 [&_pre]:font-mono [&_pre]:text-sm [&_pre]:leading-[1.85] [&_pre]:text-neutral-200 [&_pre]:shadow-[inset_0_1px_0_rgb(255_255_255/0.05)] ' +
+  '[&_pre]:overflow-x-auto [&_pre]:[scrollbar-color:var(--color-neutral-700)_transparent] [&_pre]:[scrollbar-width:thin] [&_pre]:rounded-lg [&_pre]:bg-neutral-900 [&_pre]:px-4.5 [&_pre]:py-3.5 [&_pre]:font-mono [&_pre]:text-sm [&_pre]:leading-[1.85] [&_pre]:text-neutral-200 [&_pre]:shadow-[inset_0_1px_0_rgb(255_255_255/0.05)] ' +
   '[&_pre_code]:bg-transparent [&_pre_code]:p-0 ' +
   '[&_.code-block]:relative ' +
   '[&_.code-block>button]:absolute [&_.code-block>button]:top-3 [&_.code-block>button]:right-3 [&_.code-block>button]:h-7 [&_.code-block>button]:rounded-full [&_.code-block>button]:bg-neutral-800 [&_.code-block>button]:px-2.5 [&_.code-block>button]:font-mono [&_.code-block>button]:text-xs [&_.code-block>button]:tracking-wider [&_.code-block>button]:text-neutral-200 [&_.code-block>button]:uppercase [&_.code-block>button]:opacity-0 [&_.code-block>button]:ring-1 [&_.code-block>button]:ring-neutral-700 [&_.code-block>button]:transition-opacity [&_.code-block>button]:ring-inset ' +
   '[&_.code-block:hover>button]:opacity-100 [&_.code-block>button:focus-visible]:opacity-100 [&_.code-block>button:hover]:bg-neutral-700 [&_.code-block>button:hover]:text-neutral-50 [&_.code-block>button[data-copied]]:text-gold-300 [&_.code-block>button[data-copied]]:opacity-100 pointer-coarse:[&_.code-block>button]:opacity-100 ' +
   '[&_ul]:flex [&_ul]:list-disc [&_ul]:flex-col [&_ul]:gap-2 [&_ul]:pl-5 [&_ol]:flex [&_ol]:list-decimal [&_ol]:flex-col [&_ol]:gap-2 [&_ol]:pl-5 ' +
   '[&_blockquote]:border-l [&_blockquote]:border-neutral-800 [&_blockquote]:pl-4 [&_blockquote]:text-neutral-500 ' +
-  '[&_.table-block]:overflow-x-auto ' +
+  '[&_.table-block]:scroll-x-hint ' +
   '[&_table]:w-full [&_table]:border-collapse [&_table]:text-sm ' +
   '[&_th]:pr-6 [&_th]:pb-2.5 [&_th]:text-left [&_th]:font-mono [&_th]:text-xs [&_th]:font-normal [&_th]:tracking-[.14em] [&_th]:text-neutral-500 [&_th]:uppercase [&_th:last-child]:pr-0 ' +
   '[&_td]:border-t [&_td]:border-neutral-800 [&_td]:py-3 [&_td]:pr-6 [&_td]:align-top [&_td:first-child]:whitespace-nowrap [&_td:last-child]:pr-0 ' +

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import DocsSurround from '@/components/Ui/DocsSurround.vue'
 import ProseContent from '@/components/Ui/ProseContent.vue'
-import VersionSwitcher from '@/components/Ui/VersionSwitcher.vue'
 import AppLayout from '@/layouts/AppLayout.vue'
 import DocsLayout from '@/layouts/DocsLayout.vue'
 import type { DocsProject } from '@/types'
@@ -25,15 +24,6 @@ defineProps<{
   </Head>
 
   <div class="flex flex-col gap-6">
-    <!-- Mobile-only version switcher, in place of the desktop sidebar -->
-    <div class="max-w-60 lg:hidden">
-      <VersionSwitcher
-        :project="project.key"
-        :versions="project.versions"
-        :current="project.version ?? undefined"
-      />
-    </div>
-
     <ProseContent
       v-if="project.overview"
       :html="project.overview.html"

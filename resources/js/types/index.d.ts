@@ -91,7 +91,10 @@ export type DocsProject = {
 }
 
 export type DocsDocument = {
-  project: DocsProjectRef
+  project: DocsProjectRef & {
+    versions: DocsVersion[]
+    version: string | null
+  }
   title: string
   description: string
   html: string
