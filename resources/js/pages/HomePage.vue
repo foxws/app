@@ -64,6 +64,7 @@ const { activeGroup, filter, packages, chips, visiblePackages, resetFilters } = 
         <div class="mt-2 flex flex-wrap items-center gap-x-5 gap-y-3">
           <UButton
             to="#packages"
+            external
             label="Browse packages"
             trailing-icon="i-lucide-arrow-down"
             color="neutral"
