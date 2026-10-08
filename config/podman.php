@@ -36,7 +36,6 @@ return [
     'presets' => env('PODMAN_DEFAULT_PRESETS', [
         'devcontainer',
         'development',
-        'ondemand',
     ]),
 
     /*
