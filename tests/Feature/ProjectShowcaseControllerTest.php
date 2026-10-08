@@ -56,6 +56,37 @@ test('leaves out fields the front matter does not set, or sets to something unus
         ->docs->toBeNull();
 });
 
+test('introduces the project with the readme docs:sync stored', function () {
+    $project = ProjectFactory::new()->create([
+        'slug' => 'stry',
+        'github_repository' => 'francoism90/stry',
+        'metadata' => ['kind' => 'personal'],
+    ]);
+    DocumentFactory::new()->file('README.md')->for($project)->create([
+        'body' => "# stry\n\n**stry** streams your library.\n\n> [!WARNING]\n> Keep backups.",
+    ]);
+
+    $response = $this->get('/projects/stry');
+
+    $response->assertOk();
+
+    expect($response->inertiaProps('project.introduction'))
+        ->toContain('<p><strong>stry</strong> streams your library.</p>')
+        ->toContain('<div class="callout callout-warning" data-callout="warning">')
+        ->not->toContain('<h1>');
+});
+
+test('an introduction in the front matter wins over the readme', function () {
+    $project = ProjectFactory::new()->create([
+        'slug' => 'flatpaks',
+        'github_repository' => 'francoism90/flatpaks',
+        'metadata' => ['kind' => 'personal', 'introduction' => 'From the front matter.'],
+    ]);
+    DocumentFactory::new()->file('README.md')->for($project)->create(['body' => 'From the readme.']);
+
+    expect($this->get('/projects/flatpaks')->inertiaProps('project.introduction'))->toBe("<p>From the front matter.</p>\n");
+});
+
 test('links "read the docs" to the docs on this site when the project has synced docs', function () {
     $project = ProjectFactory::new()->create(['slug' => 'stry', 'metadata' => ['kind' => 'personal']]);
     VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true]);
@@ -76,7 +107,7 @@ test('lists the other projects, not this one or any package', function () {
 
     $response->assertOk();
 
-    expect(array_column($response->inertiaProps('moreProjects'), 'slug'))->toBe(['awesome-kde'])
+    expect(array_column($response->inertiaProps('otherProjects'), 'slug'))->toBe(['awesome-kde'])
         ->and($response->inertiaProps('crumbs'))->toBe([
             ['label' => 'projects', 'href' => '/#projects'],
             ['label' => 'stry'],

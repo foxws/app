@@ -10,7 +10,7 @@ use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
 
 /**
- * The projects listed on the homepage and under "More projects",
+ * The projects listed on the homepage and under "Other projects",
  * each linking to its own project page.
  */
 final class ProjectSummaryProp implements ProvidesInertiaProperty

@@ -8,14 +8,13 @@ use Domain\Projects\Models\Project;
 use Foxws\Docs\Support\MarkdownDocumentParser;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
-use Integrations\GitHub\GitHubReadme;
 use Modules\Marketing\Support\DocsNavigation;
 use Modules\Marketing\Support\ReadmeIntroduction;
 
 /**
  * A project's own page: hero, introduction and the technologies it
  * is built with. The introduction is the front matter's own, else the
- * one in the repository's README. "Read the docs" goes to the front
+ * one in the README that docs:sync stored. "Read the docs" goes to the front
  * matter's `docs` URL, else to the project's docs on this site when it
  * has any synced.
  */
@@ -49,13 +48,12 @@ final class ProjectShowcaseProp implements ProvidesInertiaProperty
     private function readmeIntroduction(): ?string
     {
         $repository = $this->project->githubRepository();
+        $readme = $this->project->file('README.md');
 
-        if ($repository === null) {
+        if ($repository === null || $readme === null) {
             return null;
         }
 
-        $readme = GitHubReadme::cached($repository);
-
-        return $readme !== null ? ReadmeIntroduction::extract($readme, $repository) : null;
+        return ReadmeIntroduction::extract($readme->body, $repository);
     }
 }

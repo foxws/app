@@ -10,9 +10,8 @@ use Illuminate\Support\Str;
  * The introduction part of a README, for a project page: its
  * "Introduction" (or "About", "Overview") section when it has one, else
  * whatever comes before the first `##` heading. The title, badges, link
- * rows and rules around it are dropped, relative links and images point
- * at the repository on GitHub, since they'd break on this site, and
- * GitHub's alerts become the docs' own callouts.
+ * rows and rules around it are dropped, and relative links and images
+ * point at the repository on GitHub, since they'd break on this site.
  */
 final class ReadmeIntroduction
 {
@@ -26,7 +25,7 @@ final class ReadmeIntroduction
             ->first(fn (array $section): bool => in_array(self::normalizeHeading($section['heading']), self::SECTION_NAMES, true))
             ?? $sections[0];
 
-        $markdown = collect(self::convertAlerts($section['lines']))
+        $markdown = collect($section['lines'])
             ->map(fn (array $line): ?string => $line['code'] ? $line['text'] : self::clean($line['text'], $repository))
             ->filter(fn (?string $line): bool => $line !== null)
             ->implode("\n");
@@ -44,72 +43,33 @@ final class ReadmeIntroduction
      */
     private static function sections(string $readme): array
     {
-        $sections = [['heading' => null, 'lines' => []]];
+        $sections = [];
+        $heading = null;
+        $lines = [];
         $inFence = false;
 
         foreach (preg_split('/\R/', $readme) ?: [] as $text) {
             if (preg_match('/^\s*(```|~~~)/', $text)) {
                 $inFence = ! $inFence;
-                $sections[array_key_last($sections)]['lines'][] = ['text' => $text, 'code' => true];
+                $lines[] = ['text' => $text, 'code' => true];
 
                 continue;
             }
 
-            if (! $inFence && preg_match('/^##\s+(.+)$/', $text, $heading)) {
-                $sections[] = ['heading' => $heading[1], 'lines' => []];
+            if (! $inFence && preg_match('/^##\s+(.+)$/', $text, $match)) {
+                $sections[] = ['heading' => $heading, 'lines' => $lines];
+                $heading = $match[1];
+                $lines = [];
 
                 continue;
             }
 
-            $sections[array_key_last($sections)]['lines'][] = ['text' => $text, 'code' => $inFence];
+            $lines[] = ['text' => $text, 'code' => $inFence];
         }
+
+        $sections[] = ['heading' => $heading, 'lines' => $lines];
 
         return $sections;
-    }
-
-    /**
-     * GitHub's `> [!WARNING]` alerts become the `:::warning` callouts the
-     * docs renderer knows; any other quote is left as it is.
-     *
-     * @param  array<int, array{text: string, code: bool}>  $lines
-     * @return array<int, array{text: string, code: bool}>
-     */
-    private static function convertAlerts(array $lines): array
-    {
-        $converted = [];
-        $inAlert = false;
-
-        foreach ($lines as $line) {
-            if (! $line['code'] && preg_match('/^\s*>\s*\[!(\w+)\]\s*$/', $line['text'], $alert)) {
-                if ($inAlert) {
-                    $converted[] = ['text' => ':::', 'code' => false];
-                }
-
-                $converted[] = ['text' => ':::'.Str::lower($alert[1]), 'code' => false];
-                $inAlert = true;
-
-                continue;
-            }
-
-            if ($inAlert && ! $line['code'] && preg_match('/^\s*>\s?(.*)$/', $line['text'], $quoted)) {
-                $converted[] = ['text' => $quoted[1], 'code' => false];
-
-                continue;
-            }
-
-            if ($inAlert) {
-                $converted[] = ['text' => ':::', 'code' => false];
-                $inAlert = false;
-            }
-
-            $converted[] = $line;
-        }
-
-        if ($inAlert) {
-            $converted[] = ['text' => ':::', 'code' => false];
-        }
-
-        return $converted;
     }
 
     private static function normalizeHeading(?string $heading): string

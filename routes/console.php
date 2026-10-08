@@ -6,7 +6,6 @@ use Foxws\Docs\Console\Commands\SyncDocsCommand;
 use Illuminate\Auth\Console\ClearResetsCommand;
 use Illuminate\Cache\Console\PruneStaleTagsCommand;
 use Illuminate\Support\Facades\Schedule;
-use Modules\Marketing\Commands\SyncGitHubReadmesCommand;
 use Modules\Marketing\Commands\SyncPackagistDownloadsCommand;
 
 Schedule::command(PruneStaleTagsCommand::class)
@@ -23,8 +22,4 @@ Schedule::command(SyncDocsCommand::class)
 
 Schedule::command(SyncPackagistDownloadsCommand::class)
     ->dailyAt('03:30')
-    ->runInBackground();
-
-Schedule::command(SyncGitHubReadmesCommand::class)
-    ->dailyAt('03:45')
     ->runInBackground();

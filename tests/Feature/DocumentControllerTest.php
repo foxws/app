@@ -184,7 +184,16 @@ test('resolves a document under a requested version, stamping generated links wi
     $configurationPath = route('document', ['project' => 'test-project', 'document' => 'configuration', 'version' => 'latest'], absolute: false);
 
     expect($document['html'])->not->toContain('Stable installation')
-        ->and($document['project'])->toBe(['name' => 'Test Project', 'slug' => 'test-project', 'href' => $projectPath])
+        ->and($document['project'])->toBe([
+            'name' => 'Test Project',
+            'slug' => 'test-project',
+            'href' => $projectPath,
+            'versions' => [
+                ['name' => '1.0.0', 'is_default' => true],
+                ['name' => 'latest', 'is_default' => false],
+            ],
+            'version' => 'latest',
+        ])
         ->and($document['surround'][1])->toBe(['title' => 'Configuration', 'path' => $configurationPath])
         ->and($crumbs[0]['href'])->toBe($projectPath);
 });

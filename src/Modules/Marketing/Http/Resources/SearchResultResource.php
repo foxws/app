@@ -8,6 +8,7 @@ use Foxws\Docs\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
+use LogicException;
 use Modules\Marketing\Support\DocsNavigation;
 use Modules\Marketing\Support\DocumentHeadings;
 use Modules\Marketing\Support\SearchHighlighter;
@@ -24,7 +25,7 @@ final class SearchResultResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $version = $this->version;
+        $version = $this->version ?? throw new LogicException('Only pages are searchable, and every page has a version.');
         $project = $version->project;
         $body = DocumentHeadings::extract($this->toHtml(), $this->title)['html'];
         $query = $request->query('query');

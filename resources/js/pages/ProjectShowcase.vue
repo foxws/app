@@ -7,7 +7,7 @@ import { computed } from 'vue'
 
 const props = defineProps<{
   project: DocsProjectShowcase
-  moreProjects: DocsProjectSummary[]
+  otherProjects: DocsProjectSummary[]
 }>()
 
 const docsIsExternal = computed(() => props.project.docs?.startsWith('http') ?? false)
@@ -127,15 +127,15 @@ const docsIsExternal = computed(() => props.project.docs?.startsWith('http') ?? 
   </section>
 
   <section
-    v-if="moreProjects.length"
+    v-if="otherProjects.length"
     class="border-t border-neutral-900"
   >
     <UContainer class="flex flex-col gap-6 px-4 pt-12 pb-16 sm:px-7">
-      <h2 class="font-mono text-xs tracking-[.14em] text-neutral-500 uppercase">More projects</h2>
+      <h2 class="font-mono text-xs tracking-[.14em] text-neutral-500 uppercase">Other projects</h2>
 
       <div class="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
         <FeaturedProject
-          v-for="other in moreProjects"
+          v-for="other in otherProjects"
           :key="other.slug"
           :name="other.name"
           :desc="other.desc"

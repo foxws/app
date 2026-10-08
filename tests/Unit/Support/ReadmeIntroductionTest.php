@@ -51,20 +51,6 @@ it('points relative links and images at the repository, leaving absolute ones al
     );
 });
 
-it('turns github alerts into callouts', function () {
-    $readme = <<<'MD'
-    Intro.
-
-    > [!WARNING]
-    > Keep backups.
-
-    > A plain quote.
-    MD;
-
-    expect(ReadmeIntroduction::extract($readme, 'francoism90/stry'))
-        ->toBe("Intro.\n\n:::warning\nKeep backups.\n:::\n\n> A plain quote.");
-});
-
 it('leaves fenced code as it is, including headings and links inside it', function () {
     $readme = <<<'MD'
     Add the remote:

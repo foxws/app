@@ -20,7 +20,7 @@ final class ProjectShowcaseController
 
         return Inertia::render('ProjectShowcase', [
             'project' => fn () => new ProjectShowcaseProp($project),
-            'moreProjects' => fn () => new ProjectSummaryProp(Project::orderBy('title')
+            'otherProjects' => fn () => new ProjectSummaryProp(Project::orderBy('title')
                 ->get()
                 ->reject(fn (Project $other): bool => $other->isPackage() || $other->is($project))
                 ->values()),
