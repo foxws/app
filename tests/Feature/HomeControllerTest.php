@@ -46,11 +46,11 @@ test('a project flagged as a side project is listed there instead of the package
         'type' => 'Experiment',
         'desc' => 'Drop in a manifest, see how Shaka Player handles it.',
         'status' => 'active',
-        'href' => 'https://github.com/francoism90/shaka-playground',
+        'href' => '/projects/shaka-playground',
     ]]);
 });
 
-test('a side project with synced docs links to its own page instead of its source', function () {
+test('a side project with synced docs links to its project page, not its docs', function () {
     $project = ProjectFactory::new()->create(['slug' => 'stry', 'metadata' => ['kind' => 'personal']]);
     VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true]);
 
@@ -58,10 +58,10 @@ test('a side project with synced docs links to its own page instead of its sourc
 
     $response->assertOk();
 
-    expect($response->inertiaProps('sideProjects.0.href'))->toBe('/stry');
+    expect($response->inertiaProps('sideProjects.0.href'))->toBe('/projects/stry');
 });
 
-test('a side project whose version has no docs still links to its source', function () {
+test('a side project without docs links to its project page, not its source', function () {
     $project = ProjectFactory::new()->create([
         'slug' => 'flatpaks',
         'github_repository' => 'francoism90/flatpaks',
@@ -73,7 +73,7 @@ test('a side project whose version has no docs still links to its source', funct
 
     $response->assertOk();
 
-    expect($response->inertiaProps('sideProjects.0.href'))->toBe('https://github.com/francoism90/flatpaks');
+    expect($response->inertiaProps('sideProjects.0.href'))->toBe('/projects/flatpaks');
 });
 
 test('a project with no kind metadata is listed as a package, not a side project', function () {

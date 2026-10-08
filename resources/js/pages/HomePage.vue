@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import FeaturedProject from '@/components/Ui/FeaturedProject.vue'
 import PackageRow from '@/components/Ui/PackageRow.vue'
+import { usePackageFilter } from '@/composables/packages'
 import type { DocsPackageGroup, DocsSideProjectSummary } from '@/types'
 import { Head } from '@inertiajs/vue3'
-import { computed, ref } from 'vue'
 
 const props = defineProps<{
   packageGroups: DocsPackageGroup[]
@@ -12,43 +12,9 @@ const props = defineProps<{
 
 const focusAreas = ['Laravel', 'AI', 'Linux', 'Cloud']
 
-const allGroups = 'all'
-const ungroupedLabel = 'More'
-
-const activeGroup = ref<string>(allGroups)
-const filter = ref('')
-
-const packages = computed(() =>
-  props.packageGroups.flatMap((group) =>
-    group.packages.map((pkg) => ({ ...pkg, group: group.name ?? ungroupedLabel })),
-  ),
+const { activeGroup, filter, packages, chips, visiblePackages, resetFilters } = usePackageFilter(
+  () => props.packageGroups,
 )
-
-const chips = computed(() => [
-  { label: 'All', value: allGroups, count: packages.value.length },
-  ...props.packageGroups.map((group) => ({
-    label: group.name ?? ungroupedLabel,
-    value: group.name ?? ungroupedLabel,
-    count: group.packages.length,
-  })),
-])
-
-/** Most-installed first, so the list leads with what people actually use. */
-const visiblePackages = computed(() => {
-  const needle = filter.value.trim().toLowerCase()
-
-  return packages.value
-    .filter((pkg) => activeGroup.value === allGroups || pkg.group === activeGroup.value)
-    .filter(
-      (pkg) => needle === '' || [pkg.name, pkg.slug, pkg.desc, pkg.group].join(' ').toLowerCase().includes(needle),
-    )
-    .sort((a, b) => (b.downloads ?? 0) - (a.downloads ?? 0) || a.name.localeCompare(b.name))
-})
-
-function resetFilters() {
-  activeGroup.value = allGroups
-  filter.value = ''
-}
 </script>
 
 <template>
@@ -110,7 +76,7 @@ function resetFilters() {
       <div
         class="relative flex min-w-0 flex-col gap-3.5 rounded-3xl bg-neutral-950/42 px-7 pt-6 pb-3 ring-1 ring-neutral-50/12 backdrop-blur-md ring-inset"
       >
-        <h2 class="font-mono text-xs tracking-[.18em] text-gold-300 uppercase">What I do</h2>
+        <h2 class="font-mono text-xs tracking-[.18em] text-gold-300 uppercase">What I work with</h2>
 
         <ul class="flex flex-col">
           <li

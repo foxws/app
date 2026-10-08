@@ -31,7 +31,6 @@ final class HomeController
     private function projectsByKind(): Collection
     {
         return once(fn (): Collection => Project::with('versions')
-            ->withExists('documents')
             ->orderBy('title')
             ->get()
             ->groupBy(fn (Project $project): string => $project->isPackage() ? 'packages' : 'sideProjects'));

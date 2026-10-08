@@ -50,6 +50,17 @@ export type DocsSideProjectSummary = {
   href: string | null
 }
 
+export type DocsProjectShowcase = {
+  name: string
+  slug: string
+  desc: string
+  image: string | null
+  introduction: string | null
+  technologies: string[]
+  docs: string | null
+  source: string | null
+}
+
 export type DocsUsedBy = {
   name: string
   desc?: string

@@ -2,12 +2,18 @@
 import { useClipboard } from '@vueuse/core'
 import { nextTick, onMounted, useTemplateRef, watch } from 'vue'
 
-const props = defineProps<{
-  html: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    html: string
+    lead?: boolean
+  }>(),
+  {
+    lead: false,
+  },
+)
 
 const proseClass =
-  'flex flex-col gap-4 font-sans text-base leading-relaxed wrap-break-word text-neutral-400 ' +
+  'flex flex-col font-sans leading-relaxed wrap-break-word ' +
   '[&_h2]:mt-7 [&_h2]:scroll-mt-22 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-neutral-50 [&>h2:first-child]:mt-0 ' +
   '[&_h3]:mt-6 [&_h3]:scroll-mt-22 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-neutral-50 ' +
   '[&_p]:text-pretty ' +
@@ -109,7 +115,7 @@ watch(
 <template>
   <div
     ref="root"
-    :class="proseClass"
+    :class="[proseClass, lead ? 'gap-7 text-base text-neutral-300 sm:text-lg' : 'gap-4 text-base text-neutral-400']"
     @click="onClick"
     v-html="html"
   />

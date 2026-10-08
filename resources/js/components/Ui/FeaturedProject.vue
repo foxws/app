@@ -37,7 +37,7 @@ const monogram = computed(() => formatMonogram(props.name))
     <span class="flex items-center gap-2">
       <h3 class="font-sans text-xl font-semibold tracking-tight text-neutral-50">{{ name }}</h3>
       <UIcon
-        name="i-lucide-arrow-up-right"
+        :name="isExternal ? 'i-lucide-arrow-up-right' : 'i-lucide-arrow-right'"
         class="size-4 shrink-0 text-neutral-600 transition-colors group-hover:text-neutral-300"
       />
     </span>

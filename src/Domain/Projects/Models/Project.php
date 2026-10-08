@@ -7,6 +7,7 @@ namespace Domain\Projects\Models;
 use Domain\Projects\Enums\PackageGroup;
 use Foxws\Docs\Enums\ProjectDriver;
 use Foxws\Docs\Models\Project as BaseProject;
+use Illuminate\Support\Str;
 
 /**
  * A laravel-docs project, with the meaning this site gives to its
@@ -41,6 +42,58 @@ class Project extends BaseProject
         $description = $this->metadataValue('desc');
 
         return is_string($description) ? $description : '';
+    }
+
+    /**
+     * A 16:10 screenshot or artwork for the project page. Only absolute
+     * http(s) URLs are used, since front matter has nowhere to host a file.
+     */
+    public function image(): ?string
+    {
+        $image = $this->metadataValue('image');
+
+        if (! is_string($image) || ! Str::startsWith($image, ['https://', 'http://'])) {
+            return null;
+        }
+
+        return $image;
+    }
+
+    /**
+     * The project page's introduction, as markdown.
+     */
+    public function introduction(): ?string
+    {
+        $introduction = $this->metadataValue('introduction');
+
+        return is_string($introduction) && trim($introduction) !== '' ? $introduction : null;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function technologies(): array
+    {
+        $technologies = $this->metadataValue('technologies');
+
+        if (! is_array($technologies)) {
+            return [];
+        }
+
+        return collect($technologies)
+            ->filter(fn (mixed $technology): bool => is_string($technology) && $technology !== '')
+            ->values()
+            ->all();
+    }
+
+    /**
+     * Where to read the docs, when they live somewhere other than this site.
+     */
+    public function docsUrl(): ?string
+    {
+        $docs = $this->metadataValue('docs');
+
+        return is_string($docs) && $docs !== '' ? $docs : null;
     }
 
     /**

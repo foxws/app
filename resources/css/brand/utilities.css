@@ -72,7 +72,7 @@
 
 @utility bg-page-glow {
   background: radial-gradient(
-    ellipse 70% 34rem at 50% 0%,
+    ellipse 70% 34rem at var(--glow-x, 50%) 0%,
     color-mix(in oklab, var(--color-identity-500) 40%, transparent) 0%,
     color-mix(in oklab, var(--color-identity-800) 22%, transparent) 42%,
     transparent 78%
