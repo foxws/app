@@ -144,3 +144,11 @@
     animation-timeline: scroll(self inline);
   }
 }
+
+@utility bg-placeholder-stripes {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--color-neutral-900) 0 14px,
+    color-mix(in oklab, var(--color-neutral-800) 70%, var(--color-neutral-900)) 14px 28px
+  );
+}

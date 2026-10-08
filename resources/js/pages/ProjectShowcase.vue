@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import FeaturedProject from '@/components/Ui/FeaturedProject.vue'
 import ProseContent from '@/components/Ui/ProseContent.vue'
+import { useMonogram } from '@/composables/monogram'
 import type { DocsProjectShowcase, DocsProjectSummary } from '@/types'
 import { Head } from '@inertiajs/vue3'
 import { computed } from 'vue'
@@ -9,6 +10,10 @@ const props = defineProps<{
   project: DocsProjectShowcase
   moreProjects: DocsProjectSummary[]
 }>()
+
+const { formatMonogram } = useMonogram()
+
+const monogram = computed(() => formatMonogram(props.project.name))
 
 const docsIsExternal = computed(() => props.project.docs?.startsWith('http') ?? false)
 </script>
@@ -25,8 +30,7 @@ const docsIsExternal = computed(() => props.project.docs?.startsWith('http') ?? 
   <section class="[--glow-x:76%] bg-page-glow">
     <UContainer
       :class="[
-        'grid items-center gap-x-14 gap-y-10 px-4 py-12 sm:px-7 sm:py-16 lg:py-20',
-        project.image ? 'lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]' : undefined,
+        'grid items-center gap-x-14 gap-y-10 px-4 py-12 sm:px-7 sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:py-20',
       ]"
     >
       <div class="flex min-w-0 flex-col gap-5">
@@ -77,18 +81,40 @@ const docsIsExternal = computed(() => props.project.docs?.startsWith('http') ?? 
         :alt="`${project.name} screenshot`"
         class="aspect-16/10 w-full min-w-0 rounded-3xl bg-neutral-900 object-cover ring-1 ring-neutral-800"
       />
+
+      <div
+        v-else
+        role="img"
+        :aria-label="`Image of ${project.name} coming soon`"
+        class="flex aspect-16/10 w-full min-w-0 flex-col items-center justify-center gap-4 rounded-3xl border border-dashed border-neutral-700 bg-placeholder-stripes"
+      >
+        <span
+          aria-hidden="true"
+          class="flex size-14 items-center justify-center rounded-2xl bg-neutral-950 font-mono text-base tracking-wider text-gold-300 ring-1 ring-neutral-800 ring-inset"
+        >
+          {{ monogram }}
+        </span>
+        <span class="font-mono text-xs tracking-[.14em] text-neutral-400 uppercase">Image coming soon</span>
+      </div>
     </UContainer>
 
-    <UContainer
-      v-if="project.introduction || project.technologies.length"
-      class="px-4 pt-4 pb-20 sm:px-7"
-    >
+    <UContainer class="px-4 pt-4 pb-20 sm:px-7">
       <div class="mx-auto flex max-w-160 flex-col gap-7">
         <ProseContent
           v-if="project.introduction"
           :html="project.introduction"
           lead
         />
+
+        <!-- TEMPORARY preview: shows where the introduction goes until projects set `introduction`. -->
+        <div
+          v-else
+          class="flex flex-col gap-7 font-sans text-base leading-relaxed text-pretty text-neutral-300 sm:text-lg"
+        >
+          <p>[Introduction: two or three short paragraphs. What {{ project.name }} is and who it is for.]</p>
+          <p>[Why you built it, and what makes it different from the alternatives.]</p>
+          <p>[Where it stands today, and what is coming next.]</p>
+        </div>
 
         <div
           v-if="project.technologies.length"
