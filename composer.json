@@ -14,7 +14,7 @@
     "require": {
         "php": "^8.3",
         "foxws/laravel-ddd": "^0.0.5",
-        "foxws/laravel-docs": "^1.8.0",
+        "foxws/laravel-docs": "^1.8.1",
         "foxws/laravel-essentials": "^0.0.3",
         "foxws/laravel-pwa": "^2.5.3",
         "foxws/laravel-scout-builder": "^1.0.3",
