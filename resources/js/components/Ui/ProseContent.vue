@@ -12,8 +12,10 @@ const props = withDefaults(
   },
 )
 
+/** A markdown `# Heading` reads as a section here; the page's own title is its real h1. */
 const proseClass =
   'flex flex-col font-sans leading-relaxed wrap-break-word ' +
+  '[&_h1]:mt-7 [&_h1]:scroll-mt-22 [&_h1]:text-2xl [&_h1]:font-semibold [&_h1]:tracking-tight [&_h1]:text-neutral-50 [&>h1:first-child]:mt-0 ' +
   '[&_h2]:mt-7 [&_h2]:scroll-mt-22 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-neutral-50 [&>h2:first-child]:mt-0 ' +
   '[&_h3]:mt-6 [&_h3]:scroll-mt-22 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-neutral-50 ' +
   '[&_p]:text-pretty ' +
