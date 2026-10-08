@@ -52,6 +52,31 @@ php artisan docs:projects:add laravel-docs "Laravel Docs" --github=foxws/laravel
 
 `--sync` registers a `latest` version tracking `main` as the default and syncs it right away. Use `docs:versions:add` to register further versions, such as a release tag, or to change the default with `--default`.
 
+## Project pages
+
+A project with `kind` set to anything other than `package` gets its own page at `/projects/{slug}` instead of a docs page. The page is filled from the `metadata` in the front matter of the project's `docs/index.md`:
+
+```yaml
+---
+metadata:
+    kind: personal
+    desc: A streaming platform built with Laravel and Inertia.js.
+    image: https://raw.githubusercontent.com/francoism90/stry/main/docs/screenshot.png
+    technologies: [Laravel, Inertia.js, Vue]
+    docs: https://example.com/stry
+---
+```
+
+| Key            | Used for                                                                                                                                                                        |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `desc`         | The one-line description under the title, and on the homepage.                                                                                                                  |
+| `image`        | The 16:10 image next to the title, or an "Image coming soon" placeholder without one. It must be a full `https://` URL, such as the raw GitHub URL of a file in the repository. |
+| `introduction` | Markdown shown below the hero. Without it, the page uses the Introduction or About section of the README that `docs:sync` stores, or the README's opening.                      |
+| `technologies` | The "Built with" tags.                                                                                                                                                          |
+| `docs`         | Where "Read the docs" links to. Without it, the button links to the project's docs on this site when it has any, and is hidden otherwise.                                       |
+
+Changes reach the site with the next `docs:sync`, which runs nightly and clears the response cache. Front matter is only read from a synced version, so a project without any versions keeps the metadata it has until it gets one, for example from a GitHub release. Its README is still synced, since root files are read at `HEAD`.
+
 ## Tests
 
 ```sh
