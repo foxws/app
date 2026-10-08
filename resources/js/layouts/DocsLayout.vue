@@ -3,7 +3,6 @@ import DocsToc from '@/components/Ui/DocsToc.vue'
 import DocsTree from '@/components/Ui/DocsTree.vue'
 import MobileDocsSheet from '@/components/Ui/MobileDocsSheet.vue'
 import ProjectHero from '@/components/Ui/ProjectHero.vue'
-import SearchTrigger from '@/components/Ui/SearchTrigger.vue'
 import VersionSwitcher from '@/components/Ui/VersionSwitcher.vue'
 import type { DocsDocument, DocsProject } from '@/types'
 import { computed, ref } from 'vue'
@@ -46,11 +45,6 @@ const docsSheetOpen = ref(false)
     <UPage :ui="{ root: 'lg:gap-12' }">
       <template #left>
         <UPageAside :ui="{ root: 'pt-7 pb-16', container: 'flex flex-col gap-6' }">
-          <SearchTrigger
-            label="Search docs"
-            block
-          />
-
           <VersionSwitcher
             v-if="versionSwitcher"
             v-bind="versionSwitcher"
@@ -99,12 +93,24 @@ const docsSheetOpen = ref(false)
             v-if="toc.length"
             class="-order-1 min-w-0 xl:order-0"
           >
+            <!--
+              UContentToc swaps its collapsible for the full list at lg, but the
+              rail only exists from xl, so the container's selectors keep the
+              collapsible until then.
+            -->
             <DocsToc
               :links="toc"
               :ui="{
-                root: '-mx-4 px-4 sm:-mx-7 sm:px-7 lg:mx-0 lg:px-0 xl:static xl:max-h-none xl:overflow-visible',
-                container: 'py-3 sm:py-3 lg:py-3 xl:p-0',
+                root: '-mx-4 px-4 sm:-mx-7 sm:px-7 lg:mx-0 lg:bg-default/75 lg:px-0 xl:static xl:max-h-none xl:overflow-visible xl:bg-[initial]',
+                container: [
+                  'py-3 sm:py-3 lg:border-b lg:py-3 xl:border-0 xl:p-0',
+                  'lg:[&>button[data-slot=trigger]]:flex xl:[&>button[data-slot=trigger]]:hidden',
+                  'lg:[&>[data-slot=content][data-state]]:block xl:[&>[data-slot=content][data-state]]:hidden',
+                  'lg:[&>p[data-slot=trigger]]:hidden xl:[&>p[data-slot=trigger]]:flex',
+                  'lg:[&>div[data-slot=content]:not([data-state])]:hidden xl:[&>div[data-slot=content]:not([data-state])]:flex',
+                ].join(' '),
                 title: 'font-mono text-xs font-normal tracking-[.14em] text-neutral-500 uppercase',
+                trailingIcon: 'lg:block xl:hidden',
                 trigger: 'mt-0 py-0',
                 list: 'mt-2.5 flex flex-col gap-2.5',
                 link: 'min-w-0 py-0 text-sm text-neutral-400 hover:text-neutral-50',

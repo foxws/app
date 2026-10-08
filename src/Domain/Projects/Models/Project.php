@@ -61,7 +61,8 @@ class Project extends BaseProject
     }
 
     /**
-     * The project page's introduction, as markdown.
+     * The project page's introduction, as markdown, when the front matter
+     * sets one; it takes the place of the README's.
      */
     public function introduction(): ?string
     {
@@ -113,15 +114,23 @@ class Project extends BaseProject
     }
 
     /**
-     * The Composer package name, which is the GitHub repository: the same
-     * name the install command uses.
+     * The `owner/name` of the GitHub repository the project syncs from.
      */
-    public function packagistName(): ?string
+    public function githubRepository(): ?string
     {
         if ($this->driver !== ProjectDriver::Github || blank($this->github_repository)) {
             return null;
         }
 
         return $this->github_repository;
+    }
+
+    /**
+     * The Composer package name, which is the GitHub repository: the same
+     * name the install command uses.
+     */
+    public function packagistName(): ?string
+    {
+        return $this->githubRepository();
     }
 }

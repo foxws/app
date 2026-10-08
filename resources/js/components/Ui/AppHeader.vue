@@ -63,8 +63,7 @@ defineShortcuts({ meta_k: () => (searchOpen.value = true) })
     </template>
 
     <template #right>
-      <!-- Docs pages carry their own search in the sidebar from lg up. -->
-      <SearchTrigger :class="scope ? 'lg:hidden' : undefined" />
+      <SearchTrigger />
 
       <UButton
         to="https://github.com/foxws"

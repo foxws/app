@@ -28,8 +28,13 @@ const isPrevious = (link: ContentSurroundLink): boolean => asDocsLink(link).path
   >
     <!-- The slot fills UContentSurround's own link, so this holds only what goes inside it. -->
     <template #link="{ link }">
-      <span :class="['flex items-center gap-4', isPrevious(link) ? 'flex-row-reverse text-right' : 'text-left']">
-        <span class="flex min-w-0 flex-1 flex-col gap-0.5">
+      <span
+        :class="[
+          'flex items-center gap-4',
+          isPrevious(link) ? 'flex-row-reverse justify-end text-left' : 'justify-end text-right',
+        ]"
+      >
+        <span class="flex min-w-0 flex-col gap-0.5">
           <span class="font-mono text-xs tracking-[.14em] text-neutral-400 uppercase">
             {{ isPrevious(link) ? 'Previous' : 'Next' }}
           </span>

@@ -91,23 +91,16 @@ const docsIsExternal = computed(() => props.project.docs?.startsWith('http') ?? 
       </div>
     </UContainer>
 
-    <UContainer class="px-4 pt-4 pb-20 sm:px-7">
+    <UContainer
+      v-if="project.introduction || project.technologies.length"
+      class="px-4 pt-4 pb-20 sm:px-7"
+    >
       <div class="mx-auto flex max-w-160 flex-col gap-7">
         <ProseContent
           v-if="project.introduction"
           :html="project.introduction"
           lead
         />
-
-        <!-- TEMPORARY preview: shows where the introduction goes until projects set `introduction`. -->
-        <div
-          v-else
-          class="flex flex-col gap-7 font-sans text-base leading-relaxed text-pretty text-neutral-300 sm:text-lg"
-        >
-          <p>[Introduction: two or three short paragraphs. What {{ project.name }} is and who it is for.]</p>
-          <p>[Why you built it, and what makes it different from the alternatives.]</p>
-          <p>[Where it stands today, and what is coming next.]</p>
-        </div>
 
         <div
           v-if="project.technologies.length"
