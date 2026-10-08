@@ -4,7 +4,6 @@ import DocsTree from '@/components/Ui/DocsTree.vue'
 import MobileDocsSheet from '@/components/Ui/MobileDocsSheet.vue'
 import ProjectHero from '@/components/Ui/ProjectHero.vue'
 import SearchTrigger from '@/components/Ui/SearchTrigger.vue'
-import UsedByList from '@/components/Ui/UsedByList.vue'
 import VersionSwitcher from '@/components/Ui/VersionSwitcher.vue'
 import type { DocsDocument, DocsProject } from '@/types'
 import { computed, ref } from 'vue'
@@ -74,14 +73,13 @@ const docsSheetOpen = ref(false)
           </div>
 
           <div
-            v-if="toc.length || project?.used_by.length"
-            class="-order-1 flex min-w-0 flex-col gap-8 xl:order-0"
+            v-if="toc.length"
+            class="-order-1 min-w-0 xl:order-0"
           >
             <DocsToc
-              v-if="toc.length"
               :links="toc"
               :ui="{
-                root: 'xl:static xl:max-h-none xl:overflow-visible',
+                root: '-mx-4 px-4 sm:-mx-7 sm:px-7 lg:mx-0 lg:px-0 xl:static xl:max-h-none xl:overflow-visible',
                 container: 'pt-0 sm:pt-0 xl:p-0',
                 title: 'font-mono text-xs font-normal tracking-[.14em] text-neutral-500 uppercase',
                 trigger: 'py-0',
@@ -90,13 +88,6 @@ const docsSheetOpen = ref(false)
                 linkText: 'min-w-0 truncate',
               }"
             />
-
-            <div
-              v-if="project?.used_by.length"
-              class="hidden xl:block"
-            >
-              <UsedByList :projects="project.used_by" />
-            </div>
           </div>
         </div>
       </div>

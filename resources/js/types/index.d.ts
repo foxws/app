@@ -61,12 +61,6 @@ export type DocsProjectShowcase = {
   source: string | null
 }
 
-export type DocsUsedBy = {
-  name: string
-  desc?: string
-  href: string
-}
-
 export type DocsVersion = {
   name: string
   is_default: boolean
@@ -92,7 +86,6 @@ export type DocsProject = {
   source: string | null
   package: DocsPackageInfo | null
   downloads: number | null
-  used_by: DocsUsedBy[]
   get_started: string | null
   surround: (DocsSurroundLink | null)[]
 }

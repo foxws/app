@@ -75,35 +75,8 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'source' => $this->project->sourceUrl(),
             'package' => $package !== [] ? $package : null,
             'downloads' => $packagistName !== null ? PackagistDownloads::monthly($packagistName) : null,
-            'used_by' => $this->usedBy(),
             'get_started' => $firstDocument ? DocsNavigation::pathFor($this->project, $firstDocument, $overview, $versionParam) : null,
             'surround' => [null, $next],
         ];
-    }
-
-    /**
-     * `used_by` is a list of projects, or a single project in front matter
-     * written before lists were supported (still in published releases).
-     * Entries without a name and href are skipped.
-     *
-     * @return array<int, array{name: string, href: string, desc?: string}>
-     */
-    private function usedBy(): array
-    {
-        $usedBy = $this->project->metadataValue('used_by');
-
-        if (! is_array($usedBy)) {
-            return [];
-        }
-
-        return collect(array_is_list($usedBy) ? $usedBy : [$usedBy])
-            ->filter(fn (mixed $entry): bool => is_array($entry) && is_string($entry['name'] ?? null) && is_string($entry['href'] ?? null))
-            ->map(fn (array $entry): array => array_filter([
-                'name' => $entry['name'],
-                'desc' => is_string($entry['desc'] ?? null) ? $entry['desc'] : null,
-                'href' => $entry['href'],
-            ], fn (?string $value): bool => $value !== null))
-            ->values()
-            ->all();
     }
 }
