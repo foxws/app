@@ -121,7 +121,7 @@ watch(query, (term) => search(term))
     :ui="{
       overlay: 'bg-neutral-950/72 backdrop-blur-sm',
       content:
-        'top-[clamp(1rem,12vh,7rem)] max-h-[min(640px,80vh)] max-w-160 translate-y-0 overflow-hidden rounded-3xl shadow-[0_30px_80px_rgb(0_0_0/0.55)] ring-1 ring-neutral-700 bg-dialog-glow sm:max-w-160',
+        'top-2 max-h-[60dvh] w-[calc(100vw-1rem)] max-w-160 translate-y-0 overflow-hidden rounded-2xl shadow-[0_30px_80px_rgb(0_0_0/0.55)] ring-1 ring-neutral-700 bg-dialog-glow sm:top-[clamp(1rem,12vh,7rem)] sm:max-h-[min(640px,80vh)] sm:w-[calc(100vw-2rem)] sm:max-w-160 sm:rounded-3xl',
     }"
   >
     <template #content>
@@ -130,33 +130,42 @@ watch(query, (term) => search(term))
         :groups="groups"
         :loading="loading"
         :placeholder="scope ? `Search ${scope} and more` : 'Search projects, packages and docs'"
-        :close="{
-          label: 'esc',
-          icon: '',
-          color: 'neutral',
-          variant: 'soft',
-          class:
-            'h-7 rounded-full bg-neutral-950 px-2.5 font-mono text-xs text-neutral-400 hover:bg-neutral-950 hover:text-neutral-50',
-        }"
+        close
         :ui="{
           root: 'divide-neutral-800',
           input:
-            'h-15 ps-2 pe-1 font-sans text-base text-neutral-50 focus-within:shadow-[inset_0_-2px_0_var(--ui-primary)] [&>input]:h-15 [&>input]:placeholder:text-neutral-500',
-          viewport: 'divide-y-0 p-2',
+            'h-13 ps-1 pe-1 font-sans text-base text-neutral-50 focus-within:shadow-[inset_0_-2px_0_var(--ui-primary)] sm:h-15 sm:ps-2 [&>input]:h-13 [&>input]:placeholder:text-neutral-500 sm:[&>input]:h-15',
+          viewport: 'divide-y-0 p-1.5 sm:p-2',
           group: 'p-0 pb-1.5',
           label:
-            'flex items-baseline justify-between gap-3 px-3 pt-2.5 pb-1.5 font-mono text-xs font-normal tracking-[.14em] text-neutral-500 uppercase',
-          item: 'items-center gap-3 rounded-xl px-3 py-2.5 before:inset-0 before:rounded-xl hover:before:bg-neutral-800/45 data-highlighted:before:bg-neutral-800/80',
+            'flex items-baseline justify-between gap-3 px-2.5 pt-2 pb-1 font-mono text-xs font-normal tracking-[.14em] text-neutral-500 uppercase sm:px-3 sm:pt-2.5 sm:pb-1.5',
+          item: 'items-center gap-3 rounded-xl px-2.5 py-2 before:inset-0 before:rounded-xl hover:before:bg-neutral-800/45 data-highlighted:before:bg-neutral-800/80 sm:px-3 sm:py-2.5',
           itemLabel: 'whitespace-normal text-neutral-50',
           itemDescription: 'hidden',
           itemTrailingHighlightedIcon: 'size-4 text-neutral-400',
           empty: 'px-3 py-8 font-sans text-sm text-neutral-400',
           footer:
-            'flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 border-neutral-800 px-5 py-2.5 font-mono text-xs tracking-wider text-neutral-400',
+            'flex flex-wrap items-center justify-end gap-x-4 gap-y-1.5 border-neutral-800 px-4 py-2 font-mono text-xs tracking-wider text-neutral-400 sm:justify-between sm:px-5 sm:py-2.5',
         }"
         @close="open = false"
         @update:model-value="onSelect"
       >
+        <template #close>
+          <UButton
+            color="neutral"
+            variant="soft"
+            aria-label="Close search"
+            class="h-7 rounded-full bg-neutral-950 px-2.5 font-mono text-xs text-neutral-400 hover:bg-neutral-950 hover:text-neutral-50"
+            @click="open = false"
+          >
+            <UIcon
+              name="i-lucide-x"
+              class="size-4 sm:hidden"
+            />
+            <span class="hidden sm:inline">esc</span>
+          </UButton>
+        </template>
+
         <template #group-label="{ group }">
           <span>{{ group.label }}</span>
           <span class="tracking-wider normal-case">{{ (group as SearchGroup).version }}</span>
@@ -207,7 +216,8 @@ watch(query, (term) => search(term))
         </template>
 
         <template #footer>
-          <span class="flex flex-wrap items-center gap-x-3.5 gap-y-1.5">
+          <!-- Key hints are no use on a touch screen. -->
+          <span class="hidden flex-wrap items-center gap-x-3.5 gap-y-1.5 sm:flex">
             <span><span class="text-neutral-50">↑↓</span> navigate</span>
             <span><span class="text-neutral-50">↵</span> open</span>
             <span><span class="text-neutral-50">esc</span> close</span>
