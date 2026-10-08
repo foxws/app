@@ -41,7 +41,7 @@ export type DocsPackageGroup = {
   packages: DocsPackageSummary[]
 }
 
-export type DocsSideProjectSummary = {
+export type DocsProjectSummary = {
   name: string
   slug: string
   type: string | null
@@ -50,10 +50,15 @@ export type DocsSideProjectSummary = {
   href: string | null
 }
 
-export type DocsUsedBy = {
+export type DocsProjectShowcase = {
   name: string
-  desc?: string
-  href: string
+  slug: string
+  desc: string
+  image: string | null
+  introduction: string | null
+  technologies: string[]
+  docs: string | null
+  source: string | null
 }
 
 export type DocsVersion = {
@@ -80,13 +85,16 @@ export type DocsProject = {
   version: string | null
   source: string | null
   package: DocsPackageInfo | null
-  used_by: DocsUsedBy[]
+  downloads: number | null
   get_started: string | null
   surround: (DocsSurroundLink | null)[]
 }
 
 export type DocsDocument = {
-  project: DocsProjectRef
+  project: DocsProjectRef & {
+    versions: DocsVersion[]
+    version: string | null
+  }
   title: string
   description: string
   html: string

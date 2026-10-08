@@ -32,6 +32,10 @@ final class SitemapController
      */
     private function addProject(Sitemap $sitemap, Project $project): void
     {
+        if (! $project->isPackage()) {
+            $sitemap->add(Url::create(route('projectShowcase', $project)));
+        }
+
         $documents = $project->defaultVersion()?->orderedDocuments() ?? collect();
 
         if ($documents->isEmpty()) {

@@ -1,11 +1,10 @@
 <script setup lang="ts">
+import DocsSurround from '@/components/Ui/DocsSurround.vue'
 import ProseContent from '@/components/Ui/ProseContent.vue'
 import AppLayout from '@/layouts/AppLayout.vue'
 import DocsLayout from '@/layouts/DocsLayout.vue'
-import { Head } from '@inertiajs/vue3'
-import type { ContentSurroundLink } from '@nuxt/ui/components/content/ContentSurround.vue'
-import UContentSurround from '@nuxt/ui/components/content/ContentSurround.vue'
 import type { DocsDocument } from '@/types'
+import { Head } from '@inertiajs/vue3'
 
 defineOptions({ layout: [AppLayout, DocsLayout] })
 
@@ -23,26 +22,25 @@ defineProps<{
     />
   </Head>
 
-  <div class="flex flex-col gap-5.5 py-4 sm:py-5.5">
+  <div class="flex flex-col gap-6">
     <UButton
       :to="document.project.href"
       icon="i-lucide-arrow-left"
       variant="link"
       color="neutral"
-      :ui="{ base: 'p-0 font-mono text-xs text-neutral-500 hover:text-neutral-300' }"
+      :ui="{
+        base: 'self-start p-0 font-mono text-xs tracking-wider text-neutral-500 uppercase hover:text-neutral-300',
+      }"
     >
       {{ document.project.name }}
     </UButton>
 
-    <h1 class="font-sans text-3xl font-semibold tracking-tight text-neutral-50">{{ document.title }}</h1>
+    <h1 class="font-sans text-4xl leading-[1.05] font-semibold tracking-tight text-neutral-50 sm:text-5xl">
+      {{ document.title }}
+    </h1>
 
     <ProseContent :html="document.html" />
 
-    <!--
-      UContentSurround's own template guards each slot with `v-if="link"` and
-      renders a blank placeholder for a missing prev/next — its .d.ts just doesn't
-      declare that, so the null entries here need a cast.
-    -->
-    <UContentSurround :surround="document.surround as unknown as ContentSurroundLink[]" />
+    <DocsSurround :surround="document.surround" />
   </div>
 </template>

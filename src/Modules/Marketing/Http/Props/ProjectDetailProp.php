@@ -7,6 +7,7 @@ namespace Modules\Marketing\Http\Props;
 use Domain\Projects\Models\Project;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
+use Integrations\Packagist\PackagistDownloads;
 use Modules\Marketing\Support\DocsNavigation;
 use Modules\Marketing\Support\DocumentHeadings;
 use Modules\Marketing\Support\DocumentLinks;
@@ -47,6 +48,8 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'licence' => $this->project->metadataValue('licence'),
         ], fn ($value) => $value !== null);
 
+        $packagistName = $this->project->packagistName();
+
         $firstDocument = DocsNavigation::firstDocument($navDocuments);
 
         // The overview reads as the first page in the project, so it only
@@ -60,7 +63,7 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'slug' => $this->project->metadataValue('slug') ?? $this->project->sourceLocation(),
             'eyebrow' => $this->project->metadataValue('eyebrow') ?? '',
             'lead' => $this->project->metadataValue('lead') ?? $this->project->metadataValue('desc') ?? '',
-            // Only packages default to a composer command — a side project
+            // Only packages default to a composer command — a project
             // (an app, a Flatpak remote, ...) shows one only if it sets its own.
             'install' => $this->project->metadataValue('install') ?? ($this->project->isPackage()
                 ? "composer require {$this->project->sourceLocation()}"
@@ -71,35 +74,9 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'version' => $version?->name,
             'source' => $this->project->sourceUrl(),
             'package' => $package !== [] ? $package : null,
-            'used_by' => $this->usedBy(),
+            'downloads' => $packagistName !== null ? PackagistDownloads::monthly($packagistName) : null,
             'get_started' => $firstDocument ? DocsNavigation::pathFor($this->project, $firstDocument, $overview, $versionParam) : null,
             'surround' => [null, $next],
         ];
-    }
-
-    /**
-     * `used_by` is a list of projects, or a single project in front matter
-     * written before lists were supported (still in published releases).
-     * Entries without a name and href are skipped.
-     *
-     * @return array<int, array{name: string, href: string, desc?: string}>
-     */
-    private function usedBy(): array
-    {
-        $usedBy = $this->project->metadataValue('used_by');
-
-        if (! is_array($usedBy)) {
-            return [];
-        }
-
-        return collect(array_is_list($usedBy) ? $usedBy : [$usedBy])
-            ->filter(fn (mixed $entry): bool => is_array($entry) && is_string($entry['name'] ?? null) && is_string($entry['href'] ?? null))
-            ->map(fn (array $entry): array => array_filter([
-                'name' => $entry['name'],
-                'desc' => is_string($entry['desc'] ?? null) ? $entry['desc'] : null,
-                'href' => $entry['href'],
-            ], fn (?string $value): bool => $value !== null))
-            ->values()
-            ->all();
     }
 }

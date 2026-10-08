@@ -6,3 +6,149 @@
     user-select: none;
   }
 }
+
+@utility text-gradient-gold {
+  color: var(--color-gold-400);
+
+  @supports (background-clip: text) {
+    background: linear-gradient(90deg, var(--color-gold-300), var(--color-gold-400) 45%, var(--color-gold-500));
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+@utility bg-hero-panel {
+  border: 1px solid transparent;
+  background:
+    radial-gradient(
+        90% 130% at 100% 0%,
+        color-mix(in oklab, var(--color-identity-500) 36%, transparent) 0%,
+        color-mix(in oklab, var(--color-identity-800) 26%, transparent) 36%,
+        transparent 70%
+      )
+      padding-box,
+    radial-gradient(
+        70% 90% at 0% 100%,
+        color-mix(in oklab, var(--color-identity-900) 40%, transparent) 0%,
+        transparent 60%
+      )
+      padding-box,
+    linear-gradient(var(--color-neutral-900), var(--color-neutral-900)) padding-box,
+    linear-gradient(
+        225deg,
+        color-mix(in oklab, var(--color-gold-300) 60%, transparent) 0%,
+        color-mix(in oklab, var(--color-gold-500) 32%, transparent) 28%,
+        rgb(255 255 255 / 0.08) 60%
+      )
+      border-box;
+}
+
+@utility bg-package-panel {
+  background:
+    radial-gradient(
+      90% 130% at 100% 0%,
+      color-mix(in oklab, var(--color-gold-400) 50%, transparent) 0%,
+      color-mix(in oklab, var(--color-gold-400) 20%, transparent) 36%,
+      transparent 70%
+    ),
+    radial-gradient(
+      70% 90% at 0% 100%,
+      color-mix(in oklab, var(--color-plum-800) 50%, transparent) 0%,
+      transparent 60%
+    ),
+    var(--color-neutral-900);
+}
+
+@utility bg-cta-panel {
+  background:
+    radial-gradient(
+      70% 180% at 100% 100%,
+      color-mix(in oklab, var(--color-identity-500) 50%, transparent) 0%,
+      color-mix(in oklab, var(--color-identity-800) 30%, transparent) 38%,
+      transparent 72%
+    ),
+    var(--color-neutral-900);
+}
+
+@utility bg-page-glow {
+  background: radial-gradient(
+    ellipse 70% 34rem at var(--glow-x, 50%) 0%,
+    color-mix(in oklab, var(--color-identity-500) 40%, transparent) 0%,
+    color-mix(in oklab, var(--color-identity-800) 22%, transparent) 42%,
+    transparent 78%
+  );
+}
+
+@utility bg-dialog-glow {
+  background:
+    radial-gradient(
+      80% 60% at 100% 0%,
+      color-mix(in oklab, var(--color-identity-500) 16%, transparent) 0%,
+      transparent 70%
+    ),
+    var(--color-neutral-900);
+}
+
+@property --scroll-fade-start {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --scroll-fade-end {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes scroll-fade-x {
+  from {
+    --scroll-fade-start: 0px;
+    --scroll-fade-end: 3rem;
+  }
+
+  10% {
+    --scroll-fade-start: 3rem;
+  }
+
+  90% {
+    --scroll-fade-end: 3rem;
+  }
+
+  to {
+    --scroll-fade-start: 3rem;
+    --scroll-fade-end: 0px;
+  }
+}
+
+/*
+ * A horizontal scroll box that shows there is more to see: a thin
+ * scrollbar that stays visible, and the content fading out at whichever
+ * edge still has more to scroll to. A box that fits has no scroll
+ * timeline, so it never fades.
+ */
+@utility scroll-x-hint {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-neutral-700) transparent;
+
+  @supports (animation-timeline: scroll()) {
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 var(--scroll-fade-start),
+      #000 calc(100% - var(--scroll-fade-end)),
+      transparent
+    );
+    animation: scroll-fade-x linear both;
+    animation-timeline: scroll(self inline);
+  }
+}
+
+@utility bg-placeholder-stripes {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--color-neutral-900) 0 14px,
+    color-mix(in oklab, var(--color-neutral-800) 70%, var(--color-neutral-900)) 14px 28px
+  );
+}

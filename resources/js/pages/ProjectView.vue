@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import InstallCommand from '@/components/Ui/InstallCommand.vue'
-import PackageInfo from '@/components/Ui/PackageInfo.vue'
-import ProjectHero from '@/components/Ui/ProjectHero.vue'
+import DocsSurround from '@/components/Ui/DocsSurround.vue'
 import ProseContent from '@/components/Ui/ProseContent.vue'
-import VersionSwitcher from '@/components/Ui/VersionSwitcher.vue'
 import AppLayout from '@/layouts/AppLayout.vue'
 import DocsLayout from '@/layouts/DocsLayout.vue'
 import type { DocsProject } from '@/types'
 import { Head } from '@inertiajs/vue3'
-import type { ContentSurroundLink } from '@nuxt/ui/components/content/ContentSurround.vue'
-import UContentSurround from '@nuxt/ui/components/content/ContentSurround.vue'
 
+// The package hero lives in DocsLayout, so it can span the TOC column too.
 defineOptions({ layout: [AppLayout, DocsLayout] })
 
 defineProps<{
@@ -27,61 +23,12 @@ defineProps<{
     />
   </Head>
 
-  <div class="flex flex-col gap-5.5 py-4 sm:py-5.5">
-    <ProjectHero
-      :eyebrow="project.eyebrow"
-      :title="project.name"
-      :lead="project.lead"
-    />
-
-    <!-- Mobile-only version switcher, in place of the desktop right rail -->
-    <div class="lg:hidden">
-      <VersionSwitcher
-        :project="project.key"
-        :versions="project.versions"
-        :current="project.version ?? undefined"
-      />
-    </div>
-
-    <PackageInfo
-      v-if="project.package"
-      :info="project.package"
-      variant="grid"
-      class="lg:hidden"
-    />
-
-    <InstallCommand
-      v-if="project.install"
-      :command="project.install"
-    />
-
-    <UButton
-      v-if="project.get_started"
-      :to="project.get_started"
-      block
-      size="lg"
-      class="rounded-lg bg-identity-500 py-3 font-sans text-base font-semibold text-neutral-950 hover:bg-identity-400 lg:hidden"
-    >
-      Get started
-    </UButton>
-
-    <UButton
-      v-if="project.source"
-      :to="project.source"
-      target="_blank"
-      block
-      variant="outline"
-      color="neutral"
-      class="justify-center rounded-lg py-2.5 font-sans text-sm font-medium lg:hidden"
-    >
-      Source ↗
-    </UButton>
-
+  <div class="flex flex-col gap-6">
     <ProseContent
       v-if="project.overview"
       :html="project.overview.html"
     />
 
-    <UContentSurround :surround="project.surround as unknown as ContentSurroundLink[]" />
+    <DocsSurround :surround="project.surround" />
   </div>
 </template>

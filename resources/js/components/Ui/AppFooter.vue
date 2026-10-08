@@ -7,34 +7,31 @@ const year = new Date().getFullYear()
     :ui="{
       root: 'border-t border-neutral-900',
       container:
-        'flex flex-col items-center justify-center gap-3 px-4 py-5 font-mono text-xs tracking-wider text-neutral-500 uppercase sm:flex-row sm:justify-between sm:px-7',
-      left: 'order-1 mt-0',
-      center: 'order-2 mt-0',
-      right: 'order-3',
+        'flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-6 font-mono text-xs tracking-wider text-neutral-500 uppercase sm:px-7 lg:flex',
+      left: 'dot-separated flex items-center gap-0',
+      right: 'dot-separated flex items-center gap-0',
     }"
   >
     <template #left>
-      <span>foxws.nl</span>
-    </template>
-
-    <UButton
-      to="https://github.com/foxws/app"
-      aria-label="Source on GitHub"
-      variant="ghost"
-      color="neutral"
-      size="xs"
-      icon="i-lucide-github"
-    />
-
-    <template #right>
       <ULink
         to="/terms"
-        active-class="text-inherit"
+        class="text-neutral-500 hover:text-neutral-300"
+        active-class="text-neutral-300"
       >
         Terms
       </ULink>
-      <span aria-hidden="true">·</span>
       <span>© {{ year }}</span>
+    </template>
+
+    <template #right>
+      <ULink
+        to="https://github.com/foxws/app"
+        target="_blank"
+        class="text-neutral-500 hover:text-neutral-300"
+      >
+        foxws/app ↗
+      </ULink>
+      <span>foxws.nl</span>
     </template>
   </UFooter>
 </template>

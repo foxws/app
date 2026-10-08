@@ -8,18 +8,15 @@ use Domain\Projects\Models\Project;
 use Illuminate\Support\Collection;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
-use Modules\Marketing\Support\DocsNavigation;
 
 /**
- * The homepage "Side projects" list. Side projects with synced docs link
- * to their own page; the rest link out to their source. A version alone
- * isn't enough — auto-discovery registers one for any GitHub release,
- * even when the repository has no docs folder to fill it.
+ * The projects listed on the homepage and under "Other projects",
+ * each linking to its own project page.
  */
-final class SideProjectSummaryProp implements ProvidesInertiaProperty
+final class ProjectSummaryProp implements ProvidesInertiaProperty
 {
     /**
-     * @param  Collection<int, Project>  $projects  Loaded with `withExists('documents')`.
+     * @param  Collection<int, Project>  $projects
      */
     public function __construct(private readonly Collection $projects) {}
 
@@ -31,9 +28,7 @@ final class SideProjectSummaryProp implements ProvidesInertiaProperty
             'type' => $project->metadataValue('type'),
             'desc' => $project->description(),
             'status' => $project->metadataValue('status'),
-            'href' => $project->getAttribute('documents_exists')
-                ? DocsNavigation::projectPath($project)
-                : $project->sourceUrl(),
+            'href' => route('projectShowcase', $project, absolute: false),
         ])->values()->all();
     }
 }

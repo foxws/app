@@ -6,6 +6,7 @@ namespace Modules\Marketing\Http\Props;
 
 use Foxws\Docs\Models\Document;
 use Foxws\Docs\Models\Project;
+use Foxws\Docs\Models\Version;
 use Illuminate\Support\Collection;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
@@ -46,6 +47,10 @@ final class DocumentDetailProp implements ProvidesInertiaProperty
                 'name' => $this->project->title,
                 'slug' => $this->project->slug,
                 'href' => DocsNavigation::projectPath($this->project, $this->version),
+                'versions' => $this->project->versions
+                    ->map(fn (Version $version): array => ['name' => $version->name, 'is_default' => $version->is_default])
+                    ->all(),
+                'version' => $this->project->versionOrDefault($this->version)?->name,
             ],
             'title' => $this->document->title,
             'description' => $this->document->resolveSeoDescription(html: $rendered['html']),

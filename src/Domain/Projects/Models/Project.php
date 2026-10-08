@@ -7,6 +7,7 @@ namespace Domain\Projects\Models;
 use Domain\Projects\Enums\PackageGroup;
 use Foxws\Docs\Enums\ProjectDriver;
 use Foxws\Docs\Models\Project as BaseProject;
+use Illuminate\Support\Str;
 
 /**
  * A laravel-docs project, with the meaning this site gives to its
@@ -22,7 +23,8 @@ class Project extends BaseProject
 
     /**
      * Every project is a package unless its front matter sets `kind` to
-     * something else (`misc`, `personal`, `other`), which makes it a side project.
+     * something else (`misc`, `personal`, `other`), which lists it under
+     * projects instead of packages.
      */
     public function isPackage(): bool
     {
@@ -44,6 +46,59 @@ class Project extends BaseProject
     }
 
     /**
+     * A 16:10 screenshot or artwork for the project page. Only absolute
+     * http(s) URLs are used, since front matter has nowhere to host a file.
+     */
+    public function image(): ?string
+    {
+        $image = $this->metadataValue('image');
+
+        if (! is_string($image) || ! Str::startsWith($image, ['https://', 'http://'])) {
+            return null;
+        }
+
+        return $image;
+    }
+
+    /**
+     * The project page's introduction, as markdown, when the front matter
+     * sets one; it takes the place of the README's.
+     */
+    public function introduction(): ?string
+    {
+        $introduction = $this->metadataValue('introduction');
+
+        return is_string($introduction) && trim($introduction) !== '' ? $introduction : null;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function technologies(): array
+    {
+        $technologies = $this->metadataValue('technologies');
+
+        if (! is_array($technologies)) {
+            return [];
+        }
+
+        return collect($technologies)
+            ->filter(fn (mixed $technology): bool => is_string($technology) && $technology !== '')
+            ->values()
+            ->all();
+    }
+
+    /**
+     * Where to read the docs, when they live somewhere other than this site.
+     */
+    public function docsUrl(): ?string
+    {
+        $docs = $this->metadataValue('docs');
+
+        return is_string($docs) && $docs !== '' ? $docs : null;
+    }
+
+    /**
      * Where the code lives, for an outbound link: the front matter's
      * `source` when set, else the GitHub repository.
      */
@@ -59,15 +114,23 @@ class Project extends BaseProject
     }
 
     /**
-     * The Composer package name, which is the GitHub repository: the same
-     * name the install command uses.
+     * The `owner/name` of the GitHub repository the project syncs from.
      */
-    public function packagistName(): ?string
+    public function githubRepository(): ?string
     {
         if ($this->driver !== ProjectDriver::Github || blank($this->github_repository)) {
             return null;
         }
 
         return $this->github_repository;
+    }
+
+    /**
+     * The Composer package name, which is the GitHub repository: the same
+     * name the install command uses.
+     */
+    public function packagistName(): ?string
+    {
+        return $this->githubRepository();
     }
 }

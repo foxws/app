@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Foxws\Docs\Database\Factories\DocumentFactory;
 use Foxws\Docs\Database\Factories\ProjectFactory;
 use Foxws\Docs\Database\Factories\VersionFactory;
+use Illuminate\Support\Facades\Cache;
 
 test('renders the project overview document as the page body while keeping it in the nav', function () {
     $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
@@ -141,6 +142,19 @@ test('builds the package info box from index metadata and the default version', 
     ]);
 });
 
+test('shares the synced monthly install count of a package', function () {
+    $project = ProjectFactory::new()->create(['slug' => 'laravel-podman', 'github_repository' => 'foxws/laravel-podman']);
+    VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true]);
+
+    Cache::forever('packagist-downloads:foxws/laravel-podman', 1689);
+
+    $response = $this->get('/laravel-podman');
+
+    $response->assertOk();
+
+    expect($response->inertiaProps('project.downloads'))->toBe(1689);
+});
+
 test('returns not found for a project without any version', function () {
     ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
 
@@ -169,58 +183,9 @@ test('defaults the install command to composer for packages only', function (arr
     expect($response->inertiaProps('project')['install'])->toBe($install);
 })->with([
     'package' => [[], 'composer require foxws/test-project'],
-    'side project' => [['kind' => 'personal'], null],
-    'side project with its own command' => [['kind' => 'personal', 'install' => 'flatpak install foo'], 'flatpak install foo'],
+    'project' => [['kind' => 'personal'], null],
+    'project with its own command' => [['kind' => 'personal', 'install' => 'flatpak install foo'], 'flatpak install foo'],
 ]);
-
-test('reads a single "used by" project, as written before lists were supported', function () {
-    $project = ProjectFactory::new()->create([
-        'slug' => 'test-project',
-        'title' => 'Test Project',
-        'metadata' => [
-            'used_by' => [
-                'name' => 'Stry',
-                'desc' => 'See it running in production',
-                'href' => '/stry',
-            ],
-        ],
-    ]);
-    VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true]);
-
-    $response = $this->get('/test-project');
-
-    $response->assertOk();
-
-    expect($response->inertiaProps('project')['used_by'])->toBe([[
-        'name' => 'Stry',
-        'desc' => 'See it running in production',
-        'href' => '/stry',
-    ]]);
-});
-
-test('lists every "used by" project, skipping ones without a name or href', function () {
-    $project = ProjectFactory::new()->create([
-        'slug' => 'test-project',
-        'title' => 'Test Project',
-        'metadata' => [
-            'used_by' => [
-                ['name' => 'Stry', 'desc' => 'A self-hosted video streaming app.', 'href' => 'https://github.com/francoism90/stry'],
-                ['name' => 'Missing href'],
-                ['name' => 'foxws.nl', 'href' => 'https://foxws.nl'],
-            ],
-        ],
-    ]);
-    VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true]);
-
-    $response = $this->get('/test-project');
-
-    $response->assertOk();
-
-    expect($response->inertiaProps('project')['used_by'])->toBe([
-        ['name' => 'Stry', 'desc' => 'A self-hosted video streaming app.', 'href' => 'https://github.com/francoism90/stry'],
-        ['name' => 'foxws.nl', 'href' => 'https://foxws.nl'],
-    ]);
-});
 
 test('resolves a project page under a requested version, stamping generated links with ?version=', function () {
     $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
@@ -343,19 +308,4 @@ test('omits the source link for a local-driven project with no metadata override
     $response->assertOk();
 
     expect($response->inertiaProps('project')['source'])->toBeNull();
-});
-
-test('has no "used by" projects when the single entry is missing a name or href', function () {
-    $project = ProjectFactory::new()->create([
-        'slug' => 'test-project',
-        'title' => 'Test Project',
-        'metadata' => ['used_by' => ['desc' => 'Missing name and href']],
-    ]);
-    VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true]);
-
-    $response = $this->get('/test-project');
-
-    $response->assertOk();
-
-    expect($response->inertiaProps('project')['used_by'])->toBe([]);
 });

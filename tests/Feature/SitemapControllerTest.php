@@ -73,3 +73,14 @@ test('leaves out projects without documents, since their page is a 404', functio
 
     expect(array_keys(sitemapEntries($response)))->not->toContain(url('/awesome-kde'));
 });
+
+test('lists the project page of each project, with or without docs', function () {
+    ProjectFactory::new()->create(['slug' => 'flatpaks', 'metadata' => ['kind' => 'personal']]);
+    ProjectFactory::new()->create(['slug' => 'laravel-podman']);
+
+    $response = $this->get('/sitemap.xml');
+
+    expect(array_keys(sitemapEntries($response)))
+        ->toContain(url('/projects/flatpaks'))
+        ->not->toContain(url('/projects/laravel-podman'));
+});
