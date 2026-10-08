@@ -67,7 +67,7 @@ test('links "read the docs" to the docs on this site when the project has synced
     expect($response->inertiaProps('project.docs'))->toBe(route('project', 'stry', absolute: false));
 });
 
-test('lists the other side projects, not this one or any package', function () {
+test('lists the other projects, not this one or any package', function () {
     ProjectFactory::new()->create(['slug' => 'stry', 'title' => 'Stry', 'metadata' => ['kind' => 'personal']]);
     ProjectFactory::new()->create(['slug' => 'awesome-kde', 'title' => 'Awesome KDE', 'metadata' => ['kind' => 'misc']]);
     ProjectFactory::new()->create(['slug' => 'laravel-podman', 'title' => 'Laravel Podman']);

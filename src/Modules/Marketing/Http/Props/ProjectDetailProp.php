@@ -63,7 +63,7 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'slug' => $this->project->metadataValue('slug') ?? $this->project->sourceLocation(),
             'eyebrow' => $this->project->metadataValue('eyebrow') ?? '',
             'lead' => $this->project->metadataValue('lead') ?? $this->project->metadataValue('desc') ?? '',
-            // Only packages default to a composer command — a side project
+            // Only packages default to a composer command — a project
             // (an app, a Flatpak remote, ...) shows one only if it sets its own.
             'install' => $this->project->metadataValue('install') ?? ($this->project->isPackage()
                 ? "composer require {$this->project->sourceLocation()}"

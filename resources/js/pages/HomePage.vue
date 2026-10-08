@@ -2,12 +2,12 @@
 import FeaturedProject from '@/components/Ui/FeaturedProject.vue'
 import PackageRow from '@/components/Ui/PackageRow.vue'
 import { usePackageFilter } from '@/composables/packages'
-import type { DocsPackageGroup, DocsSideProjectSummary } from '@/types'
+import type { DocsPackageGroup, DocsProjectSummary } from '@/types'
 import { Head } from '@inertiajs/vue3'
 
 const props = defineProps<{
   packageGroups: DocsPackageGroup[]
-  sideProjects: DocsSideProjectSummary[]
+  projects: DocsProjectSummary[]
 }>()
 
 const focusAreas = ['Laravel', 'AI', 'Linux', 'Cloud']
@@ -93,16 +93,16 @@ const { activeGroup, filter, packages, chips, visiblePackages, resetFilters } = 
   </UContainer>
 
   <section
-    v-if="sideProjects.length"
+    v-if="projects.length"
     id="projects"
     class="border-b border-neutral-900"
   >
     <UContainer class="flex flex-col gap-6 px-4 py-12 sm:px-7">
-      <h2 class="font-mono text-xs tracking-[.14em] text-neutral-500 uppercase">Featured work</h2>
+      <h2 class="font-mono text-xs tracking-[.14em] text-neutral-500 uppercase">Projects</h2>
 
       <div class="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         <FeaturedProject
-          v-for="project in sideProjects"
+          v-for="project in projects"
           :key="project.slug"
           :name="project.name"
           :desc="project.desc"

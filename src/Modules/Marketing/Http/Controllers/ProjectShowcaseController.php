@@ -8,7 +8,7 @@ use Domain\Projects\Models\Project;
 use Inertia\Inertia;
 use Inertia\Response;
 use Modules\Marketing\Http\Props\ProjectShowcaseProp;
-use Modules\Marketing\Http\Props\SideProjectSummaryProp;
+use Modules\Marketing\Http\Props\ProjectSummaryProp;
 
 final class ProjectShowcaseController
 {
@@ -20,7 +20,7 @@ final class ProjectShowcaseController
 
         return Inertia::render('ProjectShowcase', [
             'project' => fn () => new ProjectShowcaseProp($project),
-            'moreProjects' => fn () => new SideProjectSummaryProp(Project::orderBy('title')
+            'moreProjects' => fn () => new ProjectSummaryProp(Project::orderBy('title')
                 ->get()
                 ->reject(fn (Project $other): bool => $other->isPackage() || $other->is($project))
                 ->values()),

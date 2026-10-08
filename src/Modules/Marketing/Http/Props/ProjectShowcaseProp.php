@@ -11,7 +11,7 @@ use Inertia\ProvidesInertiaProperty;
 use Modules\Marketing\Support\DocsNavigation;
 
 /**
- * A side project's own page: hero, introduction and the technologies it
+ * A project's own page: hero, introduction and the technologies it
  * is built with. "Read the docs" goes to the front matter's `docs` URL,
  * else to the project's docs on this site when it has any synced.
  */

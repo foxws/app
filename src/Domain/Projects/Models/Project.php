@@ -23,7 +23,8 @@ class Project extends BaseProject
 
     /**
      * Every project is a package unless its front matter sets `kind` to
-     * something else (`misc`, `personal`, `other`), which makes it a side project.
+     * something else (`misc`, `personal`, `other`), which lists it under
+     * projects instead of packages.
      */
     public function isPackage(): bool
     {

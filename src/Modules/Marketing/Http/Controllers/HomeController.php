@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use Inertia\Response;
 use Modules\Marketing\Http\Props\PackageGroupsProp;
-use Modules\Marketing\Http\Props\SideProjectSummaryProp;
+use Modules\Marketing\Http\Props\ProjectSummaryProp;
 
 final class HomeController
 {
@@ -18,7 +18,7 @@ final class HomeController
     {
         return Inertia::render('HomePage', [
             'packageGroups' => Inertia::once(fn () => new PackageGroupsProp($this->projectsByKind()->get('packages', collect()))),
-            'sideProjects' => Inertia::once(fn () => new SideProjectSummaryProp($this->projectsByKind()->get('sideProjects', collect()))),
+            'projects' => Inertia::once(fn () => new ProjectSummaryProp($this->projectsByKind()->get('projects', collect()))),
         ]);
     }
 
@@ -33,6 +33,6 @@ final class HomeController
         return once(fn (): Collection => Project::with('versions')
             ->orderBy('title')
             ->get()
-            ->groupBy(fn (Project $project): string => $project->isPackage() ? 'packages' : 'sideProjects'));
+            ->groupBy(fn (Project $project): string => $project->isPackage() ? 'packages' : 'projects'));
     }
 }

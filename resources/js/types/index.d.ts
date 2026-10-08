@@ -41,7 +41,7 @@ export type DocsPackageGroup = {
   packages: DocsPackageSummary[]
 }
 
-export type DocsSideProjectSummary = {
+export type DocsProjectSummary = {
   name: string
   slug: string
   type: string | null

@@ -21,7 +21,7 @@ test('orders packages by title, regardless of when they were created or last syn
         ->toBe(['alpha-project', 'zeta-project']);
 });
 
-test('a project flagged as a side project is listed there instead of the package grid', function () {
+test('a project whose kind is not a package is listed under projects, not packages', function () {
     ProjectFactory::new()->create([
         'slug' => 'shaka-playground',
         'title' => 'Shaka Playground',
@@ -40,7 +40,7 @@ test('a project flagged as a side project is listed there instead of the package
 
     expect($response->inertiaProps('packageGroups'))->toBe([]);
 
-    expect($response->inertiaProps('sideProjects'))->toBe([[
+    expect($response->inertiaProps('projects'))->toBe([[
         'name' => 'Shaka Playground',
         'slug' => 'shaka-playground',
         'type' => 'Experiment',
@@ -50,7 +50,7 @@ test('a project flagged as a side project is listed there instead of the package
     ]]);
 });
 
-test('a side project with synced docs links to its project page, not its docs', function () {
+test('a project with synced docs links to its project page, not its docs', function () {
     $project = ProjectFactory::new()->create(['slug' => 'stry', 'metadata' => ['kind' => 'personal']]);
     VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true]);
 
@@ -58,10 +58,10 @@ test('a side project with synced docs links to its project page, not its docs', 
 
     $response->assertOk();
 
-    expect($response->inertiaProps('sideProjects.0.href'))->toBe('/projects/stry');
+    expect($response->inertiaProps('projects.0.href'))->toBe('/projects/stry');
 });
 
-test('a side project without docs links to its project page, not its source', function () {
+test('a project without docs links to its project page, not its source', function () {
     $project = ProjectFactory::new()->create([
         'slug' => 'flatpaks',
         'github_repository' => 'francoism90/flatpaks',
@@ -73,10 +73,10 @@ test('a side project without docs links to its project page, not its source', fu
 
     $response->assertOk();
 
-    expect($response->inertiaProps('sideProjects.0.href'))->toBe('/projects/flatpaks');
+    expect($response->inertiaProps('projects.0.href'))->toBe('/projects/flatpaks');
 });
 
-test('a project with no kind metadata is listed as a package, not a side project', function () {
+test('a project with no kind metadata is listed under packages, not projects', function () {
     ProjectFactory::new()->create(['slug' => 'laravel-podman', 'title' => 'Laravel Podman']);
 
     $response = $this->get('/');
@@ -84,7 +84,7 @@ test('a project with no kind metadata is listed as a package, not a side project
     $response->assertOk();
 
     expect(array_column($response->inertiaProps('packageGroups.0.packages'), 'slug'))->toContain('laravel-podman');
-    expect($response->inertiaProps('sideProjects'))->toBe([]);
+    expect($response->inertiaProps('projects'))->toBe([]);
 });
 
 test('groups packages in PackageGroup order, with unknown or missing groups last', function () {

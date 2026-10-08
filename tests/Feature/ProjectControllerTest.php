@@ -183,8 +183,8 @@ test('defaults the install command to composer for packages only', function (arr
     expect($response->inertiaProps('project')['install'])->toBe($install);
 })->with([
     'package' => [[], 'composer require foxws/test-project'],
-    'side project' => [['kind' => 'personal'], null],
-    'side project with its own command' => [['kind' => 'personal', 'install' => 'flatpak install foo'], 'flatpak install foo'],
+    'project' => [['kind' => 'personal'], null],
+    'project with its own command' => [['kind' => 'personal', 'install' => 'flatpak install foo'], 'flatpak install foo'],
 ]);
 
 test('reads a single "used by" project, as written before lists were supported', function () {

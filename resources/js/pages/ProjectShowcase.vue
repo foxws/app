@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import FeaturedProject from '@/components/Ui/FeaturedProject.vue'
 import ProseContent from '@/components/Ui/ProseContent.vue'
-import type { DocsProjectShowcase, DocsSideProjectSummary } from '@/types'
+import type { DocsProjectShowcase, DocsProjectSummary } from '@/types'
 import { Head } from '@inertiajs/vue3'
 import { computed } from 'vue'
 
 const props = defineProps<{
   project: DocsProjectShowcase
-  moreProjects: DocsSideProjectSummary[]
+  moreProjects: DocsProjectSummary[]
 }>()
 
 const docsIsExternal = computed(() => props.project.docs?.startsWith('http') ?? false)

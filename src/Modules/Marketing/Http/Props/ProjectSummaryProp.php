@@ -10,10 +10,10 @@ use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
 
 /**
- * The side projects listed on the homepage and under "More projects",
+ * The projects listed on the homepage and under "More projects",
  * each linking to its own project page.
  */
-final class SideProjectSummaryProp implements ProvidesInertiaProperty
+final class ProjectSummaryProp implements ProvidesInertiaProperty
 {
     /**
      * @param  Collection<int, Project>  $projects
