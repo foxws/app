@@ -80,6 +80,7 @@ export type DocsProject = {
   version: string | null
   source: string | null
   package: DocsPackageInfo | null
+  downloads: number | null
   used_by: DocsUsedBy[]
   get_started: string | null
   surround: (DocsSurroundLink | null)[]

@@ -39,6 +39,8 @@ final class SearchResultResource extends JsonResource
             'suffix' => $suffix,
             'suffixHtml' => SearchHighlighter::highlight($suffix, $query),
             'prefix' => Str::upper($project->slug),
+            'project' => $project->title,
+            'section' => $this->section,
             'version' => $version->name,
             'description' => $description,
             'descriptionHtml' => SearchHighlighter::highlight($description, $query),

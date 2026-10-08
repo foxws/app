@@ -6,3 +6,85 @@
     user-select: none;
   }
 }
+
+@utility text-gradient-gold {
+  color: var(--color-gold-400);
+
+  @supports (background-clip: text) {
+    background: linear-gradient(90deg, var(--color-gold-300), var(--color-gold-400) 45%, var(--color-gold-500));
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+@utility bg-hero-panel {
+  border: 1px solid transparent;
+  background:
+    radial-gradient(
+        90% 130% at 100% 0%,
+        color-mix(in oklab, var(--color-identity-500) 36%, transparent) 0%,
+        color-mix(in oklab, var(--color-identity-800) 26%, transparent) 36%,
+        transparent 70%
+      )
+      padding-box,
+    radial-gradient(
+        70% 90% at 0% 100%,
+        color-mix(in oklab, var(--color-identity-900) 40%, transparent) 0%,
+        transparent 60%
+      )
+      padding-box,
+    linear-gradient(var(--color-neutral-900), var(--color-neutral-900)) padding-box,
+    linear-gradient(
+        225deg,
+        color-mix(in oklab, var(--color-gold-300) 60%, transparent) 0%,
+        color-mix(in oklab, var(--color-gold-500) 32%, transparent) 28%,
+        rgb(255 255 255 / 0.08) 60%
+      )
+      border-box;
+}
+
+@utility bg-package-panel {
+  background:
+    radial-gradient(
+      90% 130% at 100% 0%,
+      color-mix(in oklab, var(--color-gold-400) 50%, transparent) 0%,
+      color-mix(in oklab, var(--color-gold-400) 20%, transparent) 36%,
+      transparent 70%
+    ),
+    radial-gradient(
+      70% 90% at 0% 100%,
+      color-mix(in oklab, var(--color-plum-800) 50%, transparent) 0%,
+      transparent 60%
+    ),
+    var(--color-neutral-900);
+}
+
+@utility bg-cta-panel {
+  background:
+    radial-gradient(
+      70% 180% at 100% 100%,
+      color-mix(in oklab, var(--color-identity-500) 50%, transparent) 0%,
+      color-mix(in oklab, var(--color-identity-800) 30%, transparent) 38%,
+      transparent 72%
+    ),
+    var(--color-neutral-900);
+}
+
+@utility bg-page-glow {
+  background: radial-gradient(
+    ellipse 70% 34rem at 50% 0%,
+    color-mix(in oklab, var(--color-identity-500) 40%, transparent) 0%,
+    color-mix(in oklab, var(--color-identity-800) 22%, transparent) 42%,
+    transparent 78%
+  );
+}
+
+@utility bg-dialog-glow {
+  background:
+    radial-gradient(
+      80% 60% at 100% 0%,
+      color-mix(in oklab, var(--color-identity-500) 16%, transparent) 0%,
+      transparent 70%
+    ),
+    var(--color-neutral-900);
+}

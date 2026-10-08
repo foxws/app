@@ -9,9 +9,27 @@ defineProps<{
 </script>
 
 <template>
+  <!--
+    Every section stays open and acts as a label, so the whole tree is visible
+    at once. A section's `trigger` classes sit next to its `link` classes
+    without being merged, hence the `!` on the ones that differ.
+  -->
   <UContentNavigation
     :navigation="nav as unknown as ContentNavigationLink[]"
-    highlight
-    :ui="{ link: 'min-w-0', linkTitle: 'min-w-0 truncate' }"
+    type="multiple"
+    :collapsible="false"
+    default-open
+    trailing-icon=""
+    :ui="{
+      root: 'flex flex-col gap-5.5',
+      list: 'mx-0 mt-0 flex flex-col gap-0.5',
+      listWithChildren: 'ms-0 flex flex-col gap-0.5 border-s-0',
+      itemWithChildren: 'data-[state=open]:mb-0',
+      trigger:
+        'pointer-events-none min-h-0! pt-0! pb-1.5! font-mono text-xs! font-normal! tracking-wider text-neutral-500! uppercase',
+      link: 'min-h-9 min-w-0 rounded-full px-3 py-0 text-sm before:rounded-full hover:before:bg-transparent aria-[current=page]:font-semibold',
+      linkTitle: 'min-w-0 truncate',
+      linkTrailingIcon: 'hidden',
+    }"
   />
 </template>

@@ -29,25 +29,19 @@ function onSelect(name: string | number | undefined) {
 </script>
 
 <template>
-  <UFormField
+  <USelect
     v-if="versions.length"
-    label="Version"
+    :model-value="current"
+    :items="items"
+    :disabled="versions.length <= 1"
+    aria-label="Version"
+    class="w-full"
     :ui="{
-      root: 'flex flex-col gap-2',
-      label: 'font-mono text-xs tracking-[.14em] text-neutral-500 uppercase',
+      base: 'h-10 rounded-full bg-neutral-900 ps-4 pe-9 font-mono text-sm text-neutral-50 ring-neutral-800 disabled:opacity-100',
+      trailingIcon: 'size-4 text-neutral-400',
+      content: 'rounded-2xl bg-neutral-900 ring-neutral-800',
+      item: 'rounded-lg font-mono text-sm text-neutral-200',
     }"
-  >
-    <USelect
-      :model-value="current"
-      :items="items"
-      :disabled="versions.length <= 1"
-      class="w-full"
-      :ui="{
-        base: 'rounded-lg border-neutral-800 bg-neutral-900 py-2.5 font-sans text-sm font-medium text-neutral-50',
-        content: 'rounded-lg border border-neutral-800 bg-neutral-900',
-        item: 'font-sans text-sm text-neutral-200',
-      }"
-      @update:model-value="onSelect"
-    />
-  </UFormField>
+    @update:model-value="onSelect"
+  />
 </template>

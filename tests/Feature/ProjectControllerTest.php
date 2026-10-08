@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Foxws\Docs\Database\Factories\DocumentFactory;
 use Foxws\Docs\Database\Factories\ProjectFactory;
 use Foxws\Docs\Database\Factories\VersionFactory;
+use Illuminate\Support\Facades\Cache;
 
 test('renders the project overview document as the page body while keeping it in the nav', function () {
     $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
@@ -139,6 +140,19 @@ test('builds the package info box from index metadata and the default version', 
         'runtime' => 'Podman 5',
         'licence' => 'MIT',
     ]);
+});
+
+test('shares the synced monthly install count of a package', function () {
+    $project = ProjectFactory::new()->create(['slug' => 'laravel-podman', 'github_repository' => 'foxws/laravel-podman']);
+    VersionFactory::new()->has(DocumentFactory::new(), 'documents')->create(['project_id' => $project->id, 'is_default' => true]);
+
+    Cache::forever('packagist-downloads:foxws/laravel-podman', 1689);
+
+    $response = $this->get('/laravel-podman');
+
+    $response->assertOk();
+
+    expect($response->inertiaProps('project.downloads'))->toBe(1689);
 });
 
 test('returns not found for a project without any version', function () {

@@ -2,7 +2,8 @@
 import DocsToc from '@/components/Ui/DocsToc.vue'
 import DocsTree from '@/components/Ui/DocsTree.vue'
 import MobileDocsSheet from '@/components/Ui/MobileDocsSheet.vue'
-import PackageInfo from '@/components/Ui/PackageInfo.vue'
+import ProjectHero from '@/components/Ui/ProjectHero.vue'
+import SearchTrigger from '@/components/Ui/SearchTrigger.vue'
 import UsedByList from '@/components/Ui/UsedByList.vue'
 import VersionSwitcher from '@/components/Ui/VersionSwitcher.vue'
 import type { DocsDocument, DocsProject } from '@/types'
@@ -28,9 +29,21 @@ const docsSheetOpen = ref(false)
 
 <template>
   <UContainer class="px-4 sm:px-7">
-    <UPage>
+    <UPage :ui="{ root: 'lg:gap-12' }">
       <template #left>
-        <UPageAside>
+        <UPageAside :ui="{ root: 'pt-7 pb-16', container: 'flex flex-col gap-6' }">
+          <SearchTrigger
+            label="Search docs"
+            block
+          />
+
+          <VersionSwitcher
+            v-if="project"
+            :project="project.key"
+            :versions="project.versions"
+            :current="project.version ?? undefined"
+          />
+
           <DocsTree :nav="nav" />
         </UPageAside>
       </template>
@@ -43,74 +56,50 @@ const docsSheetOpen = ref(false)
           color="neutral"
           trailing-icon="i-lucide-chevron-down"
           :label="currentPageLabel"
-          class="rounded-lg border border-neutral-800 bg-neutral-900 py-2.5 font-sans text-xs font-medium text-neutral-50"
+          class="h-11 rounded-full bg-neutral-900 px-4 font-sans text-sm font-medium text-neutral-50 ring-neutral-800"
           :ui="{ label: 'min-w-0', trailingIcon: 'text-neutral-500' }"
           @click="docsSheetOpen = true"
         />
       </div>
 
-      <slot />
-
-      <template
-        v-if="project || toc.length"
-        #right
-      >
-        <div
+      <div class="flex flex-col gap-10 pt-7 pb-16">
+        <ProjectHero
           v-if="project"
-          class="hidden flex-col gap-5.5 py-8 lg:sticky lg:top-(--ui-header-height) lg:flex lg:max-h-[calc(100vh-var(--ui-header-height))] lg:overflow-x-hidden lg:overflow-y-auto"
-        >
-          <VersionSwitcher
-            :project="project.key"
-            :versions="project.versions"
-            :current="project.version ?? undefined"
-          />
-
-          <UButton
-            v-if="project.source"
-            :to="project.source"
-            target="_blank"
-            variant="outline"
-            color="neutral"
-            class="justify-center rounded-lg py-2.5 font-sans text-sm font-medium"
-          >
-            Source ↗
-          </UButton>
-
-          <PackageInfo
-            v-if="project.package"
-            :info="project.package"
-          />
-
-          <DocsToc
-            v-if="toc.length"
-            :links="toc"
-            :ui="{
-              root: 'static mx-0 max-h-none overflow-visible px-0 sm:mx-0 sm:px-0',
-              container: 'p-0 sm:p-0 lg:min-h-0 lg:p-0',
-              link: 'min-w-0',
-              linkText: 'min-w-0 truncate',
-            }"
-          />
-
-          <UsedByList
-            v-if="project.used_by.length"
-            :projects="project.used_by"
-          />
-        </div>
-
-        <!--
-          Document pages have no desktop-only rail above, so this is their
-          only copy of the TOC — it must show at every width. Project pages
-          already show one at lg+ inside the rail above; this second copy
-          only needs to fill the mobile gap below lg.
-        -->
-        <DocsToc
-          v-if="toc.length"
-          :class="project ? 'lg:hidden' : undefined"
-          :links="toc"
-          :ui="{ link: 'min-w-0', linkText: 'min-w-0 truncate' }"
+          :project="project"
         />
-      </template>
+
+        <div class="grid grid-cols-1 gap-x-12 gap-y-6 xl:grid-cols-[minmax(0,44rem)_minmax(0,1fr)]">
+          <div class="min-w-0">
+            <slot />
+          </div>
+
+          <div
+            v-if="toc.length || project?.used_by.length"
+            class="-order-1 flex min-w-0 flex-col gap-8 xl:order-0"
+          >
+            <DocsToc
+              v-if="toc.length"
+              :links="toc"
+              :ui="{
+                root: 'xl:static xl:max-h-none xl:overflow-visible',
+                container: 'pt-0 sm:pt-0 xl:p-0',
+                title: 'font-mono text-xs font-normal tracking-[.14em] text-neutral-500 uppercase',
+                trigger: 'py-0',
+                list: 'mt-2.5 flex flex-col gap-2.5',
+                link: 'min-w-0 py-0 text-sm text-neutral-400 hover:text-neutral-50',
+                linkText: 'min-w-0 truncate',
+              }"
+            />
+
+            <div
+              v-if="project?.used_by.length"
+              class="hidden xl:block"
+            >
+              <UsedByList :projects="project.used_by" />
+            </div>
+          </div>
+        </div>
+      </div>
     </UPage>
   </UContainer>
 

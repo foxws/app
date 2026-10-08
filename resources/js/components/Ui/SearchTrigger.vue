@@ -1,26 +1,40 @@
 <script setup lang="ts">
-import { defineShortcuts } from '@nuxt/ui/composables'
+import { useSearchPalette } from '@/composables/search'
 
 withDefaults(
   defineProps<{
-    scope?: string
+    label?: string
+    block?: boolean
   }>(),
   {
-    scope: undefined,
+    label: 'Search',
+    block: false,
   },
 )
 
-const open = defineModel<boolean>('open', { default: false })
-
-defineShortcuts({ meta_k: () => (open.value = true) })
+const { open } = useSearchPalette()
 </script>
 
 <template>
   <UButton
     icon="i-lucide-search"
-    variant="ghost"
     color="neutral"
-    :aria-label="scope ? `Search ${scope}` : 'Search'"
+    variant="soft"
+    :block="block"
+    :aria-label="label"
+    :class="[
+      'rounded-full bg-neutral-900 py-0 ps-3.5 pe-1.5 font-sans text-sm font-normal text-neutral-400 ring-1 ring-neutral-800 ring-inset hover:bg-neutral-900 hover:ring-neutral-700',
+      block ? 'h-11' : 'h-10',
+    ]"
+    :ui="{ leadingIcon: 'size-4' }"
     @click="open = true"
-  />
+  >
+    <span :class="['text-left', block ? 'flex-1' : 'min-w-22']">{{ label }}</span>
+    <UKbd
+      value="meta"
+      :ui="{ base: 'h-auto rounded-full bg-neutral-950 px-2 py-0.5 font-mono text-xs text-neutral-400 ring-0' }"
+    >
+      ⌘K
+    </UKbd>
+  </UButton>
 </template>

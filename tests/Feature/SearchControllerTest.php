@@ -34,6 +34,8 @@ test('searches documents by title', function () {
             'suffix' => 'Test Project — Getting Started',
             'suffixHtml' => null,
             'prefix' => 'TEST-PROJECT',
+            'project' => 'Test Project',
+            'section' => 'Getting Started',
             'version' => 'v2',
             'description' => 'Run the installer to get started quickly.',
             'descriptionHtml' => null,

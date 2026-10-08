@@ -10,6 +10,14 @@
   --color-identity-800: #8c3415;
   --color-identity-900: #722c14;
   --color-identity-950: #3d1608;
+
+  --color-gold-300: #fbd364;
+  --color-gold-400: #e0a14f;
+  --color-gold-500: #cf7937;
+
+  --color-plum-700: #7f3e3b;
+  --color-plum-800: #643a46;
+  --color-plum-900: #522b28;
 }
 
 :root {

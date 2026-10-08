@@ -7,6 +7,7 @@ namespace Modules\Marketing\Http\Props;
 use Domain\Projects\Models\Project;
 use Inertia\PropertyContext;
 use Inertia\ProvidesInertiaProperty;
+use Integrations\Packagist\PackagistDownloads;
 use Modules\Marketing\Support\DocsNavigation;
 use Modules\Marketing\Support\DocumentHeadings;
 use Modules\Marketing\Support\DocumentLinks;
@@ -47,6 +48,8 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'licence' => $this->project->metadataValue('licence'),
         ], fn ($value) => $value !== null);
 
+        $packagistName = $this->project->packagistName();
+
         $firstDocument = DocsNavigation::firstDocument($navDocuments);
 
         // The overview reads as the first page in the project, so it only
@@ -71,6 +74,7 @@ final class ProjectDetailProp implements ProvidesInertiaProperty
             'version' => $version?->name,
             'source' => $this->project->sourceUrl(),
             'package' => $package !== [] ? $package : null,
+            'downloads' => $packagistName !== null ? PackagistDownloads::monthly($packagistName) : null,
             'used_by' => $this->usedBy(),
             'get_started' => $firstDocument ? DocsNavigation::pathFor($this->project, $firstDocument, $overview, $versionParam) : null,
             'surround' => [null, $next],
