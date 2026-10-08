@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import { useMonogram } from '@/composables/monogram'
 import InstallCommand from '@/components/Ui/InstallCommand.vue'
 import PackageInfo from '@/components/Ui/PackageInfo.vue'
 import type { DocsProject } from '@/types'
-import { computed } from 'vue'
 
-const props = defineProps<{
+defineProps<{
   project: DocsProject
 }>()
-
-const { formatMonogram } = useMonogram()
-
-const monogram = computed(() => formatMonogram(props.project.name))
 </script>
 
 <template>
@@ -19,26 +13,17 @@ const monogram = computed(() => formatMonogram(props.project.name))
     aria-label="Package"
     class="flex flex-col gap-6 rounded-4xl p-6 ring-1 ring-neutral-800 bg-package-panel ring-inset sm:p-10 lg:p-12"
   >
-    <div class="flex flex-wrap items-center gap-x-5 gap-y-4">
-      <span
-        aria-hidden="true"
-        class="flex size-18 shrink-0 items-center justify-center rounded-[1.25rem] bg-gold-400 font-mono text-lg font-bold tracking-wider text-neutral-950"
+    <div class="flex min-w-0 flex-col gap-2.5">
+      <p
+        v-if="project.eyebrow"
+        class="font-mono text-xs tracking-[.18em] text-gold-400 uppercase"
       >
-        {{ monogram }}
-      </span>
+        {{ project.eyebrow }}
+      </p>
 
-      <div class="flex min-w-0 flex-[1_1_17.5rem] flex-col gap-2.5">
-        <p
-          v-if="project.eyebrow"
-          class="font-mono text-xs tracking-[.18em] text-gold-400 uppercase"
-        >
-          {{ project.eyebrow }}
-        </p>
-
-        <h1 class="font-sans text-4xl leading-[.95] font-bold tracking-tight text-neutral-50 sm:text-5xl lg:text-6xl">
-          {{ project.name }}
-        </h1>
-      </div>
+      <h1 class="font-sans text-4xl leading-[.95] font-bold tracking-tight text-neutral-50 sm:text-5xl lg:text-6xl">
+        {{ project.name }}
+      </h1>
     </div>
 
     <p

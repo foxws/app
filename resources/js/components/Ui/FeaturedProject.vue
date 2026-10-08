@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useMonogram } from '@/composables/monogram'
 import { computed } from 'vue'
 
 const props = withDefaults(
@@ -14,10 +13,6 @@ const props = withDefaults(
 )
 
 const isExternal = computed(() => props.href?.startsWith('http') ?? false)
-
-const { formatMonogram } = useMonogram()
-
-const monogram = computed(() => formatMonogram(props.name))
 </script>
 
 <template>
@@ -27,13 +22,6 @@ const monogram = computed(() => formatMonogram(props.name))
     raw
     class="group flex min-w-0 flex-col gap-2.5 border-t border-neutral-800 pt-5 focus-visible:outline-offset-6"
   >
-    <span
-      aria-hidden="true"
-      class="mb-1.5 flex size-14 items-center justify-center rounded-2xl bg-neutral-900 font-mono text-base tracking-wider text-gold-300 ring-1 ring-neutral-800 ring-inset"
-    >
-      {{ monogram }}
-    </span>
-
     <span class="flex items-center gap-2">
       <h3 class="font-sans text-xl font-semibold tracking-tight text-neutral-50">{{ name }}</h3>
       <UIcon

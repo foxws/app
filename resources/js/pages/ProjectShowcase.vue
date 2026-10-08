@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import FeaturedProject from '@/components/Ui/FeaturedProject.vue'
 import ProseContent from '@/components/Ui/ProseContent.vue'
-import { useMonogram } from '@/composables/monogram'
 import type { DocsProjectShowcase, DocsProjectSummary } from '@/types'
 import { Head } from '@inertiajs/vue3'
 import { computed } from 'vue'
@@ -10,10 +9,6 @@ const props = defineProps<{
   project: DocsProjectShowcase
   moreProjects: DocsProjectSummary[]
 }>()
-
-const { formatMonogram } = useMonogram()
-
-const monogram = computed(() => formatMonogram(props.project.name))
 
 const docsIsExternal = computed(() => props.project.docs?.startsWith('http') ?? false)
 </script>
@@ -86,14 +81,12 @@ const docsIsExternal = computed(() => props.project.docs?.startsWith('http') ?? 
         v-else
         role="img"
         :aria-label="`Image of ${project.name} coming soon`"
-        class="flex aspect-16/10 w-full min-w-0 flex-col items-center justify-center gap-4 rounded-3xl border border-dashed border-neutral-700 bg-placeholder-stripes"
+        class="flex aspect-16/10 w-full min-w-0 flex-col items-center justify-center gap-3 rounded-3xl border border-dashed border-neutral-700 bg-placeholder-stripes"
       >
-        <span
-          aria-hidden="true"
-          class="flex size-14 items-center justify-center rounded-2xl bg-neutral-950 font-mono text-base tracking-wider text-gold-300 ring-1 ring-neutral-800 ring-inset"
-        >
-          {{ monogram }}
-        </span>
+        <UIcon
+          name="i-lucide-image"
+          class="size-6 text-neutral-500"
+        />
         <span class="font-mono text-xs tracking-[.14em] text-neutral-400 uppercase">Image coming soon</span>
       </div>
     </UContainer>
