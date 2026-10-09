@@ -33,6 +33,7 @@ class BasicPreset implements Preset
             ->add(Directive::FRAME_ANCESTORS, Keyword::NONE)
             ->add(Directive::IMG, Keyword::SELF)
             ->add(Directive::IMG, Scheme::DATA)
+            ->add(Directive::IMG, 'https://raw.githubusercontent.com')
             ->add(Directive::MEDIA, Keyword::SELF)
             ->add(Directive::MEDIA, Scheme::BLOB)
             ->add(Directive::OBJECT, Keyword::NONE)
