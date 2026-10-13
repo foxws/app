@@ -4,6 +4,7 @@ Disallow: /_inertia/
 Disallow: /api/
 Disallow: /broadcasting/
 Disallow: /horizon/
+Disallow: /telescope/
 Disallow: /livewire/
 Disallow: /storage/
 Disallow: /up/
