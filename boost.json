@@ -19,13 +19,11 @@
     "skills": [
         "infer-conventions",
         "deploying-to-cloud",
-        "fortify-development",
         "laravel-best-practices",
         "testing-best-practices",
         "octane-development",
         "scout-development",
         "wayfinder-development",
-        "telescope-debugging",
         "inertia-vue-development",
         "tailwindcss-development",
         "laravel-ddd-development",

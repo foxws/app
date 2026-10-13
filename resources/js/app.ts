@@ -5,7 +5,6 @@ import '@/plugins/iconify'
 import '@/plugins/vueuse'
 
 import AppLayout from '@/layouts/AppLayout.vue'
-import AuthLayout from '@/layouts/AuthLayout.vue'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel'
 
@@ -17,13 +16,7 @@ const cspNonce =
 
 void createInertiaApp({
   title: (title) => (title ? `${title} - ${appName}` : appName),
-  layout: (name) => {
-    if (name.startsWith('Auth/')) {
-      return AuthLayout
-    }
-
-    return AppLayout
-  },
+  layout: () => AppLayout,
   progress: {
     color: '#e8622c',
   },
