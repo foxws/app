@@ -18,8 +18,6 @@
         "foxws/laravel-essentials": "^0.0.4",
         "foxws/laravel-pwa": "^2.5.3",
         "foxws/laravel-scout-builder": "^1.0.3",
-        "foxws/laravel-scout-relations": "^1.0.2",
-        "guzzlehttp/guzzle": "^7.15.5",
         "inertiajs/inertia-laravel": "^3.5.1",
         "laravel/framework": "^13.35.0",
         "laravel/octane": "^2.21.0",
