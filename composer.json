@@ -13,14 +13,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
-        "foxws/laravel-ddd": "^0.0.7",
+        "foxws/laravel-ddd": "^0.0.8",
         "foxws/laravel-docs": "^1.8.1",
         "foxws/laravel-essentials": "^0.0.4",
         "foxws/laravel-pwa": "^2.5.3",
         "foxws/laravel-scout-builder": "^1.0.3",
         "foxws/laravel-scout-relations": "^1.0.2",
         "guzzlehttp/guzzle": "^7.15.5",
-        "http-interop/http-factory-guzzle": "^1.2.1",
         "inertiajs/inertia-laravel": "^3.5.1",
         "laravel/framework": "^13.35.0",
         "laravel/octane": "^2.21.0",
@@ -36,7 +35,6 @@
         "spatie/laravel-sitemap": "^8.2"
     },
     "require-dev": {
-        "aws/aws-sdk-php": "^3.401.0",
         "barryvdh/laravel-ide-helper": "^3.7",
         "fakerphp/faker": "^1.24.1",
         "foxws/laravel-podman": "^5.5.1",
@@ -44,8 +42,6 @@
         "laravel/boost": "^2.10.3",
         "laravel/cloud-cli": "^0.6.5",
         "laravel/doctor": "^0.1.0",
-        "laravel/envoy": "^2.12.2",
-        "laravel/pail": "^1.2.7",
         "laravel/pao": "^1.1.5",
         "laravel/pint": "^1.32.1",
         "mockery/mockery": "^1.6.15",
