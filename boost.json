@@ -13,7 +13,9 @@
         "foxws/laravel-ddd",
         "foxws/laravel-docs",
         "foxws/laravel-essentials",
-        "foxws/laravel-podman"
+        "foxws/laravel-podman",
+        "foxws/laravel-pwa",
+        "foxws/laravel-scout-builder"
     ],
     "sail": false,
     "skills": [
@@ -29,6 +31,8 @@
         "laravel-ddd-development",
         "docs-development",
         "laravel-essentials-development",
+        "pwa-development",
+        "scout-builder-development",
         "laravel-permission-development",
         "responsecache-development",
         "podman-lpod",
