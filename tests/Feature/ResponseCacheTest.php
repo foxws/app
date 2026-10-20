@@ -43,8 +43,8 @@ it('does not serve a cached full-page document to an Inertia navigation for the 
     $this->get('/')->assertOk()->assertHeader('X-Cache-Status', 'MISS');
 
     // The XHR request Inertia's client sends for an in-app navigation back
-    // to "/", e.g. clicking Home from another page. Without the cache
-    // profile disabling caching for these, this would receive the cached
+    // to "/", e.g. clicking Home from another page. Without X-Inertia in
+    // responsecache.excluded_request_headers, this would receive the cached
     // HTML document above instead of a page object, and Inertia would
     // render it as a nested "page in a page" inside its non-Inertia-
     // response overlay.
