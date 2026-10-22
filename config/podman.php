@@ -35,7 +35,10 @@ return [
 
     'presets' => env('PODMAN_DEFAULT_PRESETS', [
         'devcontainer',
+        // 'production',
         'development',
+        // 'ondemand',
+        // 'proxy',
     ]),
 
     /*
@@ -53,13 +56,14 @@ return [
 
     's3_buckets' => env('PODMAN_S3_BUCKETS', [
         // 'local',
-        // 'conversions',
+        // 'assets',
         // 'media',
+        // 'conversions',
     ]),
 
     's3_cors_buckets' => env('PODMAN_S3_CORS_BUCKETS', [
         // 'conversions',
-        // 'media',
+        // 'assets',
     ]),
 
     /*
@@ -97,12 +101,27 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Base Path
+    |--------------------------------------------------------------------------
+    |
+    | The project folder presets are read from and rendered into, as this
+    | process sees it. Relative "stubs_path" and "publish_path" values are
+    | resolved against it. Defaults to base_path(); override when rendering
+    | another project than the running app, e.g. from an installer container
+    | with the project mounted somewhere else.
+    |
+    */
+
+    'base_path' => env('PODMAN_BASE_PATH'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Working Path
     |--------------------------------------------------------------------------
     |
     | The host path baked into the "{{workingPath}}"/"{{runtimePath}}"
     | placeholders. It does not affect where Artisan itself reads or writes
-    | files — that's always base_path(). Defaults to base_path(); override
+    | files — that's always "base_path". Defaults to "base_path"; override
     | when rendering happens somewhere whose filesystem view of the project
     | isn't the host's, e.g. inside the container used by "Setting up
     | without PHP on the host".
@@ -174,6 +193,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Podman Binary
+    |--------------------------------------------------------------------------
+    |
+    | The Podman binary the package runs, such as for creating the secrets a
+    | preset's units use. Set it to "podman-remote" when running inside a
+    | container with the host's Podman socket mounted.
+    |
+    */
+
+    'binary' => env('PODMAN_BINARY', 'podman'),
+
+    /*
+    |--------------------------------------------------------------------------
     | SELinux Volume Mapping
     |--------------------------------------------------------------------------
     |
@@ -201,6 +233,10 @@ return [
     | idle and no jobs are left. A sleeping stack skips scheduled tasks, and
     | the first request after idling waits for every service to start.
     |
+    | The idle check stops the "idle_workers" (e.g. "queue" for the
+    | "{prefix}-queue" container) once they have no work left, so their
+    | database and cache can sleep too. It comes with the on-demand socket.
+    |
     */
 
     'ondemand' => [
@@ -211,6 +247,8 @@ return [
         'port' => env('PODMAN_ONDEMAND_PORT', 18000),
 
         'idle_timeout' => env('PODMAN_ONDEMAND_IDLE_TIMEOUT', '10min'),
+
+        'idle_workers' => env('PODMAN_ONDEMAND_IDLE_WORKERS', 'queue,horizon'),
     ],
 
     /*

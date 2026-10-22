@@ -83,6 +83,7 @@ return [
         'scope' => env('PWA_SCOPE', '/'),
         'display_override' => ['standalone', 'minimal-ui'],
         'display' => env('PWA_DISPLAY', 'standalone'),
+        'orientation' => env('PWA_ORIENTATION', 'any'),
         'background_color' => env('PWA_BACKGROUND_COLOR', '#0A0A0A'),
         'theme_color' => env('PWA_THEME_COLOR', '#0A0A0A'),
         'lang' => env('PWA_LANG', 'en'),
@@ -97,8 +98,7 @@ return [
     | Define the icons for your PWA manifest. Each icon entry supports a
     | "disk" key (any configured Laravel filesystem disk) and a "path"
     | relative to that disk's root. The URL is resolved at generation time
-    | via Storage::disk()->url(). Set "disk" to null to fall back to the
-    | asset() helper with "path" used as-is.
+    | via Storage::disk()->url(). Set "disk" to null to fall back to a path.
     |
     */
 

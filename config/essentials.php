@@ -14,6 +14,7 @@ use Foxws\Essentials\Configurables\ForceHttpsScheme;
 use Foxws\Essentials\Configurables\ForceSecurePassword;
 use Foxws\Essentials\Configurables\ImmutableDates;
 use Foxws\Essentials\Configurables\ModelShouldBeStrict;
+// use Foxws\Essentials\Configurables\ModelUnguard;
 use Foxws\Essentials\Configurables\PreventStrayRequests;
 use Foxws\Essentials\Configurables\ProhibitDestructiveCommands;
 use Foxws\Essentials\Configurables\ResourceWithoutWrapping;
@@ -41,6 +42,7 @@ return [
         ForceSecurePassword::class,
         ImmutableDates::class,
         ModelShouldBeStrict::class,
+        // ModelUnguard::class,
         PreventStrayRequests::class,
         ProhibitDestructiveCommands::class,
         ResourceWithoutWrapping::class,
