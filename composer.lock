@@ -10584,16 +10584,16 @@
         },
         {
             "name": "laravel/cloud-cli",
-            "version": "v0.7.0",
+            "version": "v0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/cloud-cli.git",
-                "reference": "f08bc6fecc28089728b0a95c46a1bd6c9428cabe"
+                "reference": "c5f2d525581f11eb00d8a6f7b52589e2ecb5bfd3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/cloud-cli/zipball/f08bc6fecc28089728b0a95c46a1bd6c9428cabe",
-                "reference": "f08bc6fecc28089728b0a95c46a1bd6c9428cabe",
+                "url": "https://api.github.com/repos/laravel/cloud-cli/zipball/c5f2d525581f11eb00d8a6f7b52589e2ecb5bfd3",
+                "reference": "c5f2d525581f11eb00d8a6f7b52589e2ecb5bfd3",
                 "shasum": ""
             },
             "require": {
@@ -10654,7 +10654,7 @@
                 "issues": "https://github.com/laravel/cloud-cli/issues",
                 "source": "https://github.com/laravel/cloud-cli"
             },
-            "time": "2026-10-20T20:36:13+00:00"
+            "time": "2026-10-28T14:39:52+00:00"
         },
         {
             "name": "laravel/doctor",
