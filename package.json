@@ -23,7 +23,7 @@
     },
     "devDependencies": {
         "@iconify-json/lucide": "^1.2.149",
-        "@inertiajs/vite": "^3.9.1",
+        "@inertiajs/vite": "^3.10.0",
         "@laravel/vite-plugin-wayfinder": "^0.1.11",
         "@tailwindcss/vite": "^4.3.3",
         "@tsconfig/node24": "^24.0.5",
