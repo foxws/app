@@ -15,7 +15,7 @@
     },
     "dependencies": {
         "@iconify/vue": "^5.0.4",
-        "@inertiajs/vue3": "^3.9.1",
+        "@inertiajs/vue3": "^3.10.0",
         "@nuxt/ui": "^4.12.0",
         "@vueuse/core": "^15.0.0",
         "tailwindcss": "^4.3.3",

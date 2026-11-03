@@ -24,11 +24,11 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4(vue@3.5.44(typescript@6.0.3))
       '@inertiajs/vue3':
-        specifier: ^3.9.1
-        version: 3.9.1(vue@3.5.44(typescript@6.0.3))
+        specifier: ^3.10.0
+        version: 3.10.0(vue@3.5.44(typescript@6.0.3))
       '@nuxt/ui':
         specifier: ^4.12.0
-        version: 4.12.0(5158c3bbad4918db5e678c9a09cfdaea)
+        version: 4.12.0(22aaec8ebca59e03c48b0728c5cc1dd2)
       '@vueuse/core':
         specifier: ^15.0.0
         version: 15.0.0(vue@3.5.44(typescript@6.0.3))
@@ -319,6 +319,14 @@ packages:
     peerDependencies:
       vue: '>=3.0.0'
 
+  '@inertiajs/core@3.10.0':
+    resolution: {integrity: sha512-bkPajs5v45v/udXoJhI9N+JtG2qoPNzSBbt67+nyAqX1qiyp/aTT4jAN3/AQS4wkf6AQp211Dl4rVaxe9vw/+g==}
+    peerDependencies:
+      axios: ^1.15.2
+    peerDependenciesMeta:
+      axios:
+        optional: true
+
   '@inertiajs/core@3.9.1':
     resolution: {integrity: sha512-ScLQZ1/KXlvmqCEJMEZABSK5updJZIli1kaG/coWXpWMmpSLsazSJkR7esITYp7X5vTgrOGNIrcRmdMp/GQ0NA==}
     peerDependencies:
@@ -332,8 +340,8 @@ packages:
     peerDependencies:
       vite: ^7.0.0 || ^8.0.0
 
-  '@inertiajs/vue3@3.9.1':
-    resolution: {integrity: sha512-pISiTjoCm86xHFMdG7QhkzKXrX3fMf9Ihgst08xalxv4pOzwQ5L/Hw/RnOzrqO34waykPEWgAr34nyo2IQ80mg==}
+  '@inertiajs/vue3@3.10.0':
+    resolution: {integrity: sha512-bSU0Gw/50bHAwrYbHtdw6rUetk+A6r5uOsL2DqKz1gRAf0hrc87+n/1RXOQqUPapK62n5BWkUrggOhIm5XmvCQ==}
     peerDependencies:
       vue: ^3.0.0
 
@@ -2877,6 +2885,12 @@ snapshots:
       '@iconify/types': 2.0.0
       vue: 3.5.44(typescript@6.0.3)
 
+  '@inertiajs/core@3.10.0':
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.31
+      es-toolkit: 1.52.0
+      laravel-precognition: 2.1.1
+
   '@inertiajs/core@3.9.1':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
@@ -2893,9 +2907,9 @@ snapshots:
     transitivePeerDependencies:
       - axios
 
-  '@inertiajs/vue3@3.9.1(vue@3.5.44(typescript@6.0.3))':
+  '@inertiajs/vue3@3.10.0(vue@3.5.44(typescript@6.0.3))':
     dependencies:
-      '@inertiajs/core': 3.9.1
+      '@inertiajs/core': 3.10.0
       es-toolkit: 1.52.0
       laravel-precognition: 2.1.1
       vue: 3.5.44(typescript@6.0.3)
@@ -3071,7 +3085,7 @@ snapshots:
       pkg-types: 2.4.0
       std-env: 4.3.0
 
-  '@nuxt/ui@4.12.0(5158c3bbad4918db5e678c9a09cfdaea)':
+  '@nuxt/ui@4.12.0(22aaec8ebca59e03c48b0728c5cc1dd2)':
     dependencies:
       '@floating-ui/dom': 1.8.0
       '@iconify/vue': 5.0.4(vue@3.5.44(typescript@6.0.3))
@@ -3140,7 +3154,7 @@ snapshots:
       vaul-vue: 0.4.1(reka-ui@2.11.0(vue@3.5.44(typescript@6.0.3)))(vue@3.5.44(typescript@6.0.3))
       vue-component-type-helpers: 3.3.13
     optionalDependencies:
-      '@inertiajs/vue3': 3.9.1(vue@3.5.44(typescript@6.0.3))
+      '@inertiajs/vue3': 3.10.0(vue@3.5.44(typescript@6.0.3))
     transitivePeerDependencies:
       - '@azure/app-configuration'
       - '@azure/cosmos'
