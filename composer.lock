@@ -10063,16 +10063,16 @@
         },
         {
             "name": "foxws/laravel-podman",
-            "version": "6.2.0",
+            "version": "6.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-podman.git",
-                "reference": "1f3233a0015de93539f54ab9152ed299d19ebc8f"
+                "reference": "f005bce7598470fd9995d1d6bbd766078c02073f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-podman/zipball/1f3233a0015de93539f54ab9152ed299d19ebc8f",
-                "reference": "1f3233a0015de93539f54ab9152ed299d19ebc8f",
+                "url": "https://api.github.com/repos/foxws/laravel-podman/zipball/f005bce7598470fd9995d1d6bbd766078c02073f",
+                "reference": "f005bce7598470fd9995d1d6bbd766078c02073f",
                 "shasum": ""
             },
             "require": {
@@ -10140,7 +10140,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-podman/issues",
-                "source": "https://github.com/foxws/laravel-podman/tree/6.2.0"
+                "source": "https://github.com/foxws/laravel-podman/tree/6.4.0"
             },
             "funding": [
                 {
@@ -10148,7 +10148,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-22T09:17:46+00:00"
+            "time": "2026-10-25T13:23:10+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
