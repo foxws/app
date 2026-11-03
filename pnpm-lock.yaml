@@ -43,8 +43,8 @@ importers:
         specifier: ^1.2.149
         version: 1.2.149
       '@inertiajs/vite':
-        specifier: ^3.9.1
-        version: 3.9.1(@voidzero-dev/vite-plus-core@1.3.0(@types/node@26.6.6)(@volar/typescript@2.4.28(typescript@6.0.3))(@vue/language-core@3.3.13)(esbuild@0.27.7)(jiti@2.7.0)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3)))
+        specifier: ^3.10.0
+        version: 3.10.0(@voidzero-dev/vite-plus-core@1.3.0(@types/node@26.6.6)(@volar/typescript@2.4.28(typescript@6.0.3))(@vue/language-core@3.3.13)(esbuild@0.27.7)(jiti@2.7.0)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3)))
       '@laravel/vite-plugin-wayfinder':
         specifier: ^0.1.11
         version: 0.1.11
@@ -319,6 +319,14 @@ packages:
     peerDependencies:
       vue: '>=3.0.0'
 
+  '@inertiajs/core@3.10.0':
+    resolution: {integrity: sha512-bkPajs5v45v/udXoJhI9N+JtG2qoPNzSBbt67+nyAqX1qiyp/aTT4jAN3/AQS4wkf6AQp211Dl4rVaxe9vw/+g==}
+    peerDependencies:
+      axios: ^1.15.2
+    peerDependenciesMeta:
+      axios:
+        optional: true
+
   '@inertiajs/core@3.9.1':
     resolution: {integrity: sha512-ScLQZ1/KXlvmqCEJMEZABSK5updJZIli1kaG/coWXpWMmpSLsazSJkR7esITYp7X5vTgrOGNIrcRmdMp/GQ0NA==}
     peerDependencies:
@@ -327,8 +335,8 @@ packages:
       axios:
         optional: true
 
-  '@inertiajs/vite@3.9.1':
-    resolution: {integrity: sha512-Phwwa/joUAxuZO/KoPnBNab5skQVHBwmYFk+OMMyS+qqB4gg/BpDSmWLepW7kiSVJ4AF/SLeJEwWvBH49EWiqg==}
+  '@inertiajs/vite@3.10.0':
+    resolution: {integrity: sha512-HjTYLwDFpNowNrc2DNu8hUZBAgiXqXpmbDlGwYNxfhF/LJkdkjawLq9b9G+chU/wkMxDjBlA9jLYczJGfw8WSw==}
     peerDependencies:
       vite: ^7.0.0 || ^8.0.0
 
@@ -2877,15 +2885,21 @@ snapshots:
       '@iconify/types': 2.0.0
       vue: 3.5.44(typescript@6.0.3)
 
+  '@inertiajs/core@3.10.0':
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.31
+      es-toolkit: 1.52.0
+      laravel-precognition: 2.1.1
+
   '@inertiajs/core@3.9.1':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       es-toolkit: 1.52.0
       laravel-precognition: 2.1.1
 
-  '@inertiajs/vite@3.9.1(@voidzero-dev/vite-plus-core@1.3.0(@types/node@26.6.6)(@volar/typescript@2.4.28(typescript@6.0.3))(@vue/language-core@3.3.13)(esbuild@0.27.7)(jiti@2.7.0)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3)))':
+  '@inertiajs/vite@3.10.0(@voidzero-dev/vite-plus-core@1.3.0(@types/node@26.6.6)(@volar/typescript@2.4.28(typescript@6.0.3))(@vue/language-core@3.3.13)(esbuild@0.27.7)(jiti@2.7.0)(typescript@6.0.3)(vue-tsc@3.3.13(typescript@6.0.3)))':
     dependencies:
-      '@inertiajs/core': 3.9.1
+      '@inertiajs/core': 3.10.0
       '@jridgewell/remapping': 2.3.5
       magic-string: 0.30.21
       tinyglobby: 0.2.17
