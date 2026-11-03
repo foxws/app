@@ -883,16 +883,16 @@
         },
         {
             "name": "foxws/laravel-scout-builder",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-scout-builder.git",
-                "reference": "8e10fdb730d0df12748d8462e91965ba35be8113"
+                "reference": "a973c6e90326ff59dd9eaf6fec1bab3ffe98ef4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-scout-builder/zipball/8e10fdb730d0df12748d8462e91965ba35be8113",
-                "reference": "8e10fdb730d0df12748d8462e91965ba35be8113",
+                "url": "https://api.github.com/repos/foxws/laravel-scout-builder/zipball/a973c6e90326ff59dd9eaf6fec1bab3ffe98ef4b",
+                "reference": "a973c6e90326ff59dd9eaf6fec1bab3ffe98ef4b",
                 "shasum": ""
             },
             "require": {
@@ -950,7 +950,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-scout-builder/issues",
-                "source": "https://github.com/foxws/laravel-scout-builder/tree/1.2.0"
+                "source": "https://github.com/foxws/laravel-scout-builder/tree/1.2.1"
             },
             "funding": [
                 {
@@ -958,7 +958,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-20T08:52:00+00:00"
+            "time": "2026-10-26T12:33:08+00:00"
         },
         {
             "name": "fruitcake/php-cors",
