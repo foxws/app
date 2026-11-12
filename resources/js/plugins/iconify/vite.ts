@@ -3,6 +3,15 @@ import { globSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import type { Plugin } from 'vite-plus'
 
+type LucideIconsOptions = {
+  /**
+   * Files that reference Lucide icons by their bare name (`'play'`) instead of
+   * `i-lucide-play`. Every quoted kebab-case string in them counts as a
+   * candidate; names that aren't Lucide icons are ignored.
+   */
+  bareNameSources?: string[]
+}
+
 /**
  * Serves `virtual:lucide-icons`: the Lucide icon set, reduced in production
  * builds to only the icons the app or Nuxt UI actually reference. The full
@@ -12,7 +21,7 @@ import type { Plugin } from 'vite-plus'
  * missed by the scan (e.g. a name built at runtime) still renders in
  * production: @iconify/vue falls back to the Iconify API, which the CSP allows.
  */
-export function lucideIcons(): Plugin {
+export function lucideIcons({ bareNameSources = [] }: LucideIconsOptions = {}): Plugin {
   const virtualId = 'virtual:lucide-icons'
   const resolvedId = `\0${virtualId}`
   const sources = [
@@ -46,15 +55,24 @@ export function lucideIcons(): Plugin {
         return `export default ${JSON.stringify(collection)}`
       }
 
-      const names = new Set<string>()
-
-      for (const file of globSync(sources)) {
-        for (const [, name] of readFileSync(file, 'utf8').matchAll(/i-lucide-([a-z0-9]+(?:-[a-z0-9]+)*)/g)) {
-          names.add(name)
-        }
-      }
+      const names = new Set([
+        ...scan(sources, /i-lucide-([a-z0-9]+(?:-[a-z0-9]+)*)/g),
+        ...scan(bareNameSources, /['"]([a-z0-9]+(?:-[a-z0-9]+)*)['"]/g),
+      ])
 
       return `export default ${JSON.stringify(getIcons(collection, [...names]))}`
     },
+  }
+}
+
+function* scan(patterns: string[], pattern: RegExp): Generator<string> {
+  if (patterns.length === 0) {
+    return
+  }
+
+  for (const file of globSync(patterns)) {
+    for (const [, name] of readFileSync(file, 'utf8').matchAll(pattern)) {
+      yield name!
+    }
   }
 }
