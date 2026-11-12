@@ -26,7 +26,6 @@ export default defineConfig(({ mode }) => {
       inertia({
         ssr: {
           port: 13714,
-          cluster: true,
         },
       }),
       lucideIcons(),
