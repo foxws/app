@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAppearance } from '@/composables/appearance'
-import logo from '@images/logo.png'
+import logo from '@images/logo.webp'
 
 withDefaults(
   defineProps<{
