@@ -4,6 +4,7 @@ use Spatie\ResponseCache\CacheProfiles\CacheAllSuccessfulGetRequests;
 use Spatie\ResponseCache\Hasher\DefaultHasher;
 use Spatie\ResponseCache\Replacers\CsrfTokenReplacer;
 use Spatie\ResponseCache\Serializers\JsonSerializer;
+use Support\Csp\Replacers\NonceReplacer;
 
 return [
     /*
@@ -153,5 +154,6 @@ return [
      */
     'replacers' => [
         CsrfTokenReplacer::class,
+        NonceReplacer::class,
     ],
 ];

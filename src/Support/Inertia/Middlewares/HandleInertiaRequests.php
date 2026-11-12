@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace Support\Inertia\Middlewares;
 
-use Domain\Shared\Enums\Language;
-use Domain\Shared\Enums\Locale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Inertia\Middleware;
-use Spatie\LaravelOptions\Options;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -22,8 +19,6 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'nonce' => fn (): string => app('csp-nonce'),
-            'locale' => fn (): string => $request->getLocale(),
-            'auth' => fn (): ?array => $request->user()?->only(['id', 'name', 'email']),
         ]);
     }
 
@@ -36,8 +31,6 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::shareOnce($request), [
             'app' => fn (): string => Config::string('app.name', 'Laravel'),
-            'locales' => fn (): Options => Options::forEnum(Locale::class),
-            'languages' => fn (): Options => Options::forEnum(Language::class),
         ]);
     }
 }

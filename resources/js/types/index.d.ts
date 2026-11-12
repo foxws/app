@@ -1,5 +1,3 @@
-import type { SelectItem } from '@nuxt/ui'
-
 export type DocsNavItem = {
   title: string
   path?: string
@@ -109,16 +107,4 @@ export type FlashData = {
   readonly title?: string
   readonly description?: string
   readonly type?: FlashType
-}
-
-export type OptionItem = SelectItem & {
-  label: string
-  value: string | number | boolean | null
-  disabled?: boolean
-}
-
-export type AuthUser = {
-  id: number
-  name: string
-  email: string
 }
