@@ -6,7 +6,9 @@
     <meta name="color-scheme" content="dark" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="csp-nonce" content="{{ Vite::cspNonce() }}" />
-    <link rel="preconnect" href="{{ config('filesystems.disks.s3.url') }}" crossorigin="anonymous" />
+    @if(config('filesystems.disks.s3.url'))
+        <link rel="preconnect" href="{{ config('filesystems.disks.s3.url') }}" crossorigin="anonymous" />
+    @endif
     @pwaHead
     @fonts
     @vite([
