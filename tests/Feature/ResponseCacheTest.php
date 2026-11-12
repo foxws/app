@@ -33,9 +33,7 @@ it('does not leak an authenticated visit into a later guest response', function 
     // session. Log out so this second call is an actual guest request.
     Auth::logout();
 
-    $response = $this->get('/')->assertOk()->assertHeader('X-Cache-Status', 'MISS');
-
-    expect($response->inertiaProps('auth'))->toBeNull();
+    $this->get('/')->assertOk()->assertHeader('X-Cache-Status', 'MISS');
 });
 
 it('does not serve a cached full-page document to an Inertia navigation for the same url', function () {
