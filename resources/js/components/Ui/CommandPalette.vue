@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import SearchController from '@/actions/Modules/Marketing/Http/Controllers/SearchController'
 import { router } from '@inertiajs/vue3'
 import { useDebounceFn } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
@@ -41,17 +42,42 @@ interface SearchGroup {
 // (SearchController) — below this, there's nothing to search yet.
 const minQueryLength = 2
 
+// Every request reaches the app server, so wait for a pause in typing and
+// remember what came back: backspacing to an earlier term costs nothing.
+const debounceMs = 300
+const maxCachedTerms = 50
+
 const results = ref<SearchResult[]>([])
 const loading = ref(false)
+const cache = new Map<string, SearchResult[]>()
 
 let controller: AbortController | undefined
 
-const search = useDebounceFn(async (term: string) => {
+function remember(term: string, found: SearchResult[]) {
+  if (cache.size >= maxCachedTerms) {
+    cache.delete(cache.keys().next().value!)
+  }
+
+  cache.set(term, found)
+}
+
+const search = useDebounceFn(async (input: string) => {
   controller?.abort()
 
-  if (term.trim().length < minQueryLength) {
+  const term = input.trim()
+
+  if (term.length < minQueryLength) {
     loading.value = false
     results.value = []
+
+    return
+  }
+
+  const cached = cache.get(term)
+
+  if (cached) {
+    loading.value = false
+    results.value = cached
 
     return
   }
@@ -60,12 +86,16 @@ const search = useDebounceFn(async (term: string) => {
   loading.value = true
 
   try {
-    const response = await fetch(`/api/v1/search?${new URLSearchParams({ query: term })}`, {
+    const response = await fetch(SearchController.url({ query: { query: term } }), {
       headers: { Accept: 'application/json' },
       signal: controller.signal,
     })
 
     results.value = response.ok ? await response.json() : []
+
+    if (response.ok) {
+      remember(term, results.value)
+    }
   } catch (error) {
     if (!(error instanceof DOMException && error.name === 'AbortError')) {
       results.value = []
@@ -73,7 +103,7 @@ const search = useDebounceFn(async (term: string) => {
   } finally {
     loading.value = false
   }
-}, 200)
+}, debounceMs)
 
 function onSelect(item: Partial<SearchResult>) {
   if (!item?.to) {
