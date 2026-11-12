@@ -7,6 +7,8 @@ description: Customize foxws/laravel-podman presets and Quadlet templates, such 
 
 `foxws/laravel-podman` renders preset templates into Podman Quadlet files. Settings live in `config/podman.php`.
 
+**Ask first:** Never run a command that deletes or overwrites data without the user's explicit confirmation first, such as `podman volume rm`, `lpod remove`, `podman secret rm` or `podman:publish --force`. Swapping the database or cache starts with a new, empty volume; leave the old one for the user to remove once they've moved their data. See "Destructive commands" in the `podman-lpod` skill for the full list.
+
 ## How it fits together
 
 - A preset is a folder with `quadlets/` (`*.quadlets` files) and `runtimes/` (`Containerfile`, `entrypoint.sh`, PHP ini, Caddy files).
@@ -53,7 +55,8 @@ VolumeName={{application}}-valkey
 | Placeholder | Value |
 | --- | --- |
 | `{{application}}` | `quadlet_prefix`, kebab-cased (default `APP_NAME`) |
-| `{{proxy}}` | `proxy_prefix`, kebab-cased |
+| `{{containerPrefix}}` | `container_prefix` (default `systemd-`), Quadlet's prefix for container and network names |
+| `{{proxy}}` | `proxy`, or the `proxy` substitution (`PODMAN_PROXY_PREFIX`) |
 | `{{appEnv}}`, `{{appName}}`, `{{appUrl}}` | `app.env`, `app.name`, `app.url` |
 | `{{appHost}}` | Host part of `app.url` |
 | `{{appUid}}`/`{{appGid}}` | `quadlet_uid`/`quadlet_gid` |
@@ -62,14 +65,19 @@ VolumeName={{application}}-valkey
 | `{{runtimePath}}` | The preset's rendered `runtimes/` folder |
 | `{{systemctl}}` | `systemctl --user`, or `systemctl` when `quadlet_uid` is `0` (root) |
 | `{{appUpstream}}` | Where the proxy sends app traffic: `systemd-{app}:8000`, or the on-demand socket |
+| `{{viteHost}}`, `{{reverbHost}}`, `{{s3Host}}`, `{{s3ConsoleHost}}`, `{{mailHost}}` | `vite.`, `ws.`, `s3.`, `fs.`, `mail.` + `{{appHost}}` |
+| `{{viteUpstream}}`, `{{reverbUpstream}}`, `{{s3Upstream}}`, `{{s3ConsoleUpstream}}`, `{{mailUpstream}}` | The presets' services: `systemd-{app}-vite:5173`, `-reverb:6001`, `-rustfs:9000`, `-rustfs:9001`, `-mailpit:8025` (web UI) |
 | `{{ondemand}}` | `yes` when `ondemand.enabled`, otherwise `no`. Used for `StopWhenUnneeded=` on the app and services |
 | `{{ondemandListen}}`, `{{ondemandPort}}`, `{{ondemandIdleTimeout}}`, `{{ondemandIdleWorkers}}` | `ondemand.listen`, `ondemand.port`, `ondemand.idle_timeout`, `ondemand.idle_workers` (space-separated) |
+| `{{scheduleCalendar}}` | One `OnCalendar=` line per time a task in the app's schedule is due (at :00), plus a wake-up 30 seconds before each (at :30, after which `schedule.quadlets` waits for the due minute), or `OnCalendar=*-*-* *:*:00` when it can't be expressed (sub-minute tasks, `L`/`W`/`#`, UTC offsets) |
 
-Add your own in `config/podman.php`. They also override built-in placeholders:
+Add your own in `config/podman.php`, usually from `.env` so templates and the app read the same values. Braces are optional, `null` renders as an empty string, and values may contain built-in placeholders (not custom ones). They also override built-in placeholders:
 
 ```php
 'substitutions' => [
-    '{{apiEndpoint}}' => env('API_ENDPOINT'),
+    'apiEndpoint' => env('API_ENDPOINT'),
+    'viteUrl' => env('VITE_HMR_URL', 'https://vite.{{appHost}}'),
+    'searchUpstream' => '{{containerPrefix}}{{application}}-typesense:8108',
 ],
 ```
 
@@ -112,14 +120,16 @@ Add `Memory=1G` under `[Container]` in that service's `.quadlets` file, then reg
 
 ### Proxy (Caddy)
 
-Publish `proxy`, then edit `containers/stubs/proxy/runtimes/Caddyfile` and `sites/*.Caddyfile`. The default site routes `APP_URL` to the app, and the subdomains `vite.`, `ws.` (Reverb), `s3.` and `fs.` (RustFS) and `mail.` (Mailpit). Regenerate and run `lpod proxy restart`.
+Publish `proxy`, then edit `containers/stubs/proxy/runtimes/Caddyfile` and `sites/*.Caddyfile`. The default site routes `APP_URL` to the app and `vite.`, `ws.` (Reverb), `s3.` and `fs.` (RustFS) and `mail.` (Mailpit) to their services, all through placeholders (`{{viteHost}}`/`{{viteUpstream}}` and so on). Change a host or upstream in `substitutions` without publishing, e.g. `'viteHost' => env('VITE_HMR_HOST', 'vite.{{appHost}}')`; keep a default, since an empty host stops Caddy. Publish to drop or add sites. Regenerate and run `lpod proxy restart`.
+
+To serve Reverb or Mailpit under a path of the app's domain (`/ws`, `/mail`) instead of a subdomain, build `CADDY_SERVER_EXTRA_DIRECTIVES` in `config/octane.php` with `PodmanCaddyRoutes::make()->route($path, $host, $port)` (Reverb, stripped path, plus Echo's `wsPath`) and `->route(..., stripPrefix: false)` (Mailpit, with `MP_WEBROOT` set to the same path). Keep S3, the RustFS console and Vite on subdomains: signed S3 URLs and Vite's modules break under a path. See docs/customizing.md "Paths instead of subdomains".
 
 ### On-demand (scale-to-zero)
 
 On by default. `PODMAN_ONDEMAND_ENABLED=false` renders `StopWhenUnneeded=no` everywhere and points the proxy straight at the container.
 
 - **Socket:** the `ondemand` preset (shared by `development` and `production`) holds the socket and its `systemd-socket-proxyd` service. Files in a preset's `systemd/` folder are plain systemd units, rendered as `{application}-{file}`; `production` also has `systemd/schedule.timer`.
-- **Idle check:** the `ondemand` preset's `idle.timer`/`idle.service`. The socket `Wants=` the timer, and the timer is `PartOf=` the socket, so installing the socket turns it on, with or without lpod. While the app sleeps, it runs `podman:idle` in each running worker of `ondemand.idle_workers` (`PODMAN_ONDEMAND_IDLE_WORKERS`, default `queue,horizon`), and once nothing is in progress, stops the workers and the scheduler timer. To check another worker, add it to `idle_workers` rather than editing `idle.service`.
+- **Idle check:** the `ondemand` preset's `laravel-idle@.timer`/`laravel-idle@.service` templates, shared by every app on the host (`%i` is the app), plus the app's drop-in `laravel-idle@{{application}}.service.d/idle.conf`. Files with `@.` in their name keep it when rendered, and `.d` folders render as drop-ins with placeholders in their name. The socket `Wants=laravel-idle@{{application}}.timer`, and the timer is `PartOf=%i-ondemand.socket`, so installing the socket turns it on, with or without lpod. While the app sleeps, it runs `podman:idle` in each running worker of `ondemand.idle_workers` (`PODMAN_ONDEMAND_IDLE_WORKERS`, default `queue,horizon`), and once nothing is in progress, stops the workers, and the scheduler timer only if it fires every minute. A timer rendered from the schedule (`{{scheduleCalendar}}`) keeps running, so tasks still run while the app sleeps. To check another worker, add it to `idle_workers` rather than editing the template: the drop-in sets `LARAVEL_IDLE_WORKERS` from it.
 - **Sleeping services:** a service with `StopWhenUnneeded={{ondemand}}` stops once no running unit needs it, so it must be in the app's `Requires=` or `Wants=`, or it stops right after starting.
 - **App quadlet:** when editing it, keep `StopWhenUnneeded={{ondemand}}`, `Notify=healthy` with the `/up` health check, and the `127.0.0.1:{{ondemandPort}}` publish.
 
@@ -129,8 +139,10 @@ lpod install ondemand/{application}-ondemand.socket --replace
 
 ### Extra PHP extensions or packages
 
-Edit `containers/stubs/{preset}/runtimes/Containerfile`, or pass the `PHP_EXTENSIONS` build arg.
+Edit `containers/stubs/{preset}/runtimes/Containerfile`, or pass the `PHP_EXTENSIONS` build arg (space-separated `install-php-extensions` names, e.g. `BuildArg=PHP_EXTENSIONS=mongodb` under `[Build]`).
+
+The `production` and `development` Containerfiles start `FROM ${RUNTIME_IMAGE}`, `ghcr.io/foxws/laravel-frankenphp:php-8.5` (`:php-8.5-dev` for development), which already has FrankenPHP, `apcu bcmath exif ffi gd igbinary imagick inotify intl opcache pcntl pdo_pgsql redis sockets uv zip` (plus `xdebug` in `-dev`), Composer, Node.js, pnpm, the PostgreSQL client and the `docker` user. Don't add those again. For PHP 8.4 set `BuildArg=RUNTIME_IMAGE=ghcr.io/foxws/laravel-frankenphp:php-8.4`. For other Node.js or PostgreSQL versions, build the package's `images/frankenphp/Containerfile` with `--build-arg NODE_VERSION=`/`POSTGRES_VERSION=` and point `RUNTIME_IMAGE` at it. Don't add `EXPOSE` or `HEALTHCHECK` to the Containerfiles: the quadlets set ports and health checks.
 
 ## Config keys
 
-`PODMAN_QUADLET_PREFIX`, `PODMAN_PROXY_PREFIX`, `PODMAN_STUBS_PATH`, `PODMAN_WORKING_PATH` (override once with `podman:generate --working-path=`), `PODMAN_CONFIG_PATH`, `PODMAN_QUADLET_UID`/`_GID`, `PODMAN_PUBLISH_PATH`, `PODMAN_SELINUX_VOLUME_MAPPING` (turn off on hosts without SELinux), `PODMAN_DEFAULT_PRESETS`, `PODMAN_ONDEMAND_ENABLED`/`_LISTEN`/`_PORT`/`_IDLE_TIMEOUT`.
+`PODMAN_QUADLET_PREFIX`, `PODMAN_CONTAINER_PREFIX`, `PODMAN_PROXY_PREFIX`, `PODMAN_STUBS_PATH`, `PODMAN_WORKING_PATH` (override once with `podman:generate --working-path=`), `PODMAN_CONFIG_PATH`, `PODMAN_QUADLET_UID`/`_GID`, `PODMAN_PUBLISH_PATH`, `PODMAN_SELINUX_VOLUME_MAPPING` (turn off on hosts without SELinux), `PODMAN_DEFAULT_PRESETS`, `PODMAN_ONDEMAND_ENABLED`/`_LISTEN`/`_PORT`/`_IDLE_TIMEOUT`.
