@@ -14,18 +14,18 @@
         "format": "vp fmt"
     },
     "dependencies": {
-        "@iconify/vue": "^5.0.4",
-        "@inertiajs/vue3": "^3.9.1",
+        "@iconify/vue": "^5.0.5",
+        "@inertiajs/vue3": "^3.11.0",
         "@nuxt/ui": "^4.12.0",
         "@vueuse/core": "^15.0.0",
-        "tailwindcss": "^4.3.3",
-        "vue": "^3.5.44"
+        "tailwindcss": "^4.3.5",
+        "vue": "^3.5.45"
     },
     "devDependencies": {
-        "@iconify-json/lucide": "^1.2.149",
-        "@inertiajs/vite": "^3.9.1",
+        "@iconify-json/lucide": "^1.2.153",
+        "@inertiajs/vite": "^3.11.0",
         "@laravel/vite-plugin-wayfinder": "^0.1.11",
-        "@tailwindcss/vite": "^4.3.3",
+        "@tailwindcss/vite": "^4.3.5",
         "@tsconfig/node24": "^24.0.5",
         "@types/jsdom": "^30.0.0",
         "@types/node": "^26.6.6",
@@ -33,11 +33,11 @@
         "@vue/tsconfig": "^0.9.1",
         "chokidar": "^6.0.0",
         "jiti": "^2.7.0",
-        "laravel-vite-plugin": "^3.2.0",
-        "playwright": "^1.64.1",
+        "laravel-vite-plugin": "^3.2.1",
+        "playwright": "^1.65.0",
         "typescript": "^6.0.3",
         "vite": "catalog:",
         "vite-plus": "catalog:",
-        "vue-tsc": "^3.3.13"
+        "vue-tsc": "^3.3.14"
     }
 }

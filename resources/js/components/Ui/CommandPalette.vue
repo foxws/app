@@ -209,8 +209,7 @@ watch(query, (term) => search(term))
             Type at least {{ minQueryLength }} characters to search.
           </span>
           <span v-else-if="searchTerm">
-            No results for <span class="font-mono text-neutral-50">{{ searchTerm }}</span
-            >.
+            No results for <span class="font-mono text-neutral-50">{{ searchTerm }}</span>.
           </span>
           <span v-else>Search for a project, package, or docs detail.</span>
         </template>
