@@ -166,6 +166,10 @@ export default defineConfig(({ mode }) => {
             const chunk = (name: string, packages: string[]) =>
               packages.some((pkg) => id.includes(`node_modules/${pkg}`)) ? name : undefined
 
+            if (id.includes('virtual:lucide-icons')) {
+              return 'icons'
+            }
+
             return (
               chunk('icons', ['@iconify']) ??
               chunk('ui', ['@nuxt/ui', '@nuxt/icon', 'reka-ui', '@internationalized']) ??

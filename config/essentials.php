@@ -33,7 +33,7 @@ return [
     |
     */
 
-    'configurables' => env('ESSENTIALS_CONFIGURABLES', [
+    'configurables' => [
         AggressivePrefetching::class,
         AutomaticallyEagerLoadRelationships::class,
         EnforceMorphMap::class,
@@ -46,7 +46,7 @@ return [
         PreventStrayRequests::class,
         ProhibitDestructiveCommands::class,
         ResourceWithoutWrapping::class,
-    ]),
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -58,11 +58,11 @@ return [
     |
     */
 
-    'morph_map' => env('ESSENTIALS_MORPH_MAP', [
+    'morph_map' => [
         'document' => Document::class,
         'project' => Project::class,
         'user' => User::class,
         'version' => Version::class,
-    ]),
+    ],
 
 ];

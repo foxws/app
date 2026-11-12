@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Domain\Users\Commands\CreateUserCommand;
 use Foundation\Http\Middlewares\AddCspHeaders;
 use Foundation\Http\Middlewares\SetCacheHeaders;
 use Illuminate\Foundation\Application;
@@ -11,7 +10,6 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request;
-use Modules\Marketing\Commands\SyncPackagistDownloadsCommand;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Spatie\Permission\Middleware\RoleMiddleware;
 use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
@@ -67,11 +65,4 @@ return Application::configure(basePath: dirname(__DIR__))
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
     })
-    ->withEvents(discover: [
-        // domain_path('*/Listeners'),
-    ])
-    ->withCommands([
-        CreateUserCommand::class,
-        SyncPackagistDownloadsCommand::class,
-    ])
     ->create();
