@@ -36,6 +36,17 @@ it('does not leak an authenticated visit into a later guest response', function 
     $this->get('/')->assertOk()->assertHeader('X-Cache-Status', 'MISS');
 });
 
+it('serves a cached page with the nonce of its own CSP header', function () {
+    $this->get('/')->assertOk()->assertHeader('X-Cache-Status', 'MISS');
+
+    $response = $this->get('/')->assertOk()->assertHeader('X-Cache-Status', 'HIT');
+
+    preg_match("/'nonce-([^']+)'/", $response->headers->get('Content-Security-Policy'), $matches);
+
+    expect($matches)->not->toBeEmpty()
+        ->and($response->getContent())->toContain("<meta name=\"csp-nonce\" content=\"{$matches[1]}\"");
+});
+
 it('does not serve a cached full-page document to an Inertia navigation for the same url', function () {
     // Warm the full-document cache for "/", as a direct browser visit would.
     $this->get('/')->assertOk()->assertHeader('X-Cache-Status', 'MISS');
