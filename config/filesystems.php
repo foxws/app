@@ -62,7 +62,7 @@ return [
 
         'cache' => [
             'driver' => 'local',
-            'root' => '/cache',
+            'root' => env('FILESYSTEM_CACHE_PATH', '/cache'),
             'serve' => false,
             'throw' => true,
             'report' => true,

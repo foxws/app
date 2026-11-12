@@ -2,6 +2,7 @@
 
 use Foxws\Podman\Support\PodmanCaddySites;
 use Laravel\Octane\Contracts\OperationTerminated;
+use Laravel\Octane\Events\OperationReleased;
 use Laravel\Octane\Events\RequestHandled;
 use Laravel\Octane\Events\RequestReceived;
 use Laravel\Octane\Events\RequestTerminated;
@@ -20,6 +21,7 @@ use Laravel\Octane\Listeners\EnsureUploadedFilesCanBeMoved;
 use Laravel\Octane\Listeners\FlushOnce;
 use Laravel\Octane\Listeners\FlushTemporaryContainerInstances;
 use Laravel\Octane\Listeners\FlushUploadedFiles;
+use Laravel\Octane\Listeners\ReleaseFreedMemory;
 use Laravel\Octane\Listeners\ReportException;
 use Laravel\Octane\Listeners\StopWorkerIfNecessary;
 use Laravel\Octane\Octane;
@@ -107,7 +109,11 @@ return [
             FlushOnce::class,
             FlushTemporaryContainerInstances::class,
             // DisconnectFromDatabases::class,
+        ],
+
+        OperationReleased::class => [
             // CollectGarbage::class,
+            // ReleaseFreedMemory::class,
         ],
 
         WorkerErrorOccurred::class => [
@@ -237,6 +243,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | RoadRunner Options
+    |--------------------------------------------------------------------------
+    |
+    | The following options are only used when the RoadRunner server is the
+    | server powering your application. You may customize the path to the
+    | worker binary here, which is useful for zero-downtime deployments
+    | where the application is served from a symlinked "current" path.
+    |
+    */
+
+    'roadrunner' => [
+        'command' => env('OCTANE_ROADRUNNER_COMMAND', 'vendor/bin/roadrunner-worker'),
+        'http_middleware' => env('OCTANE_ROADRUNNER_HTTP_MIDDLEWARE', 'static'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Extra Caddy Sites
     |--------------------------------------------------------------------------
     |
@@ -262,30 +285,13 @@ return [
     'caddy' => [
         'env' => ! env('PODMAN_ENABLED', true) || ! class_exists(PodmanCaddySites::class) ? [] : [
             // Port must match the "--port" passed to "octane:frankenphp"
-            // in APP_COMMAND (see the frankenphp-octane Containerfile).
+            // in APP_COMMAND (see the preset's runtimes/Containerfile).
             'CADDY_EXTRA_CONFIG' => PodmanCaddySites::render([
                 (string) env('MAILPIT_UI_HOST') => PodmanCaddySites::hostPort((string) env('MAIL_HOST'), 8025),
                 // Port must match "server.port" in vite.config.ts.
                 (string) env('VITE_HMR_HOST') => PodmanCaddySites::hostPort((string) env('VITE_SERVER_HOST'), 5173),
             ], (int) env('OCTANE_PORT', 8000)),
         ],
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | RoadRunner Options
-    |--------------------------------------------------------------------------
-    |
-    | The following options are only used when the RoadRunner server is the
-    | server powering your application. You may customize the path to the
-    | worker binary here, which is useful for zero-downtime deployments
-    | where the application is served from a symlinked "current" path.
-    |
-    */
-
-    'roadrunner' => [
-        'command' => env('OCTANE_ROADRUNNER_COMMAND', 'vendor/bin/roadrunner-worker'),
-        'http_middleware' => env('OCTANE_ROADRUNNER_HTTP_MIDDLEWARE', 'static'),
     ],
 
 ];
