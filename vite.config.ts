@@ -7,6 +7,7 @@ import laravel from 'laravel-vite-plugin'
 import { google } from 'laravel-vite-plugin/fonts'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, lazyPlugins, loadEnv } from 'vite-plus'
+import { lucideIcons } from './resources/js/plugins/iconify/vite'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -28,6 +29,7 @@ export default defineConfig(({ mode }) => {
           cluster: true,
         },
       }),
+      lucideIcons(),
       tailwindcss(),
       vue({
         template: {
