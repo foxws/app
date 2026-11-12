@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d8f85466740aa06e698760885a5ff92c",
+    "content-hash": "5f32f25e86009c99bec2851d9e14b542",
     "packages": [
         {
             "name": "brick/math",
@@ -650,16 +650,16 @@
         },
         {
             "name": "foxws/laravel-docs",
-            "version": "v1.8.2",
+            "version": "v1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-docs.git",
-                "reference": "7895f921f764410ab9dc6dd0785d784688d1e3bd"
+                "reference": "c98f3a9537e951e4a6ffdaad8e66497e63b229c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/7895f921f764410ab9dc6dd0785d784688d1e3bd",
-                "reference": "7895f921f764410ab9dc6dd0785d784688d1e3bd",
+                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/c98f3a9537e951e4a6ffdaad8e66497e63b229c2",
+                "reference": "c98f3a9537e951e4a6ffdaad8e66497e63b229c2",
                 "shasum": ""
             },
             "require": {
@@ -724,7 +724,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-docs/issues",
-                "source": "https://github.com/foxws/laravel-docs/tree/v1.8.2"
+                "source": "https://github.com/foxws/laravel-docs/tree/v1.9.0"
             },
             "funding": [
                 {
@@ -732,8 +732,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-14T07:21:09+00:00",
-            "published-time": "2026-10-14T07:24:22+00:00"
+            "time": "2026-11-12T14:23:00+00:00",
+            "published-time": "2026-11-12T14:23:50+00:00"
         },
         {
             "name": "foxws/laravel-essentials",
