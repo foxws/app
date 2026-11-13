@@ -9,17 +9,14 @@ use Illuminate\Support\Facades\Schedule;
 use Modules\Marketing\Commands\SyncPackagistDownloadsCommand;
 
 Schedule::command(PruneStaleTagsCommand::class)
-    ->dailyAt('01:30')
-    ->runInBackground();
+    ->dailyAt('03:00');
 
 Schedule::command(ClearResetsCommand::class)
-    ->dailyAt('02:00')
-    ->runInBackground();
+    ->dailyAt('03:00');
+
+Schedule::command(SyncPackagistDownloadsCommand::class)
+    ->dailyAt('03:00');
 
 Schedule::command(SyncDocsCommand::class)
     ->dailyAt('03:00')
-    ->runInBackground();
-
-Schedule::command(SyncPackagistDownloadsCommand::class)
-    ->dailyAt('03:30')
-    ->runInBackground();
+    ->withoutOverlapping();
