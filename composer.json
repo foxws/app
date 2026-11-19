@@ -12,7 +12,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.3",
+        "php": "^8.5",
         "foxws/laravel-ddd": "^1.0",
         "foxws/laravel-docs": "^1.9",
         "foxws/laravel-essentials": "^1.0",

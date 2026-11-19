@@ -37,7 +37,7 @@ resources/js/
 
 ## Running it locally
 
-You'll need PHP 8.3 or newer, Node 24 with pnpm, PostgreSQL and Valkey (or Redis). Development here runs in Podman containers through laravel-podman, but any setup with those services works.
+You'll need PHP 8.5 or newer, Node 24 with pnpm, PostgreSQL and Valkey (or Redis). Development here runs in Podman containers through laravel-podman, but any setup with those services works.
 
 ```sh
 composer run setup
@@ -70,7 +70,7 @@ metadata:
     group: deploy
     desc: Run Laravel in rootless Podman containers.
     eyebrow: Deploy · Podman · systemd
-    requires: PHP 8.3+
+    requires: PHP 8.5+
     laravel: 12, 13
 ---
 ```
