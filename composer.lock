@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a32bdde19522f63df46c89cab09ee6e",
+    "content-hash": "61c832fe01b8642ca357f560eff85b8f",
     "packages": [
         {
             "name": "brick/math",
@@ -574,21 +574,21 @@
         },
         {
             "name": "foxws/laravel-ddd",
-            "version": "1.1.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-ddd.git",
-                "reference": "e327cff705a86a27953920c5522f6b67f05ec074"
+                "reference": "d0c8eda1161e6969b4315946e9798708d542141f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-ddd/zipball/e327cff705a86a27953920c5522f6b67f05ec074",
-                "reference": "e327cff705a86a27953920c5522f6b67f05ec074",
+                "url": "https://api.github.com/repos/foxws/laravel-ddd/zipball/d0c8eda1161e6969b4315946e9798708d542141f",
+                "reference": "d0c8eda1161e6969b4315946e9798708d542141f",
                 "shasum": ""
             },
             "require": {
                 "illuminate/support": "^13.0",
-                "php": "^8.4"
+                "php": "^8.5"
             },
             "require-dev": {
                 "larastan/larastan": "^3.9",
@@ -637,7 +637,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-ddd/issues",
-                "source": "https://github.com/foxws/laravel-ddd/tree/1.1.0"
+                "source": "https://github.com/foxws/laravel-ddd/tree/2.0.0"
             },
             "funding": [
                 {
@@ -645,44 +645,44 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-14T21:30:26+00:00",
-            "published-time": "2026-11-14T21:32:21+00:00"
+            "time": "2026-11-19T09:50:29+00:00",
+            "published-time": "2026-11-19T09:58:02+00:00"
         },
         {
             "name": "foxws/laravel-docs",
-            "version": "v1.9.0",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-docs.git",
-                "reference": "c98f3a9537e951e4a6ffdaad8e66497e63b229c2"
+                "reference": "a959b58f187c1931a253da37742ccee78f80a4cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/c98f3a9537e951e4a6ffdaad8e66497e63b229c2",
-                "reference": "c98f3a9537e951e4a6ffdaad8e66497e63b229c2",
+                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/a959b58f187c1931a253da37742ccee78f80a4cc",
+                "reference": "a959b58f187c1931a253da37742ccee78f80a4cc",
                 "shasum": ""
             },
             "require": {
-                "illuminate/console": "^12.0|^13.0",
-                "illuminate/contracts": "^12.0|^13.0",
-                "illuminate/database": "^12.0|^13.0",
-                "illuminate/http": "^12.0|^13.0",
-                "illuminate/support": "^12.0|^13.0",
+                "illuminate/console": "^13.0",
+                "illuminate/contracts": "^13.0",
+                "illuminate/database": "^13.0",
+                "illuminate/http": "^13.0",
+                "illuminate/support": "^13.0",
                 "laravel/scout": "^10.0|^11.0",
                 "league/commonmark": "^2.4",
                 "league/flysystem": "^3.0",
-                "php": "^8.3",
+                "php": "^8.5",
                 "symfony/yaml": "^6.4|^7.0|^8.0"
             },
             "require-dev": {
                 "larastan/larastan": "^3.9",
                 "laravel/pint": "^1.29",
                 "nunomaduro/collision": "^8.8",
-                "orchestra/testbench": "^9.0|^10.0|^11.0",
-                "pestphp/pest": "^4.0",
-                "pestphp/pest-plugin-arch": "^4.0",
-                "pestphp/pest-plugin-laravel": "^4.0",
-                "pestphp/pest-plugin-type-coverage": "^4.0",
+                "orchestra/testbench": "^11.0",
+                "pestphp/pest": "^5.0",
+                "pestphp/pest-plugin-arch": "^5.0",
+                "pestphp/pest-plugin-laravel": "^5.0",
+                "pestphp/pest-plugin-type-coverage": "^5.0",
                 "phpstan/extension-installer": "^1.4",
                 "phpstan/phpstan-deprecation-rules": "^2.0",
                 "phpstan/phpstan-phpunit": "^2.0"
@@ -724,7 +724,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-docs/issues",
-                "source": "https://github.com/foxws/laravel-docs/tree/v1.9.0"
+                "source": "https://github.com/foxws/laravel-docs/tree/v2.0.0"
             },
             "funding": [
                 {
@@ -732,8 +732,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-12T14:23:00+00:00",
-            "published-time": "2026-11-12T14:23:50+00:00"
+            "time": "2026-11-19T09:45:40+00:00",
+            "published-time": "2026-11-19T09:58:04+00:00"
         },
         {
             "name": "foxws/laravel-essentials",
@@ -817,31 +817,31 @@
         },
         {
             "name": "foxws/laravel-pwa",
-            "version": "2.7.1",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-pwa.git",
-                "reference": "f493b9df1447dfdb5a0ea039506ca5410e84e0e4"
+                "reference": "50732fe66add51f2c164546360b73e11485cbb66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-pwa/zipball/f493b9df1447dfdb5a0ea039506ca5410e84e0e4",
-                "reference": "f493b9df1447dfdb5a0ea039506ca5410e84e0e4",
+                "url": "https://api.github.com/repos/foxws/laravel-pwa/zipball/50732fe66add51f2c164546360b73e11485cbb66",
+                "reference": "50732fe66add51f2c164546360b73e11485cbb66",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "^12.0||^13.0",
-                "php": "^8.3",
+                "illuminate/contracts": "^13.0",
+                "php": "^8.5",
                 "spatie/laravel-package-tools": "^1.16"
             },
             "require-dev": {
                 "larastan/larastan": "^3.0",
                 "laravel/pint": "^1.14",
                 "nunomaduro/collision": "^8.8",
-                "orchestra/testbench": "^10.0.0||^11.0",
-                "pestphp/pest": "^4.0",
-                "pestphp/pest-plugin-arch": "^4.0",
-                "pestphp/pest-plugin-laravel": "^4.0",
+                "orchestra/testbench": "^11.0",
+                "pestphp/pest": "^5.0",
+                "pestphp/pest-plugin-arch": "^5.0",
+                "pestphp/pest-plugin-laravel": "^5.0",
                 "phpstan/extension-installer": "^1.4",
                 "phpstan/phpstan-deprecation-rules": "^2.0",
                 "phpstan/phpstan-phpunit": "^2.0"
@@ -887,7 +887,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-pwa/issues",
-                "source": "https://github.com/foxws/laravel-pwa/tree/2.7.1"
+                "source": "https://github.com/foxws/laravel-pwa/tree/3.0.0"
             },
             "funding": [
                 {
@@ -895,37 +895,37 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-12T13:21:50+00:00",
-            "published-time": "2026-11-12T13:22:23+00:00"
+            "time": "2026-11-19T09:46:10+00:00",
+            "published-time": "2026-11-19T09:58:15+00:00"
         },
         {
             "name": "foxws/laravel-scout-builder",
-            "version": "1.2.3",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-scout-builder.git",
-                "reference": "47c450707f65b42fc18c0543ba5f6786912254c6"
+                "reference": "8d10abfb84583a6370b44120b265530fea36bd89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-scout-builder/zipball/47c450707f65b42fc18c0543ba5f6786912254c6",
-                "reference": "47c450707f65b42fc18c0543ba5f6786912254c6",
+                "url": "https://api.github.com/repos/foxws/laravel-scout-builder/zipball/8d10abfb84583a6370b44120b265530fea36bd89",
+                "reference": "8d10abfb84583a6370b44120b265530fea36bd89",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "^12.0||^13.0",
+                "illuminate/contracts": "^13.0",
                 "laravel/scout": "^10.0||^11.0",
-                "php": "^8.4",
+                "php": "^8.5",
                 "spatie/laravel-package-tools": "^1.16"
             },
             "require-dev": {
                 "larastan/larastan": "^3.0",
                 "laravel/pint": "^1.14",
                 "nunomaduro/collision": "^8.8",
-                "orchestra/testbench": "^10.0 || ^11.0",
-                "pestphp/pest": "^4.0",
-                "pestphp/pest-plugin-arch": "^4.0",
-                "pestphp/pest-plugin-laravel": "^4.0",
+                "orchestra/testbench": "^11.0",
+                "pestphp/pest": "^5.0",
+                "pestphp/pest-plugin-arch": "^5.0",
+                "pestphp/pest-plugin-laravel": "^5.0",
                 "phpstan/extension-installer": "^1.4",
                 "phpstan/phpstan-deprecation-rules": "^2.0",
                 "phpstan/phpstan-phpunit": "^2.0"
@@ -967,7 +967,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-scout-builder/issues",
-                "source": "https://github.com/foxws/laravel-scout-builder/tree/1.2.3"
+                "source": "https://github.com/foxws/laravel-scout-builder/tree/2.0.0"
             },
             "funding": [
                 {
@@ -975,8 +975,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-13T12:28:13+00:00",
-            "published-time": "2026-11-13T12:28:41+00:00"
+            "time": "2026-11-19T09:46:41+00:00",
+            "published-time": "2026-11-19T09:58:21+00:00"
         },
         {
             "name": "fruitcake/php-cors",
