@@ -1,0 +1,40 @@
+[Unit]
+Description=Laravel App (Octane, development)
+Requires=foxws-dev-pgsql.container foxws-dev-valkey.container
+After=foxws-dev-pgsql.container foxws-dev-valkey.container
+Wants=foxws-dev-mailpit.container foxws-dev-queue.container foxws-dev-schedule.container foxws-dev-vite.container
+# Restart=always retries a crash every 5 seconds, which never reaches
+# systemd's default start limit (5 in 10s). Give up after 5 tries in
+# 5 minutes instead, so a broken setup ends up failed, not looping.
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Container]
+Image=foxws-dev.build
+AutoUpdate=local
+UserNS=keep-id
+ShmSize=128m
+Volume=foxws-dev-source.volume:/app:rw,z,U
+Volume=foxws-dev-config.volume:/config:rw
+Volume=foxws-dev-data.volume:/data:rw
+Volume=foxws-dev-cache.volume:/cache:rw
+Network=foxws-dev.network
+NetworkAlias=systemd-foxws
+ExposeHostPort=8000
+Notify=healthy
+HealthStartupCmd=curl -fsS -o /dev/null http://127.0.0.1:8000/up
+HealthStartupInterval=1s
+HealthStartupTimeout=5s
+HealthCmd=curl -fsS -o /dev/null http://127.0.0.1:8000/up
+HealthInterval=1m
+HealthTimeout=5s
+HealthRetries=3
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=300
+TimeoutStopSec=30
+
+[Install]
+WantedBy=default.target

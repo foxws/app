@@ -1,0 +1,26 @@
+[Unit]
+Description=Vite dev server (development)
+After=foxws-dev.container
+PartOf=foxws-dev.container
+# Restart=always retries a crash every 5 seconds, which never reaches
+# systemd's default start limit (5 in 10s). Give up after 5 tries in
+# 5 minutes instead, so a broken setup ends up failed, not looping.
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Container]
+Image=foxws-dev.build
+AutoUpdate=local
+HealthCmd=none
+Environment=APP_COMMAND="pnpm run dev -- --host=0.0.0.0"
+UserNS=keep-id
+Volume=foxws-dev-source.volume:/app:rw,z
+Network=foxws-dev.network
+NetworkAlias=systemd-foxws-vite
+ExposeHostPort=5173
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=120
+TimeoutStopSec=60

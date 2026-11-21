@@ -1,0 +1,14 @@
+[Build]
+# Builds the development image from your checkout. If your checkout isn't
+# in ~/projects/app, override the three paths below (and the one in
+# foxws-dev-source.volume) with a foxws-dev.build.d/ drop-in instead of
+# editing this file. The paths are absolute on purpose:
+# SetWorkingDirectory= only sets the build context, so podman build would
+# look for a relative File= or IgnoreFile= in the service's own directory.
+ImageTag=localhost/foxws-dev:latest
+Target=development
+BuildArg=UID=%U
+BuildArg=GID=%G
+SetWorkingDirectory=%h/projects/app
+File=%h/projects/app/containers/runtimes/development/Containerfile
+IgnoreFile=%h/projects/app/containers/runtimes/development/dockerignore
