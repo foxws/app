@@ -16,7 +16,6 @@ It's shared as a working example of those packages running together in a real ap
 | Package                                                                       | Where to look                                                                                                                                                     |
 | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [foxws/laravel-docs](https://github.com/foxws/laravel-docs)                   | Pulls each package's `docs/` folder from GitHub into the database. Rendered by `src/Modules/Marketing` (controllers, `Http/Props`, `Support/DocsNavigation.php`). |
-| [foxws/laravel-podman](https://github.com/foxws/laravel-podman)               | Local development containers, rendered from `containers/stubs`                                                                                                    |
 | [foxws/laravel-ddd](https://github.com/foxws/laravel-ddd)                     | The `src/Domain`, `src/Modules`, `src/Foundation` and `src/Support` layout                                                                                        |
 | [foxws/laravel-essentials](https://github.com/foxws/laravel-essentials)       | Application defaults, configured in `config/essentials.php`                                                                                                       |
 | [foxws/laravel-pwa](https://github.com/foxws/laravel-pwa)                     | Web app manifest and service worker (`@pwaHead`/`@pwaSw` in `resources/views/app.blade.php`)                                                                      |
@@ -37,7 +36,7 @@ resources/js/
 
 ## Running it locally
 
-You'll need PHP 8.5 or newer, Node 24 with pnpm, PostgreSQL and Valkey (or Redis). Development here runs in Podman containers through laravel-podman, but any setup with those services works.
+You'll need PHP 8.5 or newer, Node 24 with pnpm, PostgreSQL 19 and Valkey (or Redis). Development here runs in rootless Podman containers: [Pods](https://github.com/foxws/pods) installs the Quadlets in `containers/quadlets/development` as `foxws-dev`, as described in `pods.yml`. VS Code can open the checkout in the devcontainer in `containers/devcontainer`. Any other setup with those services works too.
 
 ```sh
 composer run setup
