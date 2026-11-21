@@ -15,7 +15,7 @@
         "php": "^8.5",
         "foxws/laravel-ddd": "^1.1",
         "foxws/laravel-docs": "^1.9",
-        "foxws/laravel-essentials": "^1.2",
+        "foxws/laravel-essentials": "^2.1",
         "foxws/laravel-pwa": "^2.7.1",
         "foxws/laravel-scout-builder": "^1.2.3",
         "inertiajs/inertia-laravel": "^3.7.0",

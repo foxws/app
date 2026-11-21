@@ -2,8 +2,8 @@
 
 use Foxws\Essentials\Csp\Nonce\ViteNonceGenerator;
 use Foxws\Essentials\Csp\Presets\BasicPreset;
+use Foxws\Essentials\Csp\Presets\GitHubImagesPreset;
 use Spatie\Csp\Presets\BunnyFonts;
-use Support\Csp\Presets\GitHubImagesPreset;
 
 // use Spatie\Csp\Directive;
 // use Spatie\Csp\Keyword;

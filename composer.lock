@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a2c7f550b42a9697b69df20d5e05a69",
+    "content-hash": "2a32bdde19522f63df46c89cab09ee6e",
     "packages": [
         {
             "name": "brick/math",
@@ -737,22 +737,22 @@
         },
         {
             "name": "foxws/laravel-essentials",
-            "version": "1.2.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-essentials.git",
-                "reference": "25a6c6ba79bd21079ea035ccd781b52431b5eaf0"
+                "reference": "eaaf5dcbed87f676cac54c7d648eb309c3ea7c37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-essentials/zipball/25a6c6ba79bd21079ea035ccd781b52431b5eaf0",
-                "reference": "25a6c6ba79bd21079ea035ccd781b52431b5eaf0",
+                "url": "https://api.github.com/repos/foxws/laravel-essentials/zipball/eaaf5dcbed87f676cac54c7d648eb309c3ea7c37",
+                "reference": "eaaf5dcbed87f676cac54c7d648eb309c3ea7c37",
                 "shasum": ""
             },
             "require": {
                 "illuminate/database": "^13.0",
                 "illuminate/support": "^13.0",
-                "php": "^8.4"
+                "php": "^8.5"
             },
             "require-dev": {
                 "larastan/larastan": "^3.9",
@@ -804,7 +804,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-essentials/issues",
-                "source": "https://github.com/foxws/laravel-essentials/tree/1.2.0"
+                "source": "https://github.com/foxws/laravel-essentials/tree/2.1.0"
             },
             "funding": [
                 {
@@ -812,8 +812,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-17T10:48:22+00:00",
-            "published-time": "2026-11-17T10:50:23+00:00"
+            "time": "2026-11-21T19:05:38+00:00",
+            "published-time": "2026-11-21T19:06:37+00:00"
         },
         {
             "name": "foxws/laravel-pwa",
