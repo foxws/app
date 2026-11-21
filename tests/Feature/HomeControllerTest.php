@@ -63,8 +63,8 @@ test('a project with synced docs links to its project page, not its docs', funct
 
 test('a project without docs links to its project page, not its source', function () {
     $project = ProjectFactory::new()->create([
-        'slug' => 'flatpaks',
-        'github_repository' => 'francoism90/flatpaks',
+        'slug' => 'pods',
+        'github_repository' => 'foxws/pods',
         'metadata' => ['kind' => 'personal'],
     ]);
     VersionFactory::new()->create(['project_id' => $project->id, 'is_default' => true]);
@@ -73,7 +73,7 @@ test('a project without docs links to its project page, not its source', functio
 
     $response->assertOk();
 
-    expect($response->inertiaProps('projects.0.href'))->toBe('/projects/flatpaks');
+    expect($response->inertiaProps('projects.0.href'))->toBe('/projects/pods');
 });
 
 test('a project with no kind metadata is listed under packages, not projects', function () {

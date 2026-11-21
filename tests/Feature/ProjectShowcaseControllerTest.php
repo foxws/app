@@ -41,11 +41,11 @@ test('builds the project page from front matter metadata', function () {
 
 test('leaves out fields the front matter does not set, or sets to something unusable', function () {
     ProjectFactory::new()->create([
-        'slug' => 'flatpaks',
-        'metadata' => ['kind' => 'personal', 'image' => 'docs/screenshot.png', 'technologies' => 'Flatpak'],
+        'slug' => 'pods',
+        'metadata' => ['kind' => 'personal', 'image' => 'docs/screenshot.png', 'technologies' => 'Podman'],
     ]);
 
-    $response = $this->get('/projects/flatpaks');
+    $response = $this->get('/projects/pods');
 
     $response->assertOk();
 
@@ -78,13 +78,13 @@ test('introduces the project with the readme docs:sync stored', function () {
 
 test('an introduction in the front matter wins over the readme', function () {
     $project = ProjectFactory::new()->create([
-        'slug' => 'flatpaks',
-        'github_repository' => 'francoism90/flatpaks',
+        'slug' => 'pods',
+        'github_repository' => 'foxws/pods',
         'metadata' => ['kind' => 'personal', 'introduction' => 'From the front matter.'],
     ]);
     DocumentFactory::new()->file('README.md')->for($project)->create(['body' => 'From the readme.']);
 
-    expect($this->get('/projects/flatpaks')->inertiaProps('project.introduction'))->toBe("<p>From the front matter.</p>\n");
+    expect($this->get('/projects/pods')->inertiaProps('project.introduction'))->toBe("<p>From the front matter.</p>\n");
 });
 
 test('links "read the docs" to the docs on this site when the project has synced docs', function () {

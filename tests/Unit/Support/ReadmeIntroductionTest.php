@@ -22,7 +22,7 @@ it('uses the introduction section when the readme has one', function () {
 
 it('uses what comes before the first section otherwise, without the title, badges, link rows or rules', function () {
     $readme = <<<'MD'
-    # flatpaks [![build](https://example.com/badge.svg)](https://example.com/actions)
+    # pods [![build](https://example.com/badge.svg)](https://example.com/actions)
 
     [![Tests](https://example.com/tests.svg)](https://example.com/tests)
     ![License](https://img.shields.io/badge/license-MIT-blue)
@@ -31,12 +31,12 @@ it('uses what comes before the first section otherwise, without the title, badge
 
     ---
 
-    Unofficial Flatpak builds.
+    A self-hosted web UI for Podman Quadlet.
 
     ## Install
     MD;
 
-    expect(ReadmeIntroduction::extract($readme, 'francoism90/flatpaks'))->toBe('Unofficial Flatpak builds.');
+    expect(ReadmeIntroduction::extract($readme, 'foxws/pods'))->toBe('A self-hosted web UI for Podman Quadlet.');
 });
 
 it('points relative links and images at the repository, leaving absolute ones alone', function () {
@@ -63,7 +63,7 @@ it('leaves fenced code as it is, including headings and links inside it', functi
     ## Install
     MD;
 
-    expect(ReadmeIntroduction::extract($readme, 'francoism90/flatpaks'))
+    expect(ReadmeIntroduction::extract($readme, 'foxws/pods'))
         ->toBe("Add the remote:\n\n```bash\n## not a section\necho \"[link](relative.md)\"\n```");
 });
 
