@@ -13,7 +13,6 @@
         "foxws/laravel-ddd",
         "foxws/laravel-docs",
         "foxws/laravel-essentials",
-        "foxws/laravel-podman",
         "foxws/laravel-pwa",
         "foxws/laravel-scout-builder"
     ],
@@ -35,10 +34,6 @@
         "scout-builder-development",
         "laravel-permission-development",
         "responsecache-development",
-        "podman-lpod",
-        "podman-presets",
-        "podman-s3",
-        "podman-upgrade",
         "spatie-javascript",
         "spatie-laravel-php",
         "spatie-security",
