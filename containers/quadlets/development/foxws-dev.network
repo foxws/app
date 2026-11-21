@@ -1,0 +1,6 @@
+[Network]
+# The network of the development units. Each container also answers to the
+# name in .env.example (NetworkAlias=), such as systemd-foxws-pgsql, so the
+# same .env works in the containers and the devcontainer.
+NetworkName=systemd-foxws-dev
+Label=foxws-dev

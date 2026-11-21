@@ -1,0 +1,49 @@
+# How Pods (https://github.com/foxws/pods) installs this app's development
+# containers. Pods reads it when you add the app from Git; it never changes
+# the Quadlet files. The site itself is hosted on Laravel Cloud, so there is
+# no production source.
+version: 1
+name: foxws-dev
+label: foxws.nl
+description: The homepage and documentation site for the Foxws Laravel packages, built from your checkout
+repository: https://github.com/foxws/app
+icon: i-lucide-book-open
+
+sources:
+  development:
+    path: containers/quadlets/development
+    description: Builds and runs a checkout in ~/projects/app on the host, as foxws-dev
+
+# The development units read .env from your checkout, so there are no
+# secrets to enter.
+
+# Steps the application page in Pods offers once the units are up. Each one
+# runs in the container of a Quadlet, and is safe to run again.
+after_install:
+  migrate:
+    label: Migrate the database
+    container: foxws-dev
+    user: docker
+    command: php artisan migrate --force --no-interaction
+
+# Steps the application page offers after Pods updates the checkout's units.
+after_update:
+  update:
+    label: Migrate the database
+    container: foxws-dev
+    user: docker
+    command: php artisan migrate --force --no-interaction
+
+# The containers the Pods proxy can give a hostname. Pods asks for the
+# hostnames when installing; they must match APP_URL, VITE_HMR_HOST and
+# MAILPIT_UI_HOST in your .env. Leave one empty for no route.
+routes:
+  app:
+    upstream: systemd-foxws-dev:8000
+    description: The web app (the host in APP_URL)
+  vite:
+    upstream: systemd-foxws-dev-vite:5173
+    description: The Vite dev server (VITE_HMR_HOST)
+  mail:
+    upstream: systemd-foxws-dev-mailpit:8025
+    description: Mailpit's web UI (MAILPIT_UI_HOST)

@@ -1,0 +1,13 @@
+[Volume]
+# Your checkout of this app, mounted into the app, the queue worker, the
+# scheduler and Vite as /app. If it isn't in ~/projects/app, override
+# Device= with a foxws-dev-source.volume.d/ drop-in (and foxws-dev.build's
+# paths). The volume is created once, so remove it ("podman volume rm
+# foxws-dev-source") after changing the path.
+# Removing it never deletes your checkout.
+VolumeName=foxws-dev-source
+Label=foxws-dev-source
+Type=none
+Options=bind
+Device=%h/projects/app
+Copy=false

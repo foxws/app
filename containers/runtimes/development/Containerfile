@@ -1,0 +1,191 @@
+# The development image: the official FrankenPHP image with the PHP
+# extensions, Composer, Node.js, pnpm, the PostgreSQL client, Xdebug and
+# Playwright's browser deps. The source is mounted in at runtime.
+
+# PHP version of the official FrankenPHP image (Debian trixie) and the
+# Node.js major. Pass --build-arg PHP_VERSION=8.6 for another one, once
+# the extensions below support it (redis and Xdebug don't yet).
+ARG PHP_VERSION=8.5
+ARG NODE_VERSION=26
+
+FROM docker.io/library/node:${NODE_VERSION}-trixie-slim AS node
+
+FROM docker.io/dunglas/frankenphp:1-php${PHP_VERSION}-trixie AS runtime
+
+ARG UID=1000
+ARG GID=1000
+ARG POSTGRES_VERSION=19
+ARG PNPM_VERSION=12
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=UTC
+ENV LANG=C.UTF-8
+ENV APP_USER="docker"
+ENV PNPM_HOME="/home/docker/.local/share/pnpm"
+ENV PATH="${PATH}:${PNPM_HOME}"
+
+WORKDIR /app
+
+# Main dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gnupg curl ca-certificates \
+    && apt-get -y autoremove \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Add PostgreSQL APT repository and install client. The client moves with
+# the server: pg_dump refuses to dump a newer server.
+RUN mkdir -p /etc/apt/keyrings \
+    && curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/keyrings/postgresql.gpg \
+    && CODENAME=$(. /etc/os-release && echo "$VERSION_CODENAME") \
+    && echo "deb [signed-by=/etc/apt/keyrings/postgresql.gpg] https://apt.postgresql.org/pub/repos/apt ${CODENAME}-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends postgresql-client-${POSTGRES_VERSION} \
+    && apt-get -y autoremove \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Node.js from the official image (also Debian trixie), for Vite and the
+# Inertia SSR build
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/npm
+
+RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx \
+    && npm install -g pnpm@${PNPM_VERSION} \
+    && npm cache clean --force \
+    && rm -rf /tmp/* /var/tmp/* /root/.npm
+
+# The extensions beyond PHP's own (OPcache is built in) that Laravel, the
+# queue worker (pcntl), Valkey (redis), the PWA icons (exif, gd) and
+# Composer (zip) use
+RUN install-php-extensions @composer \
+    bcmath exif gd intl pcntl pdo_pgsql redis zip
+
+# The official image lets frankenphp bind ports below 1024 through a file
+# capability, which can't start in a container without capabilities
+# (--cap-drop=all). The app listens on 8000, so drop it. libcap2-bin is only
+# needed for setcap, so it's installed and purged in this one layer.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libcap2-bin \
+    && setcap -r /usr/local/bin/frankenphp \
+    && apt-get purge -y --auto-remove libcap2-bin \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
+
+# The non-root user. /config and /data are where FrankenPHP's Caddy keeps
+# its state (XDG_CONFIG_HOME and XDG_DATA_HOME in the official image). pnpm
+# runs as root here, so chown what it writes for the "docker" user.
+RUN groupadd -o -g "${GID}" docker \
+    && useradd -o -u "${UID}" -g docker -d /home/docker -s /bin/bash -m docker \
+    && mkdir -p /app /cache /config /data ${PNPM_HOME}/store /home/docker/.cache/composer /home/docker/.cache/pnpm \
+    && pnpm config set store-dir ${PNPM_HOME}/store \
+    && chown -R docker:docker /app /cache /config /data /home/docker
+
+# The official image's health check polls Caddy's admin port, which the
+# queue, scheduler and Vite containers don't serve. The quadlets set their
+# own.
+HEALTHCHECK NONE
+
+FROM runtime AS development
+
+LABEL org.opencontainers.image.title="foxws" \
+      org.opencontainers.image.description="The homepage and documentation site for the Foxws Laravel packages" \
+      org.opencontainers.image.source="https://github.com/foxws/app" \
+      org.opencontainers.image.licenses="MIT"
+
+ARG PHP_EXTENSIONS=""
+
+WORKDIR /app
+
+ENV PHP_CLI="php -d variables_order=EGPCS /app/artisan"
+ENV APP_COMMAND="${PHP_CLI} octane:frankenphp --host=0.0.0.0 --port=8000 --watch"
+ENV PLAYWRIGHT_BROWSERS_PATH=0
+
+# PHP Configuration
+RUN cp ${PHP_INI_DIR}/php.ini-development ${PHP_INI_DIR}/php.ini
+
+RUN install-php-extensions xdebug
+
+# Playwright's OS-level browser deps; browsers are installed per-project via `npx playwright install`
+RUN npx -y playwright install-deps \
+    && npm cache clean --force \
+    && apt-get -y autoremove \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.npm
+
+# Install additional PHP extensions if specified
+RUN if [ -n "$PHP_EXTENSIONS" ]; then \
+    install-php-extensions $PHP_EXTENSIONS; \
+fi
+
+# Custom PHP configuration
+COPY containers/runtimes/development/php-development.ini ${PHP_INI_DIR}/conf.d/xx-php-user.ini
+
+# Entrypoint
+COPY --chmod=755 containers/runtimes/development/entrypoint.sh /usr/local/bin/entrypoint.sh
+
+USER docker
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD []
+
+# The VS Code Dev Containers image (containers/devcontainer/devcontainer.json):
+# the development image plus Git and the GitHub and AWS CLIs, Claude Code,
+# the OpenAI Codex CLI and Laravel LSP. Build it with --target=devcontainer.
+FROM development AS devcontainer
+
+ARG CLAUDE_CLI="latest"
+ARG CODEX_CLI="latest"
+ARG AI_LARAVEL_LSP="latest"
+ARG AI_NPM_PACKAGES=""
+
+ENV PATH="${PATH}:/home/docker/.local/bin"
+
+USER root
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git nano jq procps unzip openssh-client gh awscli shellcheck sqlite3 \
+    && apt-get -y autoremove \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Laravel LSP, the language server laravel/agent-skills' laravel-lsp plugin
+# starts as "laravel-lsp". Set AI_LARAVEL_LSP=false to skip it, or to a
+# version constraint to pin it.
+RUN if [ "$AI_LARAVEL_LSP" != "false" ]; then \
+    if [ "$AI_LARAVEL_LSP" = "latest" ]; then LSP_PACKAGE=laravel/lsp; else LSP_PACKAGE="laravel/lsp:$AI_LARAVEL_LSP"; fi \
+    && COMPOSER_HOME=/usr/local/share/composer composer global require "$LSP_PACKAGE" \
+    && COMPOSER_HOME=/usr/local/share/composer composer clear-cache \
+    && ln -s /usr/local/share/composer/vendor/bin/laravel-lsp /usr/local/bin/laravel-lsp; \
+fi
+
+USER docker
+
+# Claude Code through its native installer, which keeps the binary in
+# ~/.local, so it survives the ~/.claude bind mount. Set CLAUDE_CLI=false to
+# skip it, or to a channel or version (stable, 2.1.89) to pin it.
+RUN if [ "$CLAUDE_CLI" != "false" ]; then \
+    curl -fsSL https://claude.ai/install.sh | bash -s "$CLAUDE_CLI"; \
+fi
+
+# The Codex CLI through npm: its native installer puts the binary in
+# ~/.codex, which the ~/.codex bind mount would hide. Set CODEX_CLI=false to
+# skip it, or to a version to pin it.
+RUN if [ "$CODEX_CLI" != "false" ]; then \
+    npm install -g --prefix=/home/docker/.local @openai/codex@$CODEX_CLI \
+    && npm cache clean --force; \
+fi
+
+# Other npm CLIs, such as AI_NPM_PACKAGES="@google/gemini-cli"
+RUN if [ -n "$AI_NPM_PACKAGES" ]; then \
+    npm install -g --prefix=/home/docker/.local $AI_NPM_PACKAGES \
+    && npm cache clean --force; \
+fi
+
+# VS Code runs its own command in the container, so the app's entrypoint,
+# which starts Octane, isn't used here
+ENTRYPOINT []
+CMD ["sleep", "infinity"]

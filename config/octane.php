@@ -1,6 +1,5 @@
 <?php
 
-use Foxws\Podman\Support\PodmanCaddySites;
 use Laravel\Octane\Contracts\OperationTerminated;
 use Laravel\Octane\Events\OperationReleased;
 use Laravel\Octane\Events\RequestHandled;
@@ -256,42 +255,6 @@ return [
     'roadrunner' => [
         'command' => env('OCTANE_ROADRUNNER_COMMAND', 'vendor/bin/roadrunner-worker'),
         'http_middleware' => env('OCTANE_ROADRUNNER_HTTP_MIDDLEWARE', 'static'),
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Extra Caddy Sites
-    |--------------------------------------------------------------------------
-    |
-    | Sibling services run on the same internal "foxws" network as this
-    | container, so FrankenPHP's embedded Caddy can reverse proxy them
-    | directly by hostname instead of each one opening
-    | its own host port and needing its own reverse proxy entry upstream.
-    | Add a service by extending the map below with its public hostname
-    | and internal "host:port" upstream -- nothing else needs to change.
-    |
-    | This must read raw env() rather than config(), since config files
-    | cannot safely depend on each other's load order -- that also means
-    | this reads PODMAN_ENABLED directly rather than config('podman.enabled'),
-    | even though it's the same flag documented in config/podman.php.
-    |
-    | Guarded so foxws/laravel-podman (which provides PodmanCaddySites) can
-    | stay a require-dev package: PODMAN_ENABLED opts out even when it's
-    | installed, and class_exists() keeps a stray "true" from being fatal
-    | when it isn't -- e.g. the "composer install --no-dev" production build.
-    |
-    */
-
-    'caddy' => [
-        'env' => ! env('PODMAN_ENABLED', true) || ! class_exists(PodmanCaddySites::class) ? [] : [
-            // Port must match the "--port" passed to "octane:frankenphp"
-            // in APP_COMMAND (see the preset's runtimes/Containerfile).
-            'CADDY_EXTRA_CONFIG' => PodmanCaddySites::render([
-                (string) env('MAILPIT_UI_HOST') => PodmanCaddySites::hostPort((string) env('MAIL_HOST'), 8025),
-                // Port must match "server.port" in vite.config.ts.
-                (string) env('VITE_HMR_HOST') => PodmanCaddySites::hostPort((string) env('VITE_SERVER_HOST'), 5173),
-            ], (int) env('OCTANE_PORT', 8000)),
-        ],
     ],
 
 ];
