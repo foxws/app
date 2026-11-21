@@ -1,8 +1,9 @@
 <?php
 
+use Foxws\Essentials\Csp\Nonce\ViteNonceGenerator;
+use Foxws\Essentials\Csp\Presets\BasicPreset;
+use Foxws\Essentials\Csp\Presets\GitHubImagesPreset;
 use Spatie\Csp\Presets\BunnyFonts;
-use Support\Csp\Nonce\ViteNonceGenerator;
-use Support\Csp\Presets\BasicPreset;
 
 // use Spatie\Csp\Directive;
 // use Spatie\Csp\Keyword;
@@ -16,6 +17,7 @@ return [
     'presets' => [
         BasicPreset::class,
         BunnyFonts::class,
+        GitHubImagesPreset::class,
     ],
 
     /**
