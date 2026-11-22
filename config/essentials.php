@@ -11,6 +11,7 @@ use Foxws\Essentials\Configurables\AutomaticallyEagerLoadRelationships;
 use Foxws\Essentials\Configurables\EnforceMorphMap;
 use Foxws\Essentials\Configurables\FakeSleep;
 use Foxws\Essentials\Configurables\ForceHttpsScheme;
+use Foxws\Essentials\Configurables\ForceRootUrl;
 use Foxws\Essentials\Configurables\ForceSecurePassword;
 use Foxws\Essentials\Configurables\ImmutableDates;
 use Foxws\Essentials\Configurables\ModelShouldBeStrict;
@@ -39,6 +40,7 @@ return [
         EnforceMorphMap::class,
         FakeSleep::class,
         ForceHttpsScheme::class,
+        ForceRootUrl::class,
         ForceSecurePassword::class,
         ImmutableDates::class,
         ModelShouldBeStrict::class,
