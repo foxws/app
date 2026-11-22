@@ -119,3 +119,27 @@ test('returns not found for a package, which has its docs page instead', functio
 
     $this->get('/projects/laravel-podman')->assertNotFound();
 });
+
+test('only links to web addresses and paths from front matter', function (string $url) {
+    ProjectFactory::new()->create([
+        'slug' => 'linked',
+        'github_repository' => 'example/linked',
+        'metadata' => ['kind' => 'personal', 'docs' => $url, 'source' => $url],
+    ]);
+
+    $project = $this->get('/projects/linked')->assertOk()->inertiaProps('project');
+
+    expect($project)
+        ->docs->toBeNull()
+        ->source->toBe('https://github.com/example/linked');
+})->with(['javascript:alert(1)', ' JavaScript:alert(1)', 'data:text/html,hello', '//example.com']);
+
+test('links to a path on this site from front matter', function () {
+    ProjectFactory::new()->create([
+        'slug' => 'linked',
+        'metadata' => ['kind' => 'personal', 'docs' => '/laravel-docs/installation'],
+    ]);
+
+    expect($this->get('/projects/linked')->assertOk()->inertiaProps('project'))
+        ->docs->toBe('/laravel-docs/installation');
+});
