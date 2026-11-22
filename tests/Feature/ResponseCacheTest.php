@@ -71,3 +71,16 @@ it('does not serve a cached full-page document to an Inertia navigation for the 
         ->assertHeader('X-Inertia', 'true')
         ->assertJsonPath('component', 'HomePage');
 });
+
+it('caches links on the configured url, whatever port the request names', function (string $url, array $headers) {
+    $this->get($url, $headers)->assertOk();
+    $this->flushHeaders();
+
+    $this->get('/sitemap.xml')
+        ->assertOk()
+        ->assertHeader('X-Cache-Status', 'HIT')
+        ->assertDontSee(':1337', escape: false);
+})->with([
+    'in the host' => ['http://localhost:1337/sitemap.xml', []],
+    'forwarded' => ['/sitemap.xml', ['X-Forwarded-Port' => '1337']],
+]);
