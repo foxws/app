@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "61c832fe01b8642ca357f560eff85b8f",
+    "content-hash": "c995bfe112fc6ef46b0a9e428e423ff7",
     "packages": [
         {
             "name": "brick/math",
@@ -737,16 +737,16 @@
         },
         {
             "name": "foxws/laravel-essentials",
-            "version": "2.1.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-essentials.git",
-                "reference": "eaaf5dcbed87f676cac54c7d648eb309c3ea7c37"
+                "reference": "66e486368b9c3e24ae8e4f8a93d88d6a72c8ecc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-essentials/zipball/eaaf5dcbed87f676cac54c7d648eb309c3ea7c37",
-                "reference": "eaaf5dcbed87f676cac54c7d648eb309c3ea7c37",
+                "url": "https://api.github.com/repos/foxws/laravel-essentials/zipball/66e486368b9c3e24ae8e4f8a93d88d6a72c8ecc5",
+                "reference": "66e486368b9c3e24ae8e4f8a93d88d6a72c8ecc5",
                 "shasum": ""
             },
             "require": {
@@ -804,7 +804,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-essentials/issues",
-                "source": "https://github.com/foxws/laravel-essentials/tree/2.1.0"
+                "source": "https://github.com/foxws/laravel-essentials/tree/3.0.0"
             },
             "funding": [
                 {
@@ -812,8 +812,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-21T19:05:38+00:00",
-            "published-time": "2026-11-21T19:06:37+00:00"
+            "time": "2026-11-22T15:53:26+00:00",
+            "published-time": "2026-11-22T15:59:41+00:00"
         },
         {
             "name": "foxws/laravel-pwa",
