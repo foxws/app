@@ -194,7 +194,7 @@ test('reads the project filter as the slug it is', function (string $slug) {
     $this->getJson('/api/v1/search?query=Shared&filter[project]='.urlencode($slug))
         ->assertOk()
         ->assertJsonCount(1);
-})->with(['123', '007', 'true', 'null', 'a,b']);
+})->with(['0', '123', '007', 'true', 'null', 'a,b']);
 
 test('finds nothing for a project that does not exist', function () {
     DocumentFactory::new()->create([
