@@ -34,6 +34,7 @@ Every configurable implements `Foxws\Essentials\Contracts\Configurable` (`enable
 | `EnforceMorphMap` | `essentials.morph_map` is not empty | `Relation::enforceMorphMap(...)` |
 | `FakeSleep` | Running unit tests | `Sleep::fake()` |
 | `ForceHttpsScheme` | Always | `URL::forceHttps()` |
+| `ForceRootUrl` | Outside `local`, with an `app.url` | `URL::useOrigin()` with `app.url` |
 | `ForceSecurePassword` | Running in production | `Password::defaults()` — 12–64 chars, mixed case, numbers, symbols, "uncompromised" |
 | `ImmutableDates` | Always | `Date::use(CarbonImmutable::class)` |
 | `ModelShouldBeStrict` | Always | `Model::shouldBeStrict()` |
@@ -41,8 +42,13 @@ Every configurable implements `Foxws\Essentials\Contracts\Configurable` (`enable
 | `PreventStrayRequests` | Running unit tests | `Http::preventStrayRequests()` |
 | `ProhibitDestructiveCommands` | Running in production | `DB::prohibitDestructiveCommands()` |
 | `ResourceWithoutWrapping` | Always | `JsonResource::withoutWrapping()` |
+| `SetTrustedProxies` | `essentials.trusted_proxies` (`TRUSTED_PROXIES`) is set | `TrustProxies::at(...)` |
 
 If an app's existing behavior conflicts with one of the "Always" defaults (e.g. it relies on lazy loading or wrapped JSON resources), publish the config and remove that configurable rather than working around it downstream.
+
+`ForceRootUrl` sends every generated link and redirect to `app.url`, as `ForceHttpsScheme` alone leaves the host and port to the request. Check `APP_URL` in every non-local environment, remove it for an app that serves several hosts, and add it to configs that were published before it existed, as those replace the default list. It doesn't cover `request()->url()`, `url()->full()`, pagination links, or the port of domain routes.
+
+For proxies that differ per environment, set `TRUSTED_PROXIES` rather than calling `env()` or `config()` in `withMiddleware()`, which runs before either is loaded. It replaces `trustProxies(at: ...)`. Keep `trustProxies(headers: ...)` in `bootstrap/app.php`, without `X-Forwarded-Host` unless the proxy overwrites it. A config published earlier needs `SetTrustedProxies::class` added.
 
 ### 3. Enable, disable, or reorder configurables
 
