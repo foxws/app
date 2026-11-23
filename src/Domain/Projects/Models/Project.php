@@ -95,7 +95,7 @@ class Project extends BaseProject
     {
         $docs = $this->metadataValue('docs');
 
-        return is_string($docs) && $docs !== '' ? $docs : null;
+        return is_string($docs) && $this->isSafeLink($docs) ? $docs : null;
     }
 
     /**
@@ -106,11 +106,19 @@ class Project extends BaseProject
     {
         $source = $this->metadataValue('source');
 
-        if (is_string($source) && $source !== '') {
+        if (is_string($source) && $this->isSafeLink($source)) {
             return $source;
         }
 
         return $this->driver === ProjectDriver::Github ? "https://github.com/{$this->sourceLocation()}" : null;
+    }
+
+    /**
+     * A web address or a path on this site, as front matter could hold a `javascript:` URL.
+     */
+    private function isSafeLink(string $url): bool
+    {
+        return preg_match('#^(https?://|/(?![/\\\\]))#i', $url) === 1;
     }
 
     /**

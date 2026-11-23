@@ -57,7 +57,7 @@ return Application::configure(basePath: dirname(__DIR__))
             CacheResponse::class,
         ]);
 
-        $middleware->throttleWithRedis();
+        $middleware->throttleApi(redis: true);
         $middleware->redirectGuestsTo(fn () => route('login'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {

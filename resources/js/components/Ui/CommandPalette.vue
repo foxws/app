@@ -39,7 +39,7 @@ interface SearchGroup {
 }
 
 // Kept in sync with the backend's own `query` => ['min:2', ...] rule
-// (SearchController) — below this, there's nothing to search yet.
+// (SearchDocsRequest) — below this, there's nothing to search yet.
 const minQueryLength = 2
 
 // Every request reaches the app server, so wait for a pause in typing and

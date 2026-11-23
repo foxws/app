@@ -5,6 +5,14 @@ declare(strict_types=1);
 use Foxws\Docs\Database\Factories\DocumentFactory;
 use Foxws\Docs\Database\Factories\ProjectFactory;
 use Foxws\Docs\Database\Factories\VersionFactory;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
+
+beforeEach(function () {
+    // The rate limit is kept in Redis, so give each test a visitor of its own.
+    $this->withServerVariables(['REMOTE_ADDR' => fake()->ipv4()]);
+});
 
 test('searches documents by title', function () {
     $project = ProjectFactory::new()->create(['slug' => 'test-project', 'title' => 'Test Project']);
@@ -158,4 +166,58 @@ test('links a hit on the project overview to the project page, not its redirecti
     $response = $this->getJson('/api/v1/search?query=Introduction');
 
     expect($response->json('0.to'))->toBe(route('project', 'test-project', absolute: false));
+});
+
+test('rejects a filter it cannot use', function (string $filter, string $field) {
+    $this->getJson("/api/v1/search?query=laravel&{$filter}")
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors($field);
+})->with([
+    'unknown filter' => ['filter[unknown]=1', 'filter'],
+    'not a list of filters' => ['filter=project', 'filter'],
+    'list of projects' => ['filter[project][]=one', 'filter.project'],
+]);
+
+test('reads the project filter as the slug it is', function (string $slug) {
+    $wanted = VersionFactory::new()->create([
+        'project_id' => ProjectFactory::new()->create(['slug' => $slug])->id,
+        'is_default' => true,
+    ]);
+    $other = VersionFactory::new()->create([
+        'project_id' => ProjectFactory::new()->create(['slug' => 'other'])->id,
+        'is_default' => true,
+    ]);
+
+    DocumentFactory::new()->create(['version_id' => $wanted->id, 'title' => 'Shared Topic']);
+    DocumentFactory::new()->create(['version_id' => $other->id, 'title' => 'Shared Topic']);
+
+    $this->getJson('/api/v1/search?query=Shared&filter[project]='.urlencode($slug))
+        ->assertOk()
+        ->assertJsonCount(1);
+})->with(['0', '123', '007', 'true', 'null', 'a,b']);
+
+test('finds nothing for a project that does not exist', function () {
+    DocumentFactory::new()->create([
+        'version_id' => VersionFactory::new()->create(['is_default' => true])->id,
+        'title' => 'Shared Topic',
+    ]);
+
+    $this->getJson('/api/v1/search?query=Shared&filter[project]=missing')
+        ->assertOk()
+        ->assertJsonCount(0);
+});
+
+test('allows a visitor 60 searches a minute', function () {
+    $this->getJson('/api/v1/search?query=laravel')
+        ->assertOk()
+        ->assertHeader('X-RateLimit-Limit', '60');
+});
+
+test('refuses searches over the rate limit', function () {
+    $visitor = Str::random();
+
+    RateLimiter::for('api', fn (): Limit => Limit::perMinute(1)->by($visitor));
+
+    $this->getJson('/api/v1/search?query=laravel')->assertOk();
+    $this->getJson('/api/v1/search?query=laravel')->assertTooManyRequests();
 });
