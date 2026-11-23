@@ -574,16 +574,16 @@
         },
         {
             "name": "foxws/laravel-ddd",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-ddd.git",
-                "reference": "d0c8eda1161e6969b4315946e9798708d542141f"
+                "reference": "83f434d097df9e37e76b4474d99a836034b9a3ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-ddd/zipball/d0c8eda1161e6969b4315946e9798708d542141f",
-                "reference": "d0c8eda1161e6969b4315946e9798708d542141f",
+                "url": "https://api.github.com/repos/foxws/laravel-ddd/zipball/83f434d097df9e37e76b4474d99a836034b9a3ab",
+                "reference": "83f434d097df9e37e76b4474d99a836034b9a3ab",
                 "shasum": ""
             },
             "require": {
@@ -637,7 +637,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-ddd/issues",
-                "source": "https://github.com/foxws/laravel-ddd/tree/2.0.0"
+                "source": "https://github.com/foxws/laravel-ddd/tree/2.0.1"
             },
             "funding": [
                 {
@@ -645,21 +645,21 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-19T09:50:29+00:00",
-            "published-time": "2026-11-19T09:58:02+00:00"
+            "time": "2026-11-22T20:44:04+00:00",
+            "published-time": "2026-11-23T09:21:01+00:00"
         },
         {
             "name": "foxws/laravel-docs",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-docs.git",
-                "reference": "a959b58f187c1931a253da37742ccee78f80a4cc"
+                "reference": "926fc6de7848c6f345db15fd7d35e29cef9bf683"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/a959b58f187c1931a253da37742ccee78f80a4cc",
-                "reference": "a959b58f187c1931a253da37742ccee78f80a4cc",
+                "url": "https://api.github.com/repos/foxws/laravel-docs/zipball/926fc6de7848c6f345db15fd7d35e29cef9bf683",
+                "reference": "926fc6de7848c6f345db15fd7d35e29cef9bf683",
                 "shasum": ""
             },
             "require": {
@@ -724,7 +724,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-docs/issues",
-                "source": "https://github.com/foxws/laravel-docs/tree/v2.0.0"
+                "source": "https://github.com/foxws/laravel-docs/tree/v2.0.1"
             },
             "funding": [
                 {
@@ -732,8 +732,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-19T09:45:40+00:00",
-            "published-time": "2026-11-19T09:58:04+00:00"
+            "time": "2026-11-22T20:45:19+00:00",
+            "published-time": "2026-11-23T09:21:05+00:00"
         },
         {
             "name": "foxws/laravel-essentials",
@@ -900,21 +900,21 @@
         },
         {
             "name": "foxws/laravel-scout-builder",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/foxws/laravel-scout-builder.git",
-                "reference": "8d10abfb84583a6370b44120b265530fea36bd89"
+                "reference": "64875a93766bea16e3eecd3490bfb25462715e45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/foxws/laravel-scout-builder/zipball/8d10abfb84583a6370b44120b265530fea36bd89",
-                "reference": "8d10abfb84583a6370b44120b265530fea36bd89",
+                "url": "https://api.github.com/repos/foxws/laravel-scout-builder/zipball/64875a93766bea16e3eecd3490bfb25462715e45",
+                "reference": "64875a93766bea16e3eecd3490bfb25462715e45",
                 "shasum": ""
             },
             "require": {
                 "illuminate/contracts": "^13.0",
-                "laravel/scout": "^10.0||^11.0",
+                "laravel/scout": "^11.10",
                 "php": "^8.5",
                 "spatie/laravel-package-tools": "^1.16"
             },
@@ -967,7 +967,7 @@
             ],
             "support": {
                 "issues": "https://github.com/foxws/laravel-scout-builder/issues",
-                "source": "https://github.com/foxws/laravel-scout-builder/tree/2.0.0"
+                "source": "https://github.com/foxws/laravel-scout-builder/tree/2.1.0"
             },
             "funding": [
                 {
@@ -975,8 +975,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-19T09:46:41+00:00",
-            "published-time": "2026-11-19T09:58:21+00:00"
+            "time": "2026-11-22T21:05:35+00:00",
+            "published-time": "2026-11-23T09:21:00+00:00"
         },
         {
             "name": "fruitcake/php-cors",
