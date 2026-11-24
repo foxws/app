@@ -144,6 +144,10 @@ ARG AI_NPM_PACKAGES=""
 
 ENV PATH="${PATH}:/home/docker/.local/bin"
 
+# The base image sets XDG_CONFIG_HOME=/config, where gh would miss the login
+# mounted at ~/.config/gh (see devcontainer.json)
+ENV GH_CONFIG_DIR="/home/docker/.config/gh"
+
 USER root
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
